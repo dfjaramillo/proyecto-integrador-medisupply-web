@@ -69,35 +69,19 @@ jobs:
         run: |
           heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
 
-      - name: Push dist to Heroku
+      - name: Push source to Heroku (let Heroku build)
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
           set -e
-          if [ -d dist ]; then
-              echo "Pushing dist/ to Heroku (using subtree or fallback)"
-              # Ensure Heroku uses the static buildpack so it can serve files without package.json
-              echo "Setting Heroku buildpack to static"
-              heroku buildpacks:set https://github.com/heroku/heroku-buildpack-static.git -a ${HEROKU_APP_NAME} || true
-              # Create a basic static.json to enable SPA routing if not present
-              if [ ! -f dist/static.json ]; then
-                printf '%s' '{"root":".","routes":{"/**":"index.html"}}' > dist/static.json
-              fi
-            git add -f dist || true
-            git commit -m "chore(deploy): dist" || true
-            if git ls-tree --name-only -r HEAD | grep -q "^dist/"; then
-              git subtree push --prefix dist heroku main || true
-            fi
-            pushd dist
-            git init
-            git add -A
-            git commit -m "deploy dist" || true
-            # Ensure branch 'main' exists (rename default branch if necessary) then push
-            git branch -M main || true
-            git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git main --force
-            popd
-          else
-            echo "dist/ not found — aborting deploy"
-            exit 1
-          fi
+          echo "Setting Heroku buildpack to heroku/nodejs"
+          heroku buildpacks:set heroku/nodejs -a ${HEROKU_APP_NAME} || true
+
+          # Ensure we are at the checked-out commit (avoid commits created earlier)
+          git fetch --all
+          git reset --hard ${GITHUB_SHA}
+
+          echo "Pushing repository HEAD to Heroku (Heroku will run build)")
+          git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git HEAD:main --force
