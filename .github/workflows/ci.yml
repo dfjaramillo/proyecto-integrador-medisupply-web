@@ -76,8 +76,7 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
         run: |
           set -e
-          echo "Setting Heroku buildpack to heroku/nodejs"
-          heroku buildpacks:set heroku/nodejs -a ${HEROKU_APP_NAME} || true
+          # Using existing Heroku buildpack configuration (do not set buildpack on every deploy)
 
           # Ensure we are at the checked-out commit (avoid commits created earlier)
           git fetch --all
