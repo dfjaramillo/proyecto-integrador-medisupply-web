@@ -54,6 +54,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-artifact
+          path: dist
 
       - name: Install Heroku CLI
         run: |
