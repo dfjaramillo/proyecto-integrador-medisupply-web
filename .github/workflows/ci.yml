@@ -1,51 +1,93 @@
-name: CI
+name: CI and Deploy
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build-and-test:
+    name: Build and Test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Cache npm
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.npm
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-
+          node-version: '20.x'
 
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
-            echo "package-lock.json found, running npm ci"
             npm ci --prefer-offline --no-audit
           else
-            echo "package-lock.json not found, running npm install"
             npm install --no-audit --prefer-offline
           fi
 
       - name: Build
         run: npm run build --if-present
 
-      - name: Run tests (Karma)
+      - name: Run tests
         env:
           CI: true
+        run: npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Show dist (debug)
         run: |
-          npm run test -- --watch=false --browsers=ChromeHeadless
+          echo "dist contents:"
+          ls -la dist || true
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-artifact
+          path: dist
+
+  deploy:
+    name: Deploy to Heroku
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-artifact
+
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
+      - name: Set git user
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: Add Heroku remote
+        run: |
+          heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
+
+      - name: Push dist to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+        run: |
+          set -e
+          if [ -d dist ]; then
+            echo "Pushing dist/ to Heroku (using subtree or fallback)"
+            git add -f dist || true
+            git commit -m "chore(deploy): dist" || true
+            if git ls-tree --name-only -r HEAD | grep -q "^dist/"; then
+              git subtree push --prefix dist heroku main || true
+            fi
+            pushd dist
+            git init
+            git add -A
+            git commit -m "deploy dist" || true
+            git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git main --force
+            popd
+          else
+            echo "dist/ not found — aborting deploy"
+            exit 1
+          fi
