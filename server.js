@@ -28,9 +28,26 @@ function findDistFolder() {
       const candidate = path.join(baseDist, item);
       try {
         const stat = fs.statSync(candidate);
-        if (stat.isDirectory() && fs.existsSync(path.join(candidate, 'index.html'))) {
-          console.log('Found index.html in:', candidate);
-          return candidate;
+        if (stat.isDirectory()) {
+          // check direct index.html
+          if (fs.existsSync(path.join(candidate, 'index.html'))) {
+            console.log('Found index.html in:', candidate);
+            return candidate;
+          }
+          // recursive search (one level deep) in case build produced nested folder
+          const subItems = fs.readdirSync(candidate);
+          for (const sub of subItems) {
+            const subCandidate = path.join(candidate, sub);
+            try {
+              const subStat = fs.statSync(subCandidate);
+              if (subStat.isDirectory() && fs.existsSync(path.join(subCandidate, 'index.html'))) {
+                console.log('Found index.html in nested folder:', subCandidate);
+                return subCandidate;
+              }
+            } catch (e) {
+              // ignore
+            }
+          }
         }
       } catch (e) {
         // ignore
