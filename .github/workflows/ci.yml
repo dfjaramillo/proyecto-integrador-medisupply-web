@@ -86,6 +86,8 @@ jobs:
             git init
             git add -A
             git commit -m "deploy dist" || true
+            # Ensure branch 'main' exists (rename default branch if necessary) then push
+            git branch -M main || true
             git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git main --force
             popd
           else
