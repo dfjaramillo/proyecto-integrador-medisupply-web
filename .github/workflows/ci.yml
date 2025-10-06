@@ -76,7 +76,14 @@ jobs:
         run: |
           set -e
           if [ -d dist ]; then
-            echo "Pushing dist/ to Heroku (using subtree or fallback)"
+              echo "Pushing dist/ to Heroku (using subtree or fallback)"
+              # Ensure Heroku uses the static buildpack so it can serve files without package.json
+              echo "Setting Heroku buildpack to static"
+              heroku buildpacks:set https://github.com/heroku/heroku-buildpack-static.git -a ${HEROKU_APP_NAME} || true
+              # Create a basic static.json to enable SPA routing if not present
+              if [ ! -f dist/static.json ]; then
+                printf '%s' '{"root":".","routes":{"/**":"index.html"}}' > dist/static.json
+              fi
             git add -f dist || true
             git commit -m "chore(deploy): dist" || true
             if git ls-tree --name-only -r HEAD | grep -q "^dist/"; then
