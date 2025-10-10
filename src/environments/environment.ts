@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://medisupply-gateway-gw-d7fde8rj.uc.gateway.dev/'
+  apiUrl: 'https://medisupply-gateway-gw-d7fde8rj.uc.gateway.dev' // Replace with production base_url
 };
