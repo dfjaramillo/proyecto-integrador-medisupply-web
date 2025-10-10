@@ -1,0 +1,175 @@
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { AuthService } from './auth.service';
+import { AuthTokenResponse } from '../models/auth-token.model';
+import { environment } from '../../../environments/environment';
+
+describe('AuthService', () => {
+  let service: AuthService;
+  let httpMock: HttpTestingController;
+
+  const mockAuthResponse: AuthTokenResponse = {
+    access_token: 'mock-access-token',
+    expires_in: 3600,
+    refresh_expires_in: 7200,
+    refresh_token: 'mock-refresh-token',
+    token_type: 'Bearer',
+    'not-before-policy': 0,
+    session_state: 'mock-session-state',
+    scope: 'openid profile email'
+  };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [AuthService]
+    });
+    service = TestBed.inject(AuthService);
+    httpMock = TestBed.inject(HttpTestingController);
+    
+    // Clear localStorage before each test
+    localStorage.clear();
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+    localStorage.clear();
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  describe('login', () => {
+    it('should send POST request with username and password', () => {
+      const username = 'test@example.com';
+      const password = 'password123';
+
+      service.login(username, password).subscribe();
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/token`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ user: username, password });
+      req.flush(mockAuthResponse);
+    });
+
+    it('should store access token on successful login', () => {
+      service.login('test@example.com', 'password123').subscribe();
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/token`);
+      req.flush(mockAuthResponse);
+
+      expect(service.getToken()).toBe('mock-access-token');
+    });
+
+    it('should store refresh token on successful login', () => {
+      service.login('test@example.com', 'password123').subscribe();
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/token`);
+      req.flush(mockAuthResponse);
+
+      expect(service.getRefreshToken()).toBe('mock-refresh-token');
+    });
+
+    it('should return AuthTokenResponse observable', (done) => {
+      service.login('test@example.com', 'password123').subscribe(response => {
+        expect(response).toEqual(mockAuthResponse);
+        done();
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/token`);
+      req.flush(mockAuthResponse);
+    });
+
+    it('should handle login error', (done) => {
+      const errorMessage = 'Invalid credentials';
+
+      service.login('test@example.com', 'wrongpassword').subscribe({
+        next: () => fail('should have failed'),
+        error: (error) => {
+          expect(error.status).toBe(401);
+          done();
+        }
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/token`);
+      req.flush({ message: errorMessage }, { status: 401, statusText: 'Unauthorized' });
+    });
+  });
+
+  describe('getToken', () => {
+    it('should return null when no token is stored', () => {
+      expect(service.getToken()).toBeNull();
+    });
+
+    it('should return stored token', () => {
+      service.setToken('test-token');
+      expect(service.getToken()).toBe('test-token');
+    });
+  });
+
+  describe('setToken', () => {
+    it('should store token in localStorage', () => {
+      service.setToken('new-token');
+      expect(localStorage.getItem('ms_access_token')).toBe('new-token');
+    });
+
+    it('should overwrite existing token', () => {
+      service.setToken('old-token');
+      service.setToken('new-token');
+      expect(service.getToken()).toBe('new-token');
+    });
+  });
+
+  describe('getRefreshToken', () => {
+    it('should return null when no refresh token is stored', () => {
+      expect(service.getRefreshToken()).toBeNull();
+    });
+
+    it('should return stored refresh token', () => {
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      expect(service.getRefreshToken()).toBe('test-refresh-token');
+    });
+  });
+
+  describe('isAuthenticated', () => {
+    it('should return false when no token is stored', () => {
+      expect(service.isAuthenticated()).toBe(false);
+    });
+
+    it('should return true when token is stored', () => {
+      service.setToken('test-token');
+      expect(service.isAuthenticated()).toBe(true);
+    });
+
+    it('should return false after logout', () => {
+      service.setToken('test-token');
+      service.logout();
+      expect(service.isAuthenticated()).toBe(false);
+    });
+  });
+
+  describe('logout', () => {
+    it('should remove access token from localStorage', () => {
+      service.setToken('test-token');
+      service.logout();
+      expect(service.getToken()).toBeNull();
+    });
+
+    it('should remove refresh token from localStorage', () => {
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      service.logout();
+      expect(service.getRefreshToken()).toBeNull();
+    });
+
+    it('should clear both tokens', () => {
+      service.setToken('test-token');
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      
+      service.logout();
+      
+      expect(service.getToken()).toBeNull();
+      expect(service.getRefreshToken()).toBeNull();
+    });
+  });
+});

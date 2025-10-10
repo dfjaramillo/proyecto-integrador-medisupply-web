@@ -1,0 +1,155 @@
+<div class="container-fluid vh-100 d-flex">
+
+    <div class="form-container">
+        <form [formGroup]="form" (ngSubmit)="submit()" role="form" aria-label="Formulario de inicio de sesión">
+        <h2 id="login-heading">Inicio de sesión</h2>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Correo electrónico</mat-label>
+            <input 
+              matInput 
+              type="email" 
+              formControlName="email" 
+              placeholder="Ingrese su correo"
+              autocomplete="email"
+              aria-required="true">
+            @if (hasError('email', 'required')) {
+              <mat-error>El correo es obligatorio</mat-error>
+            }
+            @if (hasError('email', 'email')) {
+              <mat-error>Formato de correo inválido</mat-error>
+            }
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contraseña</mat-label>
+            <input 
+              matInput 
+              [type]="hide() ? 'password' : 'text'" 
+              formControlName="password" 
+              placeholder="Ingrese su contraseña"
+              autocomplete="current-password"
+              aria-required="true">
+            <button 
+              mat-icon-button 
+              matSuffix 
+              type="button" 
+              (click)="hide.set(!hide())" 
+              class="icon-margin"
+              [attr.aria-label]="hide() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+              [attr.aria-pressed]="!hide()">
+              <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (hasError('password', 'required')) {
+              <mat-error>La contraseña es obligatoria</mat-error>
+            }
+            @if (hasError('password', 'minlength')) {
+              <mat-error>Mínimo 8 caracteres</mat-error>
+            }
+          </mat-form-field>          
+          <button 
+            mat-raised-button 
+            type="submit" 
+            class="login-btn" 
+            [disabled]="loading()"
+            [attr.aria-busy]="loading()">
+            @if (!loading()) {
+              Iniciar sesión
+            } @else {
+              <span class="sr-only">Iniciando sesión...</span>
+              <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+            }
+          </button>
+          @if (loading()) {
+            <div aria-live="polite" aria-atomic="true" class="sr-only">
+              Iniciando sesión, por favor espere...
+            </div>
+          }
+        </form>
+    </div>
+
+    <div class="image-container" role="complementary" aria-label="Imagen de bienvenida">
+      <img src="/images/background.jpg" alt="" role="presentation">
+      <div class="image-mask" aria-hidden="true"></div>
+
+      <div class="content">
+        <img src="/images/LogoApp.png" alt="Logo MediSupply" class="logo">
+        <h1 class="welcome-text">Bienvenido</h1>
+        <p class="subtitle">Inicia sesión para continuar</p>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+
+<!-- <div class="container-fluid vh-100 d-flex">
+  <div class="left">
+    <h1>Inicio de sesión</h1>
+    <div class="form-container">
+      <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Correo electrónico</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            type="email"
+            placeholder="usuario@medisupply.com"
+          />
+          <mat-error *ngIf="hasError('email', 'required')"
+            >El correo es obligatorio</mat-error
+          >
+          <mat-error *ngIf="hasError('email', 'email')"
+            >Formato de correo inválido</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            formControlName="password"
+            [type]="hide() ? 'password' : 'text'"
+          />
+          <button
+            type="button"
+            (click)="hide.set(!hide())"
+            [attr.aria-label]="'Mostrar/ocultar contraseña'"
+          >
+            <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-error *ngIf="hasError('password', 'required')"
+            >La contraseña es obligatoria</mat-error
+          >
+          <mat-error *ngIf="hasError('password', 'minlength')"
+            >Mínimo 8 caracteres</mat-error
+          >
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          class="full"
+          [disabled]="loading()"
+        >
+          <ng-container *ngIf="!loading(); else loadingTpl"
+            >Inicia sesión</ng-container
+          >
+        </button>
+        <ng-template #loadingTpl>
+          <mat-spinner diameter="20"></mat-spinner>
+        </ng-template>
+      </form>
+    </div>
+
+    <div class="image-container">
+      <img src="/images/background.jpg" alt="Inicio de sesión" />
+      <div class="image-mask"></div>
+
+      <div class="content">
+        <img src="/images/logo.png" alt="Logo de la app" class="logo" />
+        <h1 class="welcome-text">Bienvenido</h1>
+        <p class="subtitle">Inicia sesión para continuar</p>
+      </div>
+    </div>
+  </div>
+</div> -->

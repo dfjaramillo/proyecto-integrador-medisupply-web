@@ -1,39 +1,57 @@
+html, body { 
+    height: 100%; 
+    margin: 0; 
+    font-family: 'Poppins', sans-serif !important; 
+  }
+  
+  .mat-mdc-form-field label,
+  .mat-mdc-text-field-wrapper,
+  .mat-mdc-form-field .mdc-text-field__input {
+    font-family: 'Poppins', sans-serif !important;
+  }
+  
+  .mat-mdc-button, 
+  .mat-mdc-raised-button, 
+  .mat-mdc-outlined-button, 
+  .mat-mdc-unelevated-button {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500;
+  }
 
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
+  .register-link {
+    color: #41444F !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 16 !important;
+  }
 
-html {
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0,
-  ));
-}
+  .forgot-password-btn {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #6D7183 !important;
+    text-transform: none !important;
+  }
 
-body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
+  .login-btn {
+    width: 100%;
+    background-color: #1078FF !important;
+    color: #FFFFFF !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    border-radius: 12px !important;
+    padding: 12px 0 !important;
+    text-transform: none !important;
+    margin-top: 40px !important;
+  }
 
-  // Set a default background, font and text colors for the application using
-  // Angular Material's system-level CSS variables. Learn more about these
-  // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  .mat-mdc-form-field.mat-mdc-form-field-type-mat-input {
+    --mdc-outlined-text-field-outline-color: #A7AAB5 !important;
+    --mdc-outlined-text-field-outline-width: 1px;
+    --mdc-outlined-text-field-container-shape: 8px;
+  }
 
-  // Reset the user agent margin.
-  margin: 0;
-}
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  
+  
