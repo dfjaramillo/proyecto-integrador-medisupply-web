@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, of } from 'rxjs';
 import { AuthTokenResponse, LoginRequest } from '../models/auth-token.model';
 import { environment } from '../../../environments/environment';
 
@@ -65,10 +65,33 @@ export class AuthService {
   }
 
   /**
-   * Clear tokens and log out
+   * Log out user by calling backend and clearing tokens
    */
-  logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+  logout(): Observable<void> {
+    const refreshToken = this.getRefreshToken();
+    
+    // Always clear local tokens, even if backend call fails
+    const clearTokens = () => {
+      localStorage.removeItem(this.TOKEN_KEY);
+      localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    };
+
+    // If no refresh token, just clear local storage
+    if (!refreshToken) {
+      clearTokens();
+      return of(void 0);
+    }
+
+    // Call backend logout endpoint
+    return this.http
+      .post<void>(`${environment.apiUrl}/auth/logout`, {
+        refresh_token: refreshToken
+      })
+      .pipe(
+        tap({
+          next: () => clearTokens(),
+          error: () => clearTokens() // Clear tokens even if backend fails
+        })
+      );
   }
 }

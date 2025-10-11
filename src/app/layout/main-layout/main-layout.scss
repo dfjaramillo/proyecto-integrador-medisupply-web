@@ -1,0 +1,13 @@
+.main-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: 280px; // Sidebar width
+  flex: 1;
+  padding: 32px;
+  background-color: #F9FAFB;
+  min-height: 100vh;
+}

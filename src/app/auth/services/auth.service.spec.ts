@@ -142,34 +142,98 @@ describe('AuthService', () => {
       expect(service.isAuthenticated()).toBe(true);
     });
 
-    it('should return false after logout', () => {
+    it('should return false after logout', (done) => {
       service.setToken('test-token');
-      service.logout();
-      expect(service.isAuthenticated()).toBe(false);
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      
+      service.logout().subscribe(() => {
+        expect(service.isAuthenticated()).toBe(false);
+        done();
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/logout`);
+      req.flush({});
     });
   });
 
   describe('logout', () => {
-    it('should remove access token from localStorage', () => {
-      service.setToken('test-token');
-      service.logout();
-      expect(service.getToken()).toBeNull();
-    });
-
-    it('should remove refresh token from localStorage', () => {
+    it('should send POST request to /auth/logout with refresh token', () => {
       localStorage.setItem('ms_refresh_token', 'test-refresh-token');
-      service.logout();
-      expect(service.getRefreshToken()).toBeNull();
+      
+      service.logout().subscribe();
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/logout`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ refresh_token: 'test-refresh-token' });
+      req.flush({});
     });
 
-    it('should clear both tokens', () => {
+    it('should remove access token from localStorage after logout', (done) => {
       service.setToken('test-token');
       localStorage.setItem('ms_refresh_token', 'test-refresh-token');
       
-      service.logout();
+      service.logout().subscribe(() => {
+        expect(service.getToken()).toBeNull();
+        done();
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/logout`);
+      req.flush({});
+    });
+
+    it('should remove refresh token from localStorage after logout', (done) => {
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
       
-      expect(service.getToken()).toBeNull();
-      expect(service.getRefreshToken()).toBeNull();
+      service.logout().subscribe(() => {
+        expect(service.getRefreshToken()).toBeNull();
+        done();
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/logout`);
+      req.flush({});
+    });
+
+    it('should clear both tokens after successful logout', (done) => {
+      service.setToken('test-token');
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      
+      service.logout().subscribe(() => {
+        expect(service.getToken()).toBeNull();
+        expect(service.getRefreshToken()).toBeNull();
+        done();
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/logout`);
+      req.flush({});
+    });
+
+    it('should clear tokens even if backend logout fails', (done) => {
+      service.setToken('test-token');
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      
+      service.logout().subscribe({
+        error: () => {
+          expect(service.getToken()).toBeNull();
+          expect(service.getRefreshToken()).toBeNull();
+          done();
+        }
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/logout`);
+      req.flush({ message: 'Server error' }, { status: 500, statusText: 'Internal Server Error' });
+    });
+
+    it('should complete without backend call if no refresh token exists', (done) => {
+      service.setToken('test-token');
+      // No refresh token set
+      
+      service.logout().subscribe(() => {
+        expect(service.getToken()).toBeNull();
+        done();
+      });
+
+      // No HTTP request should be made
+      httpMock.expectNone(`${environment.apiUrl}/auth/logout`);
     });
   });
 });
