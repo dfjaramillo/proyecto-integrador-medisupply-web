@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, of } from 'rxjs';
 import { AuthTokenResponse, LoginRequest } from '../models/auth-token.model';
 import { environment } from '../../../environments/environment';
 
@@ -79,10 +79,7 @@ export class AuthService {
     // If no refresh token, just clear local storage
     if (!refreshToken) {
       clearTokens();
-      return new Observable(observer => {
-        observer.next();
-        observer.complete();
-      });
+      return of(void 0);
     }
 
     // Call backend logout endpoint
