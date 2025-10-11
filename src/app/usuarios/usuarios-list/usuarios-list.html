@@ -1,40 +1,30 @@
 <div class="usuarios-container">
   <!-- Header -->
-  <div class="header">
+  <div class="header">    
+    <h1>Usuarios</h1>
     <div class="breadcrumb">
       <span class="breadcrumb-link">Administración</span>
       <span class="breadcrumb-separator">-</span>
       <span class="breadcrumb-current">Usuarios</span>
     </div>
-    <h1>Usuarios</h1>
   </div>
 
-  <!-- Action Bar - Only show create button for administrators -->
+ 
+
+  <!-- Search and Table -->
+  <div class="table-container">
+ <!-- Action Bar - Only show create button for administrators -->
   @if (isAdmin()) {
     <div class="action-bar">
       <button
         mat-raised-button
         color="primary"
         (click)="openCreateUserDialog()"
-        class="create-btn">
-        <mat-icon>add</mat-icon>
+        class="create-btn">        
         Crear usuario
       </button>
     </div>
   }
-
-  <!-- Search and Table -->
-  <div class="table-container">
-    <div class="search-bar">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label>Buscar</mat-label>
-        <input
-          matInput
-          placeholder="Buscar nombre, correo, tipo de institución o teléfono"
-          (input)="onSearch($event)">
-        <mat-icon matPrefix>search</mat-icon>
-      </mat-form-field>
-    </div>
 
     @if (loading()) {
       <div class="loading-container">
@@ -42,6 +32,26 @@
         <p>Cargando usuarios...</p>
       </div>
     } @else {
+      
+      <!-- Filter inputs -->
+      <div class="filter-row">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Buscar nombre"
+          (input)="onNameFilterChange($event)">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Buscar correo"
+          (input)="onEmailFilterChange($event)">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Buscar rol"
+          (input)="onRoleFilterChange($event)">
+      </div>
+
       <table mat-table [dataSource]="filteredUsers" class="users-table">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
@@ -55,16 +65,10 @@
           <td mat-cell *matCellDef="let user">{{ user.email }}</td>
         </ng-container>
 
-        <!-- Institution Type Column -->
-        <ng-container matColumnDef="institution_type">
-          <th mat-header-cell *matHeaderCellDef>TIPO DE INSTITUCIÓN</th>
-          <td mat-cell *matCellDef="let user">{{ user.institution_type || '-' }}</td>
-        </ng-container>
-
-        <!-- Phone Column -->
-        <ng-container matColumnDef="phone">
-          <th mat-header-cell *matHeaderCellDef>TELÉFONO</th>
-          <td mat-cell *matCellDef="let user">{{ user.phone || '-' }}</td>
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>ROL</th>
+          <td mat-cell *matCellDef="let user">{{ user.role || '-' }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -76,18 +80,37 @@
             No se encontraron usuarios
           </td>
         </tr>
-      </table>
+      </table>      
 
-      <!-- Pagination -->
-      <mat-paginator
-        [length]="totalUsers()"
-        [pageSize]="pageSize()"
-        [pageIndex]="currentPage()"
-        [pageSizeOptions]="[5, 10, 20]"
-        (page)="onPageChange($event)"
-        showFirstLastButtons
-        class="users-paginator">
-      </mat-paginator>
+
+      <!-- Custom Pagination -->
+      <div class="custom-pagination">
+        <span class="pagination-info">
+          Mostrando {{ (currentPage() * pageSize()) + 1 }} al {{ Math.min((currentPage() + 1) * pageSize(), totalUsers()) }} de {{ totalUsers() }} registros
+        </span>
+        <div class="pagination-buttons">
+          <button 
+            class="pagination-btn"
+            (click)="previousPage()"
+            [disabled]="currentPage() === 0">
+            Anterior
+          </button>
+          @for (page of pageNumbers; track page) {
+            <button 
+              class="pagination-btn"
+              [class.active]="currentPage() === page - 1"
+              (click)="goToPage(page)">
+              {{ page }}
+            </button>
+          }
+          <button 
+            class="pagination-btn"
+            (click)="nextPage()"
+            [disabled]="currentPage() === totalPages() - 1">
+            Siguiente
+          </button>
+        </div>
+      </div>
     }
   </div>
 </div>

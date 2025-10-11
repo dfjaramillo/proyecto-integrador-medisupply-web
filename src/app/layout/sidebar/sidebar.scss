@@ -1,8 +1,7 @@
 .sidebar {
   width: 280px;
   height: 100vh;
-  background-color: #FFFFFF;
-  border-right: 1px solid #E5E7EB;
+  background-color: #FFFFFF;  
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -13,7 +12,7 @@
 
 .sidebar-header {
   padding: 5px 24px;
-  border-bottom: 1px solid #E5E7EB;
+  
 }
 
 .sidebar-logo {
@@ -145,8 +144,7 @@
 }
 
 .sidebar-footer {
-  padding: 24px;
-  border-top: 1px solid #E5E7EB;
+  padding: 24px;  
 }
 
 .logout-btn {

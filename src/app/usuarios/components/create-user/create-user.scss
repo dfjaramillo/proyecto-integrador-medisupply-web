@@ -23,10 +23,13 @@
     color: white;
     width: 36px;
     height: 36px;
+    border-radius: 10px;
 
     mat-icon {
-      font-size: 20px;
-      line-height: 20px;
+        width: 20.75px;
+        height: 24.75px;
+        font-size: 20px;
+        line-height: 20px;        
     }
 
     &:hover {
@@ -62,6 +65,7 @@ mat-dialog-actions {
   border-top: 1px solid #E5E7EB;
 
   .submit-btn {
+    width: 360px;
     min-width: 120px;
     height: 40px;
     background-color: #1078FF;

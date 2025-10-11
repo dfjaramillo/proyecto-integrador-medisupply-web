@@ -39,16 +39,29 @@ export class UsuariosListComponent implements OnInit {
   users = signal<User[]>([]);
   loading = signal(false);
   totalUsers = signal(0);
+  totalPages = signal(0);
   currentPage = signal(0);
-  pageSize = signal(10);
+  pageSize = signal(5);
 
-  displayedColumns: string[] = ['name', 'email', 'institution_type', 'phone'];
-  searchTerm = signal('');
+  displayedColumns: string[] = ['name', 'email', 'role'];
+  
+  // Individual search filters
+  nameFilter = signal('');
+  emailFilter = signal('');
+  roleFilter = signal('');
 
   // Check if user is admin
   isAdmin(): boolean {
     return this.authService.isAdmin();
   }
+
+  // Generate array of page numbers for pagination
+  get pageNumbers(): number[] {
+    return Array.from({ length: this.totalPages() }, (_, i) => i + 1);
+  }
+
+  // Math utility for template
+  Math = Math;
 
   ngOnInit(): void {
     this.loadUsers();
@@ -60,6 +73,7 @@ export class UsuariosListComponent implements OnInit {
       next: (response) => {
         this.users.set(response.users);
         this.totalUsers.set(response.total);
+        this.totalPages.set(Math.ceil(response.total / this.pageSize()));
         this.loading.set(false);
       },
       error: (err) => {
@@ -69,10 +83,23 @@ export class UsuariosListComponent implements OnInit {
     });
   }
 
-  onPageChange(event: PageEvent): void {
-    this.currentPage.set(event.pageIndex);
-    this.pageSize.set(event.pageSize);
+  goToPage(page: number): void {
+    this.currentPage.set(page - 1);
     this.loadUsers();
+  }
+
+  previousPage(): void {
+    if (this.currentPage() > 0) {
+      this.currentPage.set(this.currentPage() - 1);
+      this.loadUsers();
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage() < this.totalPages() - 1) {
+      this.currentPage.set(this.currentPage() + 1);
+      this.loadUsers();
+    }
   }
 
   openCreateUserDialog(): void {
@@ -89,21 +116,31 @@ export class UsuariosListComponent implements OnInit {
     });
   }
 
-  onSearch(event: Event): void {
+  onNameFilterChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    this.searchTerm.set(value.toLowerCase());
+    this.nameFilter.set(value.toLowerCase());
+  }
+
+  onEmailFilterChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.emailFilter.set(value.toLowerCase());
+  }
+
+  onRoleFilterChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.roleFilter.set(value.toLowerCase());
   }
 
   get filteredUsers(): User[] {
-    if (!this.searchTerm()) {
-      return this.users();
-    }
-    
-    return this.users().filter(user =>
-      user.name.toLowerCase().includes(this.searchTerm()) ||
-      user.email.toLowerCase().includes(this.searchTerm()) ||
-      (user.institution_type && user.institution_type.toLowerCase().includes(this.searchTerm())) ||
-      (user.phone && user.phone.toLowerCase().includes(this.searchTerm()))
-    );
+    return this.users().filter(user => {
+      const matchesName = !this.nameFilter() || 
+        user.name.toLowerCase().includes(this.nameFilter());
+      const matchesEmail = !this.emailFilter() || 
+        user.email.toLowerCase().includes(this.emailFilter());
+      const matchesRole = !this.roleFilter() || 
+        (user.role && user.role.toLowerCase().includes(this.roleFilter()));
+      
+      return matchesName && matchesEmail && matchesRole;
+    });
   }
 }

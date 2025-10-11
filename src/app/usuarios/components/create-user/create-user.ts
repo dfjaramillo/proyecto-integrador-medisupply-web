@@ -42,7 +42,7 @@ export class CreateUserComponent {
   hidePassword = signal(true);
   hideConfirmPassword = signal(true);
 
-  roles = Object.values(UserRole);
+  roles = Object.values(UserRole).filter(role => role !== UserRole.ADMINISTRADOR);
 
   form = this.fb.group({
     name: ['', [

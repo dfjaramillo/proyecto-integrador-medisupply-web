@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8081'
+  apiUrl: 'https://medisupply-gateway-gw-d7fde8rj.uc.gateway.dev'
 };

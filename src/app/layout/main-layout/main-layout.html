@@ -1,7 +1,17 @@
 <div class="main-layout">
   <app-sidebar></app-sidebar>
   
-  <main class="main-content">
-    <router-outlet></router-outlet>
-  </main>
+  <div class="main-wrapper">
+    <header class="main-header">
+      <div class="header-content">
+        <!-- Breadcrumb y título se mostrarán aquí desde cada página -->
+      </div>
+    </header>
+    
+    <main class="main-content">
+      <div class="content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
 </div>
