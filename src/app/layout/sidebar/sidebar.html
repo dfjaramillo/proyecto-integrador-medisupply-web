@@ -1,0 +1,63 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <img src="/images/logo.png" alt="MediSupply" class="sidebar-logo">
+  </div>
+
+  <nav class="sidebar-nav">    
+    <div class="nav-section">
+      <button class="section-header" (click)="toggleAdministracion()" type="button">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <h3 class="section-title">ADMINISTRACIÓN</h3>
+        <mat-icon class="expand-icon" [class.expanded]="administracionExpanded()">
+          expand_more
+        </mat-icon>
+      </button>
+      
+      <div class="nav-items pl-20" [class.collapsed]="!administracionExpanded()">
+        <a class="nav-item" routerLink="/usuarios" routerLinkActive="active">
+          <mat-icon>person</mat-icon>
+          <span>Usuarios</span>
+        </a>
+        <a class="nav-item" routerLink="/proveedores" routerLinkActive="active">
+          <mat-icon>business</mat-icon>
+          <span>Proveedores</span>
+        </a>
+        <a class="nav-item" routerLink="/clientes" routerLinkActive="active">
+          <mat-icon>home_health</mat-icon>
+          <span>Clientes</span>
+        </a>
+      </div>
+    </div>
+    
+    <div class="nav-section">      
+      <a class="nav-item" routerLink="/inventario" routerLinkActive="active">
+        <mat-icon>inventory_2</mat-icon>
+        <span>INVENTARIO</span>
+      </a>
+    </div>
+
+    <div class="nav-section">      
+      <a class="nav-item" routerLink="/logistica" routerLinkActive="active">
+        <mat-icon>route</mat-icon>
+        <span>LOGÍSTICA</span>
+      </a>
+    </div>
+
+    <div class="nav-section">
+      <button class="section-header" (click)="toggleVentas()" type="button">
+        <mat-icon>attach_money</mat-icon>
+        <h3 class="section-title">VENTAS</h3>
+        <mat-icon class="expand-icon" [class.expanded]="ventasExpanded()">
+          expand_more
+        </mat-icon>
+      </button>          
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="logout-btn" (click)="onLogout()" type="button">
+      <mat-icon>logout</mat-icon>
+      <span>CERRAR SESIÓN</span>
+    </button>
+  </div>
+</aside>
