@@ -84,7 +84,7 @@ export class CreateUserComponent {
     this.userService.createUser(userData).subscribe({
       next: (response) => {
         this.loading.set(false);
-        this.snackBar.open(response.message || 'Usuario creado exitosamente', 'Cerrar', {
+        this.snackBar.open('Usuario creado exitosamente', 'Cerrar', {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
@@ -94,13 +94,13 @@ export class CreateUserComponent {
         this.loading.set(false);
         console.error('Error creating user:', err);
         
-        let errorMessage = 'Error temporal del sistema. Contacte soporte técnico si persiste';
+        let errorMessage = 'No se pudo crear el usuario. Intente nuevamente';
         
         if (err.status === 409) {
           errorMessage = 'El correo electrónico ya está registrado';
           this.form.get('email')?.setErrors({ duplicate: true });
         } else if (err.status === 400) {
-          errorMessage = err.error?.message || 'Datos inválidos. Verifique el formulario';
+          errorMessage = 'Por favor verifique los datos ingresados';
         }
         
         this.snackBar.open(errorMessage, 'Cerrar', {

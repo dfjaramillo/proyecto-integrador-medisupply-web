@@ -62,7 +62,7 @@ export class LoginComponent {
       error: (err) => {
         this.loading.set(false);
         console.error('Login error:', err);
-        this.snack.open(err.message || 'Credenciales inválidas', 'Cerrar', {
+        this.snack.open('Usuario o contraseña incorrectos', 'Cerrar', {
           duration: 3000,
         });
       },

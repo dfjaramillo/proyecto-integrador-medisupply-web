@@ -8,6 +8,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
@@ -26,7 +27,8 @@ import { AuthService } from '../../auth/services/auth.service';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
   ],
   templateUrl: './usuarios-list.html',
   styleUrls: ['./usuarios-list.scss']
@@ -35,6 +37,7 @@ export class UsuariosListComponent implements OnInit {
   private userService = inject(UserService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
   users = signal<User[]>([]);
   loading = signal(false);
@@ -79,6 +82,11 @@ export class UsuariosListComponent implements OnInit {
       error: (err) => {
         console.error('Error loading users:', err);
         this.loading.set(false);
+        this.users.set([]);
+        this.totalUsers.set(0);
+        this.snackBar.open('No se pudieron cargar los usuarios. Intente nuevamente', 'Cerrar', {
+          duration: 4000
+        });
       }
     });
   }
