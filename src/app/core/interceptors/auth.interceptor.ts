@@ -9,8 +9,16 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const token = authService.getToken();
 
-  // Skip adding token for auth/token endpoint
-  if (req.url.includes('/auth/token')) {
+  // Endpoints that don't require authentication (only login endpoint)
+  const publicEndpoints = ['/auth/token'];
+  
+  // Check if the URL matches exactly a public endpoint (not just contains)
+  const isPublicEndpoint = publicEndpoints.some(endpoint => {
+    return req.url.endsWith(endpoint) || req.url.includes(`${endpoint}?`);
+  });
+
+  // Skip adding token for public endpoints
+  if (isPublicEndpoint) {
     return next(req);
   }
 
@@ -24,5 +32,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(cloned);
   }
 
+  // If no token and not a public endpoint, still proceed
+  // (the backend will return 401 if authentication is required)
   return next(req);
 };

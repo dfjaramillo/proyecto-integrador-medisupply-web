@@ -236,4 +236,232 @@ describe('AuthService', () => {
       httpMock.expectNone(`${environment.apiUrl}/auth/logout`);
     });
   });
+
+  describe('getUserRole', () => {
+    it('should return null when no token is stored', () => {
+      expect(service.getUserRole()).toBeNull();
+    });
+
+    it('should extract role from JWT token realm_access.roles', () => {
+      // Mock JWT token with Administrador role
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['Administrador', 'default-roles-medisupply-realm', 'offline_access']
+        }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserRole()).toBe('Administrador');
+    });
+
+    it('should return first application role from multiple roles', () => {
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['default-roles-medisupply-realm', 'Compras', 'offline_access']
+        }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserRole()).toBe('Compras');
+    });
+
+    it('should return null when no application role is found', () => {
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['default-roles-medisupply-realm', 'offline_access', 'uma_authorization']
+        }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserRole()).toBeNull();
+    });
+
+    it('should return null when realm_access is missing', () => {
+      const mockJWT = createMockJWT({
+        name: 'Test User',
+        email: 'test@example.com'
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserRole()).toBeNull();
+    });
+
+    it('should handle invalid JWT token gracefully', () => {
+      service.setToken('invalid-token');
+      expect(service.getUserRole()).toBeNull();
+    });
+  });
+
+  describe('isAdmin', () => {
+    it('should return true when user has Administrador role', () => {
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['Administrador', 'offline_access']
+        }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.isAdmin()).toBe(true);
+    });
+
+    it('should return false when user has Compras role', () => {
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['Compras', 'offline_access']
+        }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.isAdmin()).toBe(false);
+    });
+
+    it('should return false when user has no application role', () => {
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['offline_access']
+        }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.isAdmin()).toBe(false);
+    });
+
+    it('should return false when no token is stored', () => {
+      expect(service.isAdmin()).toBe(false);
+    });
+  });
+
+  describe('hasRole', () => {
+    it('should return true when user has the specified role', () => {
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['Ventas', 'offline_access']
+        }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.hasRole('Ventas')).toBe(true);
+    });
+
+    it('should return false when user has different role', () => {
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['Logistica', 'offline_access']
+        }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.hasRole('Ventas')).toBe(false);
+    });
+
+    it('should return false when no token is stored', () => {
+      expect(service.hasRole('Administrador')).toBe(false);
+    });
+  });
+
+  describe('getUserEmail', () => {
+    it('should extract email from JWT token', () => {
+      const mockJWT = createMockJWT({
+        email: 'test@example.com',
+        realm_access: { roles: ['Administrador'] }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserEmail()).toBe('test@example.com');
+    });
+
+    it('should fallback to preferred_username when email is missing', () => {
+      const mockJWT = createMockJWT({
+        preferred_username: 'user@example.com',
+        realm_access: { roles: ['Administrador'] }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserEmail()).toBe('user@example.com');
+    });
+
+    it('should return null when no token is stored', () => {
+      expect(service.getUserEmail()).toBeNull();
+    });
+  });
+
+  describe('getUserName', () => {
+    it('should extract name from JWT token', () => {
+      const mockJWT = createMockJWT({
+        name: 'John Doe',
+        realm_access: { roles: ['Administrador'] }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserName()).toBe('John Doe');
+    });
+
+    it('should fallback to given_name when name is missing', () => {
+      const mockJWT = createMockJWT({
+        given_name: 'Jane Smith',
+        realm_access: { roles: ['Administrador'] }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserName()).toBe('Jane Smith');
+    });
+
+    it('should return null when no token is stored', () => {
+      expect(service.getUserName()).toBeNull();
+    });
+  });
+
+  describe('getUserId', () => {
+    it('should extract sub (user ID) from JWT token', () => {
+      const mockJWT = createMockJWT({
+        sub: '880354f6-7121-48fa-9376-29f1250b8640',
+        realm_access: { roles: ['Administrador'] }
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserId()).toBe('880354f6-7121-48fa-9376-29f1250b8640');
+    });
+
+    it('should return null when no token is stored', () => {
+      expect(service.getUserId()).toBeNull();
+    });
+  });
+
+  describe('getUserRoles', () => {
+    it('should return all roles from JWT token', () => {
+      const mockJWT = createMockJWT({
+        realm_access: {
+          roles: ['Administrador', 'default-roles-medisupply-realm', 'offline_access', 'uma_authorization']
+        }
+      });
+      service.setToken(mockJWT);
+
+      const roles = service.getUserRoles();
+      expect(roles).toEqual(['Administrador', 'default-roles-medisupply-realm', 'offline_access', 'uma_authorization']);
+    });
+
+    it('should return empty array when realm_access is missing', () => {
+      const mockJWT = createMockJWT({
+        name: 'Test User'
+      });
+      service.setToken(mockJWT);
+
+      expect(service.getUserRoles()).toEqual([]);
+    });
+
+    it('should return empty array when no token is stored', () => {
+      expect(service.getUserRoles()).toEqual([]);
+    });
+  });
 });
+
+/**
+ * Helper function to create mock JWT tokens for testing
+ */
+function createMockJWT(payload: any): string {
+  const header = { alg: 'RS256', typ: 'JWT' };
+  const encodedHeader = btoa(JSON.stringify(header));
+  const encodedPayload = btoa(JSON.stringify(payload));
+  const signature = 'mock-signature';
+  return `${encodedHeader}.${encodedPayload}.${signature}`;
+}

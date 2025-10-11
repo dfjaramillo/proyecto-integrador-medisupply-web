@@ -2,16 +2,13 @@
 import 'zone.js';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { App as AppComponent } from './app/app';
-import { provideRouter } from '@angular/router';
-import { routes } from './app/app.routes';
+import { appConfig } from './app/app.config';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
 
 let appPromise = bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes),
-    provideAnimations(),
-    provideHttpClient()
+    ...appConfig.providers,
+    provideAnimations()
   ]
 });
 

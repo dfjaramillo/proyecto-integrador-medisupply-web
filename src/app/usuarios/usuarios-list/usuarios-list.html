@@ -1,4 +1,93 @@
 <div class="usuarios-container">
-  <h1>Usuarios</h1>
-  <p>Gestión de usuarios del sistema</p>
+  <!-- Header -->
+  <div class="header">
+    <div class="breadcrumb">
+      <span class="breadcrumb-link">Administración</span>
+      <span class="breadcrumb-separator">-</span>
+      <span class="breadcrumb-current">Usuarios</span>
+    </div>
+    <h1>Usuarios</h1>
+  </div>
+
+  <!-- Action Bar - Only show create button for administrators -->
+  @if (isAdmin()) {
+    <div class="action-bar">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openCreateUserDialog()"
+        class="create-btn">
+        <mat-icon>add</mat-icon>
+        Crear usuario
+      </button>
+    </div>
+  }
+
+  <!-- Search and Table -->
+  <div class="table-container">
+    <div class="search-bar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar</mat-label>
+        <input
+          matInput
+          placeholder="Buscar nombre, correo, tipo de institución o teléfono"
+          (input)="onSearch($event)">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    @if (loading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Cargando usuarios...</p>
+      </div>
+    } @else {
+      <table mat-table [dataSource]="filteredUsers" class="users-table">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>NOMBRE</th>
+          <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>CORREO ELECTRÓNICO</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
+
+        <!-- Institution Type Column -->
+        <ng-container matColumnDef="institution_type">
+          <th mat-header-cell *matHeaderCellDef>TIPO DE INSTITUCIÓN</th>
+          <td mat-cell *matCellDef="let user">{{ user.institution_type || '-' }}</td>
+        </ng-container>
+
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>TELÉFONO</th>
+          <td mat-cell *matCellDef="let user">{{ user.phone || '-' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- No data row -->
+        <tr class="mat-row no-data-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No se encontraron usuarios
+          </td>
+        </tr>
+      </table>
+
+      <!-- Pagination -->
+      <mat-paginator
+        [length]="totalUsers()"
+        [pageSize]="pageSize()"
+        [pageIndex]="currentPage()"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="onPageChange($event)"
+        showFirstLastButtons
+        class="users-paginator">
+      </mat-paginator>
+    }
+  </div>
 </div>

@@ -1,13 +1,129 @@
 .usuarios-container {
-  h1 {
-    font-size: 32px;
-    font-weight: 600;
-    color: #41444F;
-    margin-bottom: 8px;
+  padding: 0;
+
+  .header {
+    margin-bottom: 24px;
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+
+      .breadcrumb-link {
+        color: #1078FF;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .breadcrumb-separator {
+        color: #6D7183;
+      }
+
+      .breadcrumb-current {
+        color: #41444F;
+      }
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #41444F;
+      margin: 0;
+    }
   }
 
-  p {
-    font-size: 16px;
-    color: #6D7183;
+  .action-bar {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 24px;
+
+    .create-btn {
+      background-color: #1078FF;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      height: 40px;
+      padding: 0 24px;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+
+      &:hover {
+        background-color: #0d66d9;
+      }
+    }
+  }
+
+  .table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+
+    .search-bar {
+      margin-bottom: 16px;
+
+      .search-field {
+        width: 100%;
+        max-width: 400px;
+      }
+    }
+
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+      color: #6D7183;
+
+      p {
+        margin-top: 16px;
+        font-size: 14px;
+      }
+    }
+
+    .users-table {
+      width: 100%;
+      background: transparent;
+
+      th {
+        font-size: 12px;
+        font-weight: 600;
+        color: #6D7183;
+        letter-spacing: 0.5px;
+        background-color: #F9FAFB;
+        padding: 16px;
+      }
+
+      td {
+        font-size: 14px;
+        color: #41444F;
+        padding: 16px;
+        border-bottom: 1px solid #E5E7EB;
+      }
+
+      tr:hover {
+        background-color: #F9FAFB;
+      }
+
+      .no-data-row {
+        text-align: center;
+        color: #6D7183;
+        font-style: italic;
+        padding: 48px !important;
+      }
+    }
+
+    .users-paginator {
+      margin-top: 16px;
+      background: transparent;
+    }
   }
 }

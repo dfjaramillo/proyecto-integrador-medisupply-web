@@ -1,0 +1,127 @@
+<div class="create-user-dialog">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>Crear usuario</h2>
+    <button mat-icon-button (click)="onCancel()" class="close-btn" type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Nombre completo -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre completo</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Ingrese el nombre completo"
+          autocomplete="name">
+        @if (hasError('name', 'required')) {
+          <mat-error>El nombre completo es obligatorio</mat-error>
+        }
+        @if (hasError('name', 'minlength')) {
+          <mat-error>El nombre debe tener al menos 3 caracteres</mat-error>
+        }
+        @if (hasError('name', 'invalidName')) {
+          <mat-error>El nombre solo puede contener letras y espacios</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Correo electrónico -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          placeholder="usuario@medisupply.com"
+          autocomplete="email">
+        @if (hasError('email', 'required')) {
+          <mat-error>El correo electrónico es obligatorio</mat-error>
+        }
+        @if (hasError('email', 'email')) {
+          <mat-error>Formato de correo inválido</mat-error>
+        }
+        @if (hasError('email', 'duplicate')) {
+          <mat-error>Este correo ya está registrado</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Contraseña -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          [type]="hidePassword() ? 'password' : 'text'"
+          formControlName="password"
+          placeholder="Ingrese la contraseña"
+          autocomplete="new-password">
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword.set(!hidePassword())"
+          [attr.aria-label]="hidePassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'">
+          <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (getPasswordError()) {
+          <mat-error>{{ getPasswordError() }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Confirmar contraseña -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirmar contraseña</mat-label>
+        <input
+          matInput
+          [type]="hideConfirmPassword() ? 'password' : 'text'"
+          formControlName="confirmPassword"
+          placeholder="Confirme la contraseña"
+          autocomplete="new-password">
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hideConfirmPassword.set(!hideConfirmPassword())"
+          [attr.aria-label]="hideConfirmPassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'">
+          <mat-icon>{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        @if (hasError('confirmPassword', 'required')) {
+          <mat-error>Debe confirmar la contraseña</mat-error>
+        }
+        @if (hasError('confirmPassword', 'fieldsMismatch')) {
+          <mat-error>Las contraseñas no coinciden</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Rol -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="role">
+          @for (role of roles; track role) {
+            <mat-option [value]="role">{{ role }}</mat-option>
+          }
+        </mat-select>
+        @if (hasError('role', 'required')) {
+          <mat-error>El rol es obligatorio</mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSubmit()"
+      [disabled]="loading()"
+      type="button"
+      class="submit-btn">
+      @if (loading()) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        Guardar
+      }
+    </button>
+  </mat-dialog-actions>
+</div>
