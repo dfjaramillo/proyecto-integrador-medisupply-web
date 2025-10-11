@@ -23,6 +23,44 @@ export class SidebarComponent {
   // Collapsible sections state
   administracionExpanded = signal(true);
   ventasExpanded = signal(true);
+  
+  // User role for conditional rendering
+  userRole = signal<string | null>(null);
+
+  constructor() {
+    // Get user role on component initialization
+    this.userRole.set(this.authService.getUserRole());
+  }
+
+  // Check if user has admin role
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
+
+  // Check if user has specific role
+  hasRole(role: string): boolean {
+    return this.authService.hasRole(role);
+  }
+
+  // Check if user can see Administración menu
+  canSeeAdministracion(): boolean {
+    return this.isAdmin();
+  }
+
+  // Check if user can see Inventario menu
+  canSeeInventario(): boolean {
+    return this.isAdmin() || this.hasRole('Compras');
+  }
+
+  // Check if user can see Logística menu
+  canSeeLogistica(): boolean {
+    return this.isAdmin() || this.hasRole('Logistica');
+  }
+
+  // Check if user can see Ventas menu
+  canSeeVentas(): boolean {
+    return this.isAdmin() || this.hasRole('Ventas');
+  }
 
   toggleAdministracion(): void {
     this.administracionExpanded.set(!this.administracionExpanded());

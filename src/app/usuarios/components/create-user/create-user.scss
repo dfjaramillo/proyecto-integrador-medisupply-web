@@ -1,0 +1,117 @@
+.create-user-dialog {
+  width: 100%;
+  max-width: 600px;
+  padding: 0;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    color: #41444F;
+  }
+
+  .close-btn {
+    background-color: #1078FF;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+
+    mat-icon {
+        width: 20.75px;
+        height: 24.75px;
+        font-size: 20px;
+        line-height: 20px;        
+    }
+
+    &:hover {
+      background-color: #0d66d9;
+    }
+  }
+}
+
+mat-dialog-content {
+  padding: 0 24px;
+  margin: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  mat-form-field {
+    margin-bottom: 0;
+  }
+}
+
+mat-dialog-actions {
+  padding: 24px;
+  margin: 0;
+  border-top: 1px solid #E5E7EB;
+
+  .submit-btn {
+    width: 360px;
+    min-width: 120px;
+    height: 40px;
+    background-color: #1078FF;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+
+    &:disabled {
+      background-color: #E0E0E0;
+      color: #9E9E9E;
+    }
+
+    mat-spinner {
+      display: inline-block;
+      margin: 0 auto;
+    }
+  }
+}
+
+// Custom scrollbar
+mat-dialog-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+mat-dialog-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+mat-dialog-content::-webkit-scrollbar-thumb {
+  background: #E5E7EB;
+  border-radius: 3px;
+
+  &:hover {
+    background: #D1D5DB;
+  }
+}
+
+// Error styling
+::ng-deep {
+  .error-snackbar {
+    background-color: #DC2626 !important;
+    color: white !important;
+  }
+
+  .success-snackbar {
+    background-color: #16A34A !important;
+    color: white !important;
+  }
+}

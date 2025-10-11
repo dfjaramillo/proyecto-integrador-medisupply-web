@@ -1,4 +1,116 @@
 <div class="usuarios-container">
-  <h1>Usuarios</h1>
-  <p>Gestión de usuarios del sistema</p>
+  <!-- Header -->
+  <div class="header">    
+    <h1>Usuarios</h1>
+    <div class="breadcrumb">
+      <span class="breadcrumb-link">Administración</span>
+      <span class="breadcrumb-separator">-</span>
+      <span class="breadcrumb-current">Usuarios</span>
+    </div>
+  </div>
+
+ 
+
+  <!-- Search and Table -->
+  <div class="table-container">
+ <!-- Action Bar - Only show create button for administrators -->
+  @if (isAdmin()) {
+    <div class="action-bar">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openCreateUserDialog()"
+        class="create-btn">        
+        Crear usuario
+      </button>
+    </div>
+  }
+
+    @if (loading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Cargando usuarios...</p>
+      </div>
+    } @else {
+      
+      <!-- Filter inputs -->
+      <div class="filter-row">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Buscar nombre"
+          (input)="onNameFilterChange($event)">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Buscar correo"
+          (input)="onEmailFilterChange($event)">
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Buscar rol"
+          (input)="onRoleFilterChange($event)">
+      </div>
+
+      <table mat-table [dataSource]="filteredUsers" class="users-table">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>NOMBRE</th>
+          <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>CORREO ELECTRÓNICO</th>
+          <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+        </ng-container>
+
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>ROL</th>
+          <td mat-cell *matCellDef="let user">{{ user.role || '-' }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- No data row -->
+        <tr class="mat-row no-data-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No se encontraron usuarios
+          </td>
+        </tr>
+      </table>      
+
+
+      <!-- Custom Pagination -->
+      <div class="custom-pagination">
+        <span class="pagination-info">
+          Mostrando {{ (currentPage() * pageSize()) + 1 }} al {{ Math.min((currentPage() + 1) * pageSize(), totalUsers()) }} de {{ totalUsers() }} registros
+        </span>
+        <div class="pagination-buttons">
+          <button 
+            class="pagination-btn"
+            (click)="previousPage()"
+            [disabled]="currentPage() === 0">
+            Anterior
+          </button>
+          @for (page of pageNumbers; track page) {
+            <button 
+              class="pagination-btn"
+              [class.active]="currentPage() === page - 1"
+              (click)="goToPage(page)">
+              {{ page }}
+            </button>
+          }
+          <button 
+            class="pagination-btn"
+            (click)="nextPage()"
+            [disabled]="currentPage() === totalPages() - 1">
+            Siguiente
+          </button>
+        </div>
+      </div>
+    }
+  </div>
 </div>

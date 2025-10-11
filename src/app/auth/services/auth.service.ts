@@ -65,6 +65,92 @@ export class AuthService {
   }
 
   /**
+   * Decode JWT token and get payload
+   */
+  private getDecodedToken(): any | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      // JWT tokens have 3 parts separated by dots: header.payload.signature
+      const payload = token.split('.')[1];
+      return JSON.parse(atob(payload));
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Extract user role from JWT token
+   * The role is in realm_access.roles array
+   * We look for application-specific roles (Administrador, Compras, Ventas, Logistica)
+   */
+  getUserRole(): string | null {
+    const decodedToken = this.getDecodedToken();
+    if (!decodedToken || !decodedToken.realm_access?.roles) {
+      return null;
+    }
+
+    const roles = decodedToken.realm_access.roles;
+    const appRoles = ['Administrador', 'Compras', 'Ventas', 'Logistica'];
+    
+    // Find the first application role (ignore default Keycloak roles)
+    const userRole = roles.find((role: string) => appRoles.includes(role));
+    return userRole || null;
+  }
+
+  /**
+   * Get user email from JWT token
+   */
+  getUserEmail(): string | null {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken?.email || decodedToken?.preferred_username || null;
+  }
+
+  /**
+   * Get user name from JWT token
+   */
+  getUserName(): string | null {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken?.name || decodedToken?.given_name || null;
+  }
+
+  /**
+   * Get user ID (subject) from JWT token
+   */
+  getUserId(): string | null {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken?.sub || null;
+  }
+
+  /**
+   * Check if user has admin role
+   */
+  isAdmin(): boolean {
+    const role = this.getUserRole();
+    return role === 'Administrador';
+  }
+
+  /**
+   * Check if user has specific role
+   */
+  hasRole(role: string): boolean {
+    const userRole = this.getUserRole();
+    return userRole === role;
+  }
+
+  /**
+   * Get all user roles from JWT token
+   */
+  getUserRoles(): string[] {
+    const decodedToken = this.getDecodedToken();
+    return decodedToken?.realm_access?.roles || [];
+  }
+
+  /**
    * Log out user by calling backend and clearing tokens
    */
   logout(): Observable<void> {
