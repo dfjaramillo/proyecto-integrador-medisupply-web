@@ -19,7 +19,7 @@
   }
 
   .close-btn {
-    background-color: #1078FF;
+    background-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
     color: white;
     width: 36px;
     height: 36px;
@@ -68,7 +68,7 @@ mat-dialog-actions {
     width: 360px;
     min-width: 120px;
     height: 40px;
-    background-color: #1078FF;
+    background-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
     color: white;
     font-size: 14px;
     font-weight: 500;

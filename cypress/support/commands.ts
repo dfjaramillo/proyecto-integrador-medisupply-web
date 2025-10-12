@@ -32,6 +32,55 @@ Cypress.Commands.add('mockLoginFailure', (message = 'Invalid credentials') => {
   }).as('loginRequest');
 });
 
+// Custom command to login with admin credentials
+Cypress.Commands.add('loginAsAdmin', () => {
+  cy.session('admin-session', () => {
+    cy.visit('/login');
+    cy.get('input[type="email"]').type('admin@medisupply.com');
+    cy.get('input[type="password"]').type('Admin123!');
+    cy.get('button[type="submit"]').click();
+    cy.url().should('include', '/usuarios');
+  });
+});
+
+// Custom command to mock get users API
+Cypress.Commands.add('mockGetUsers', (users = []) => {
+  cy.intercept('GET', '**/users?page=*', {
+    statusCode: 200,
+    body: {
+      users: users,
+      total: users.length,
+      page: 1,
+      limit: 5
+    }
+  }).as('getUsers');
+});
+
+// Custom command to mock create user API
+Cypress.Commands.add('mockCreateUser', (statusCode = 201) => {
+  if (statusCode === 201) {
+    cy.intercept('POST', '**/users', {
+      statusCode: 201,
+      body: {
+        message: 'Usuario creado exitosamente',
+        data: {
+          id: 'mock-id',
+          name: 'Test User',
+          email: 'test@example.com',
+          role: 'COMPRAS'
+        }
+      }
+    }).as('createUser');
+  } else {
+    cy.intercept('POST', '**/users', {
+      statusCode: statusCode,
+      body: {
+        message: 'Error creating user'
+      }
+    }).as('createUser');
+  }
+});
+
 // Declare custom commands for TypeScript
 declare global {
   namespace Cypress {
@@ -39,6 +88,9 @@ declare global {
       login(email: string, password: string): Chainable<void>;
       mockLoginSuccess(): Chainable<void>;
       mockLoginFailure(message?: string): Chainable<void>;
+      loginAsAdmin(): Chainable<void>;
+      mockGetUsers(users?: any[]): Chainable<void>;
+      mockCreateUser(statusCode?: number): Chainable<void>;
     }
   }
 }

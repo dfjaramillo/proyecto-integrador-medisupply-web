@@ -37,7 +37,7 @@ html, body {
 
   .login-btn {
     width: 100%;
-    background-color: #1078FF !important;
+    background-color: #0D66D0 !important; /* Cambio de #1078FF a #0D66D0 para cumplir WCAG 2.1 AA (contraste 4.52:1) */
     color: #FFFFFF !important;
     font-size: 14px !important;
     font-weight: 500 !important;

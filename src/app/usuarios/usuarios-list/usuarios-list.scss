@@ -24,7 +24,7 @@
       font-size: 14px;
 
       .breadcrumb-link {
-        color: #1078FF;
+        color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
         cursor: pointer;
 
         &:hover {
@@ -49,7 +49,7 @@
     padding: 0 2px; // Add horizontal padding
 
     .create-btn {
-      background-color: #1078FF;
+      background-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
       color: white;
       font-size: 14px;
       font-weight: 500;
@@ -96,7 +96,7 @@
 
         &:focus {
           outline: none;
-          border-color: #1078FF;
+          border-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
         }
       }
     }
@@ -182,14 +182,14 @@
 
           &:hover:not(:disabled) {
             background-color: #F9FAFB;
-            border-color: #1078FF;
-            color: #1078FF;
+            border-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+            color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
           }
 
           &.active {
-            background-color: #1078FF;
+            background-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
             color: white;
-            border-color: #1078FF;
+            border-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
           }
 
           &:disabled {

@@ -125,15 +125,15 @@
 
   &:hover {
     background-color: #F9FAFB;
-    color: #1078FF;
+    color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
 
     mat-icon {
-      color: #1078FF;
+      color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
     }
   }
 
   &.active {
-    background-color: #1078FF;
+    background-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
     color: #FFFFFF;
     font-weight: 500;
 
