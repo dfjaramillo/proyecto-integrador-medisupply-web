@@ -10,6 +10,10 @@
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=ChromeHeadlessCI --code-coverage",
     "test:coverage": "ng test --watch=false --code-coverage --browsers=Chrome",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "e2e": "cypress run",
+    "e2e:open": "cypress open",
     "heroku-postbuild": "npm run build --if-present"
   },
   "prettier": {

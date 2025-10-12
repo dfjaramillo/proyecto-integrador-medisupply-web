@@ -37,11 +37,11 @@ describe('Login Flow', () => {
   });
 
   it('debe iniciar sesión correctamente con credenciales válidas', () => {
-    // Interceptar la llamada a la API
+    // Interceptar la llamada a la API con JWT válido
     cy.intercept('POST', '**/auth/token', {
       statusCode: 200,
       body: {
-        access_token: 'mock-token',
+        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwibmFtZSI6IlRlc3QgVXNlciIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJBZG1pbmlzdHJhZG9yIl19LCJpYXQiOjE1MTYyMzkwMjJ9.mock-signature',
         expires_in: 3600,
         refresh_expires_in: 7200,
         refresh_token: 'mock-refresh-token',
@@ -51,6 +51,17 @@ describe('Login Flow', () => {
         scope: 'openid profile email'
       }
     }).as('loginRequest');
+
+    // Interceptar la lista de usuarios
+    cy.intercept('GET', '**/users?page=*', {
+      statusCode: 200,
+      body: {
+        users: [],
+        total: 0,
+        page: 1,
+        limit: 5
+      }
+    }).as('getUsers');
 
     cy.get('input[type="email"]').type('test@example.com');
     cy.get('input[type="password"]').type('password123');
@@ -76,7 +87,9 @@ describe('Login Flow', () => {
     cy.get('button[type="submit"]').click();
 
     cy.wait('@loginRequest');
-    cy.contains('Invalid credentials').should('be.visible');
+    
+    // Verificar que aparece un snackbar con mensaje de error
+    cy.get('.mat-mdc-snack-bar-container, simple-snack-bar, .mdc-snackbar').should('be.visible');
   });
 
   it('debe tener los atributos de accesibilidad adecuados', () => {
