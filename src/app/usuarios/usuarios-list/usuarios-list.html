@@ -9,8 +9,6 @@
     </div>
   </div>
 
- 
-
   <!-- Search and Table -->
   <div class="table-container">
  <!-- Action Bar - Only show create button for administrators -->
@@ -39,16 +37,19 @@
           type="text"
           class="filter-input"
           placeholder="Buscar nombre"
+          [value]="nameFilter()"
           (input)="onNameFilterChange($event)">
         <input
           type="text"
           class="filter-input"
           placeholder="Buscar correo"
+          [value]="emailFilter()"
           (input)="onEmailFilterChange($event)">
         <input
           type="text"
           class="filter-input"
           placeholder="Buscar rol"
+          [value]="roleFilter()"
           (input)="onRoleFilterChange($event)">
       </div>
 
