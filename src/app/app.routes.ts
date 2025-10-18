@@ -3,7 +3,15 @@ import { LoginComponent } from './auth//login/login';
 import { MainLayoutComponent } from './layout/main-layout/main-layout';
 import { UsuariosListComponent } from './usuarios/usuarios-list/usuarios-list';
 import { InventarioListComponent } from './inventario/inventario-list/inventario-list';
-import { authGuard, adminGuard, inventarioGuard } from './core/guards/auth.guard';
+import { ProveedoresListComponent } from './proveedores/proveedores-list/proveedores-list';
+import { RoleRedirectComponent } from './core/components/role-redirect.component';
+import { 
+  authGuard, 
+  administradorGuard, 
+  comprasGuard, 
+  ventasGuard, 
+  logisticaGuard 
+} from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -14,18 +22,41 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     canActivate: [authGuard],
     children: [
+      // Administrador only - Gestión de usuarios
       { 
         path: 'usuarios', 
         component: UsuariosListComponent,
-        canActivate: [adminGuard]
+        canActivate: [administradorGuard]
       },
+      // Compras (Departamento de compras) - Gestión de inventario y proveedores
       { 
         path: 'inventario', 
         component: InventarioListComponent,
-        canActivate: [inventarioGuard]
+        canActivate: [comprasGuard]
       },
-      // Add more protected routes here
-      { path: '', pathMatch: 'full', redirectTo: 'inventario' }
+      { 
+        path: 'proveedores', 
+        component: ProveedoresListComponent,
+        canActivate: [comprasGuard]
+      },
+      // Ventas (Gerente de cuenta/vendedor) - Módulo de ventas (placeholder para futuro)
+      // { 
+      //   path: 'ventas', 
+      //   component: VentasComponent,
+      //   canActivate: [ventasGuard]
+      // },
+      // Logística (Personal logístico) - Módulo de logística (placeholder para futuro)
+      // { 
+      //   path: 'logistica', 
+      //   component: LogisticaComponent,
+      //   canActivate: [logisticaGuard]
+      // },
+      // Default redirect based on user role
+      { 
+        path: '', 
+        pathMatch: 'full', 
+        component: RoleRedirectComponent 
+      }
     ]
   },
 
