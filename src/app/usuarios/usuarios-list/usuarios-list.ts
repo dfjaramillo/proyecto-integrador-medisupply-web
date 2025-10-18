@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
@@ -33,7 +35,7 @@ import { AuthService } from '../../auth/services/auth.service';
   templateUrl: './usuarios-list.html',
   styleUrls: ['./usuarios-list.scss']
 })
-export class UsuariosListComponent implements OnInit {
+export class UsuariosListComponent implements OnInit, OnDestroy {
   private userService = inject(UserService);
   private authService = inject(AuthService);
   private dialog = inject(MatDialog);
@@ -53,6 +55,12 @@ export class UsuariosListComponent implements OnInit {
   emailFilter = signal('');
   roleFilter = signal('');
 
+  // Debounced subjects for inputs
+  private nameFilter$ = new Subject<string>();
+  private emailFilter$ = new Subject<string>();
+  private roleFilter$ = new Subject<string>();
+  private subscriptions: Subscription[] = [];
+
   // Check if user is admin
   isAdmin(): boolean {
     return this.authService.isAdmin();
@@ -67,12 +75,49 @@ export class UsuariosListComponent implements OnInit {
   Math = Math;
 
   ngOnInit(): void {
+    // Subscribe to debounced inputs
+    this.subscriptions.push(
+      this.nameFilter$.pipe(debounceTime(400), distinctUntilChanged()).subscribe(value => {
+        if (value && value.trim().length > 0) {
+          this.currentPage.set(0);
+          this.loadUsers('name', value.trim());
+        } else {
+          this.currentPage.set(0);
+          this.loadUsers();
+        }
+      }) as unknown as Subscription
+    );
+
+    this.subscriptions.push(
+      this.emailFilter$.pipe(debounceTime(400), distinctUntilChanged()).subscribe(value => {
+        if (value && value.trim().length > 0) {
+          this.currentPage.set(0);
+          this.loadUsers('email', value.trim());
+        } else {
+          this.currentPage.set(0);
+          this.loadUsers();
+        }
+      }) as unknown as Subscription
+    );
+
+    this.subscriptions.push(
+      this.roleFilter$.pipe(debounceTime(400), distinctUntilChanged()).subscribe(value => {
+        if (value && value.trim().length > 0) {
+          this.currentPage.set(0);
+          this.loadUsers('role', value.trim());
+        } else {
+          this.currentPage.set(0);
+          this.loadUsers();
+        }
+      }) as unknown as Subscription
+    );
+
+    // Initial load
     this.loadUsers();
   }
-
-  loadUsers(): void {
+  loadUsers(filterKey?: 'role' | 'name' | 'email', filterValue?: string): void {
     this.loading.set(true);
-    this.userService.getUsers(this.currentPage() + 1, this.pageSize()).subscribe({
+    this.userService.getUsers(this.currentPage() + 1, this.pageSize(), filterKey, filterValue).subscribe({
       next: (response) => {
         this.users.set(response.users);
         this.totalUsers.set(response.total);
@@ -127,16 +172,24 @@ export class UsuariosListComponent implements OnInit {
   onNameFilterChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.nameFilter.set(value.toLowerCase());
+    this.nameFilter$.next(value);
   }
 
   onEmailFilterChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.emailFilter.set(value.toLowerCase());
+    this.emailFilter$.next(value);
   }
 
   onRoleFilterChange(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.roleFilter.set(value.toLowerCase());
+    this.roleFilter$.next(value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+    this.subscriptions = [];
   }
 
   get filteredUsers(): User[] {

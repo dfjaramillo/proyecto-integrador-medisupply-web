@@ -15,10 +15,15 @@ export class UserService {
   /**
    * Get paginated list of users
    */
-  getUsers(page: number = 1, perPage: number = 10): Observable<{ users: User[], total: number }> {
-    const params = new HttpParams()
+  getUsers(page: number = 1, perPage: number = 10, filterKey?: 'role' | 'name' | 'email', filterValue?: string): Observable<{ users: User[], total: number }> {
+    let params = new HttpParams()
       .set('page', page.toString())
       .set('per_page', perPage.toString());
+
+    // If a filter key and value are provided, add them to params
+    if (filterKey && filterValue) {
+      params = params.set(filterKey, filterValue);
+    }
 
     return this.http.get<GetUsersResponse>(this.usersListUrl, { params }).pipe(
       map(response => ({

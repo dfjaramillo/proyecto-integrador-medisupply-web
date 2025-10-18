@@ -6,10 +6,19 @@ export interface AuthTokenResponse {
   token_type: string;
   'not-before-policy': number;
   session_state: string;
-  scope: string;
+  scope: string;  
+  email?: string;
+  name?: string;
+  role?: string;
 }
 
 export interface LoginRequest {
   user: string;
   password: string;
+}
+
+export interface StoredUser {
+  email?: string | null;
+  name?: string | null;
+  role?: string | null;
 }

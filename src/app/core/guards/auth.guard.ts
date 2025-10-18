@@ -59,3 +59,39 @@ export const adminGuard: CanActivateFn = (route, state) => {
   
   return true;
 };
+
+/**
+ * Guard to protect inventory routes
+ * Only users with 'Administrador' or 'Analista de Compras' role can access
+ */
+export const inventarioGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (!authService.isAuthenticated()) {
+    router.navigate(['/login'], {
+      queryParams: { returnUrl: state.url }
+    });
+    return false;
+  }
+
+  // Check if user has 'Administrador' or 'Analista de Compras' role
+  const userRole = authService.getUserRole();
+  if (userRole !== 'Administrador' && userRole !== 'Analista de Compras') {
+    // Redirect to appropriate page based on user role
+    switch (userRole) {
+      case 'Logistica':
+        router.navigate(['/logistica']);
+        break;
+      case 'Ventas':
+        router.navigate(['/ventas']);
+        break;
+      default:
+        router.navigate(['/login']);
+    }
+    
+    return false;
+  }
+  
+  return true;
+};
