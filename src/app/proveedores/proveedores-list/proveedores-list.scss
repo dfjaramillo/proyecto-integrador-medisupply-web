@@ -1,4 +1,4 @@
-.usuarios-container {
+.proveedores-container {
   padding: 0;
   margin-top: -32px; // Compensate for main-content padding to align with header
   margin-left: -32px;
@@ -24,7 +24,7 @@
       font-size: 14px;
 
       .breadcrumb-link {
-        color: #0D66D0; /*Cambio de #1078FF para cumplir WCAG 2.1 AA */
+        color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
         cursor: pointer;
 
         &:hover {
@@ -46,7 +46,7 @@
     display: flex;
     justify-content: flex-start;
     margin-bottom: 24px;
-    padding: 0 2px;
+    padding: 0 2px; // Add horizontal padding (32px + 2px)
 
     .create-btn {
       background-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
@@ -54,7 +54,7 @@
       font-size: 14px;
       font-weight: 500;
       height: 40px;
-      width: 146px;
+      width: 160px;
       padding: 0 24px;
       border-radius: 8px;
       mat-icon {
@@ -72,7 +72,7 @@
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 17px;
-    margin: 0 32px;
+    margin: 0 32px; // Add horizontal margins
 
     .filter-row {
       display: grid;
@@ -115,7 +115,7 @@
       }
     }
 
-    .users-table {
+    .proveedores-table {
       width: 100%;
       background: transparent;
 

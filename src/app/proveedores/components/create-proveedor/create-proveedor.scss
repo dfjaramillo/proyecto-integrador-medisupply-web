@@ -1,0 +1,148 @@
+.create-proveedor-dialog {
+  padding: 24px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .close-button {
+    color: #666;
+    
+    &:hover {
+      color: #333;
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+}
+
+.proveedor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .full-width {
+    width: 100%;
+  }
+}
+
+.logo-upload-section {
+  margin: 16px 0;
+
+  .logo-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 12px;
+  }
+
+  .upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    transition: border-color 0.3s;
+
+    &:hover {
+      border-color: #1976d2;
+    }
+
+    .upload-button {
+      margin-bottom: 12px;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+
+    .upload-hint {
+      margin: 0;
+      font-size: 12px;
+      color: #666;
+    }
+  }
+
+  .file-preview {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+
+    .preview-image {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .file-info {
+      flex: 1;
+
+      .file-name {
+        margin: 0 0 4px 0;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .file-size {
+        margin: 0;
+        font-size: 12px;
+        color: #666;
+      }
+    }
+  }
+
+  .logo-error {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+
+  mat-spinner {
+    margin-right: 16px;
+  }
+
+  .submit-button {
+    min-width: 120px;
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .create-proveedor-dialog {
+    padding: 16px;
+  }
+
+  .dialog-header h2 {
+    font-size: 20px;
+  }
+
+  .logo-upload-section .upload-area {
+    padding: 24px 16px;
+  }
+}

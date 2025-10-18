@@ -19,48 +19,101 @@ import { AuthService } from '../../auth/services/auth.service';
 export class SidebarComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
-
-  // Collapsible sections state
-  administracionExpanded = signal(true);
-  ventasExpanded = signal(true);
   
   // User role for conditional rendering
   userRole = signal<string | null>(null);
+  // Collapsible sections state
+  administracionExpanded = signal(true);
+  ventasExpanded = signal(true);
 
   constructor() {
     // Get user role on component initialization
     this.userRole.set(this.authService.getUserRole());
   }
 
-  // Check if user has admin role
-  isAdmin(): boolean {
-    return this.authService.isAdmin();
+  // ============================================
+  // ROLE VALIDATION METHODS
+  // ============================================
+
+  /**
+   * Check if user has Administrador role
+   * Administrador has access to all features
+   */
+  isAdministrador(): boolean {
+    return this.authService.hasRole('Administrador');
   }
 
-  // Check if user has specific role
-  hasRole(role: string): boolean {
-    return this.authService.hasRole(role);
+  /**
+   * Check if user has Compras role
+   * Departamento de compras - Manages inventory and suppliers
+   */
+  isCompras(): boolean {
+    return this.authService.hasRole('Compras');
   }
 
-  // Check if user can see Administración menu
-  canSeeAdministracion(): boolean {
-    return this.isAdmin();
+  /**
+   * Check if user has Ventas role
+   * Gerente de cuenta/vendedor - Manages sales
+   */
+  isVentas(): boolean {
+    return this.authService.hasRole('Ventas');
   }
 
-  // Check if user can see Inventario menu
+  /**
+   * Check if user has Logistica role
+   * Personal logístico - Manages logistics and distribution
+   */
+  isLogistica(): boolean {
+    return this.authService.hasRole('Logistica');
+  }
+
+  // ============================================
+  // MENU VISIBILITY BY ROLE
+  // ============================================
+
+  /**
+   * Show Usuarios menu
+   * Only: Administrador
+   */
+  canSeeUsuarios(): boolean {
+    return this.isAdministrador();
+  }
+
+  /**
+   * Show Inventario menu
+   * Roles: Administrador, Compras
+   */
   canSeeInventario(): boolean {
-    return this.isAdmin() || this.hasRole('Compras');
+    return this.isAdministrador() || this.isCompras();
   }
 
-  // Check if user can see Logística menu
-  canSeeLogistica(): boolean {
-    return this.isAdmin() || this.hasRole('Logistica');
+  /**
+   * Show Proveedores menu
+   * Roles: Administrador, Compras
+   */
+  canSeeProveedores(): boolean {
+    return this.isAdministrador() || this.isCompras();
   }
 
-  // Check if user can see Ventas menu
+  /**
+   * Show Ventas menu
+   * Roles: Administrador, Ventas
+   */
   canSeeVentas(): boolean {
-    return this.isAdmin() || this.hasRole('Ventas');
+    return this.isAdministrador() || this.isVentas();
   }
+
+  /**
+   * Show Logística menu
+   * Roles: Administrador, Logistica
+   */
+  canSeeLogistica(): boolean {
+    return this.isAdministrador() || this.isLogistica();
+  }
+
+  // ============================================
+  // ACTIONS
+  // ============================================
 
   toggleAdministracion(): void {
     this.administracionExpanded.set(!this.administracionExpanded());
@@ -69,6 +122,7 @@ export class SidebarComponent {
   toggleVentas(): void {
     this.ventasExpanded.set(!this.ventasExpanded());
   }
+
 
   onLogout(): void {
     // Call logout endpoint and clear tokens

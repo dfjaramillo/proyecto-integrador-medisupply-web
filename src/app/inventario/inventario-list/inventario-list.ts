@@ -133,7 +133,7 @@ export class InventarioListComponent implements OnInit {
 
   canCreateProducto(): boolean {
     const role = this.authService.getUserRole();
-    return role === 'Administrador' || role === 'Analista de Compras';
+    return role === 'Administrador' || role === 'Compras';
   }
 
   openCreateProductoDialog(): void {
