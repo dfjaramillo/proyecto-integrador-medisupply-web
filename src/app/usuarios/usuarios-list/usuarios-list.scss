@@ -5,15 +5,15 @@
   margin-right: -32px;
 
   .header {
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
     padding: 16px 32px;
-    
+
     margin-bottom: 32px;
 
     h1 {
       font-size: 22px;
       font-weight: 500;
-      color: #41444F;
+      color: #41444f;
       margin: 0 0 8px 0;
     }
 
@@ -24,7 +24,7 @@
       font-size: 14px;
 
       .breadcrumb-link {
-        color: #0D66D0; /*Cambio de #1078FF para cumplir WCAG 2.1 AA */
+        color: #0d66d0; /*Cambio de #1078FF para cumplir WCAG 2.1 AA */
         cursor: pointer;
 
         &:hover {
@@ -33,11 +33,11 @@
       }
 
       .breadcrumb-separator {
-        color: #6D7183;
+        color: #6d7183;
       }
 
       .breadcrumb-current {
-        color: #41444F;
+        color: #41444f;
       }
     }
   }
@@ -49,7 +49,7 @@
     padding: 0 2px;
 
     .create-btn {
-      background-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+      background-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
       color: white;
       font-size: 14px;
       font-weight: 500;
@@ -83,20 +83,20 @@
       .filter-input {
         width: 100%;
         padding: 10px 12px;
-        border: 1px solid #E5E7EB;
+        border: 1px solid #e5e7eb;
         border-radius: 4px;
         font-size: 14px;
-        color: #41444F;
-        font-family: 'Poppins', sans-serif;
+        color: #41444f;
+        font-family: "Poppins", sans-serif;
         transition: border-color 0.2s;
 
         &::placeholder {
-          color: #9CA3AF;
+          color: #9ca3af;
         }
 
         &:focus {
           outline: none;
-          border-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+          border-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
         }
       }
     }
@@ -107,7 +107,7 @@
       align-items: center;
       justify-content: center;
       padding: 48px;
-      color: #6D7183;
+      color: #6d7183;
 
       p {
         margin-top: 16px;
@@ -116,33 +116,47 @@
     }
 
     .users-table {
+      // Aseguramos que solo afecte las filas del cuerpo
+      ::ng-deep tbody tr.mat-mdc-row:nth-child(odd) {
+        background-color: #f8f8f8; // color suave
+      }
+
+      ::ng-deep tbody tr.mat-mdc-row:nth-child(even) {
+        background-color: #ffffff; // blanco base
+      }
+
+      // Prioridad sobre el hover de MDC
+      ::ng-deep tbody tr.mat-mdc-row:hover {
+        background-color: #f2f6fc !important;
+      }
+
       width: 100%;
       background: transparent;
 
       th {
         font-size: 12px;
         font-weight: 600;
-        color: #6D7183;
+        color: #6d7183;
         letter-spacing: 0.5px;
         background-color: transparent;
         padding: 16px 12px;
-        border-bottom: 1px solid #E5E7EB;
+        border-bottom: 1px solid #e5e7eb;
       }
 
       td {
         font-size: 14px;
-        color: #41444F;
+        color: #41444f;
         padding: 16px 12px;
-        border-bottom: 1px solid #E5E7EB;
+        border-bottom: 1px solid #e5e7eb;
       }
 
       tr:hover {
-        background-color: #F9FAFB;
+        background-color: #f9fafb;
       }
 
       .no-data-row {
         text-align: center;
-        color: #6D7183;
+        color: #6d7183;
         font-style: italic;
         padding: 48px !important;
       }
@@ -154,11 +168,11 @@
       align-items: center;
       margin-top: 24px;
       padding-top: 16px;
-      border-top: 1px solid #E5E7EB;
+      border-top: 1px solid #e5e7eb;
 
       .pagination-info {
         font-size: 14px;
-        color: #6D7183;
+        color: #6d7183;
       }
 
       .pagination-buttons {
@@ -170,26 +184,26 @@
           min-width: 40px;
           height: 40px;
           padding: 0 12px;
-          border: 1px solid #E5E7EB;
+          border: 1px solid #e5e7eb;
           background-color: white;
-          color: #41444F;
+          color: #41444f;
           font-size: 14px;
           font-weight: 500;
           border-radius: 4px;
           cursor: pointer;
           transition: all 0.2s;
-          font-family: 'Poppins', sans-serif;
+          font-family: "Poppins", sans-serif;
 
           &:hover:not(:disabled) {
-            background-color: #F9FAFB;
-            border-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
-            color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+            background-color: #f9fafb;
+            border-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+            color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
           }
 
           &.active {
-            background-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+            background-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
             color: white;
-            border-color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+            border-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
           }
 
           &:disabled {
