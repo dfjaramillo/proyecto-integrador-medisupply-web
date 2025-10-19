@@ -55,7 +55,7 @@ export class CreateProductoComponent implements OnInit {
   selectedFile: File | null = null;
   previewUrl: string | null = null;
 
-  tiposProducto: TipoProducto[] = ['Alto valor', 'Medio valor', 'Bajo valor'];
+  tiposProducto: TipoProducto[] = ['Cadena fría', 'Seguridad', 'Alto valor'];
 
   providers = signal<Provider[]>([]);
   filteredProviders = signal<Provider[]>([]);

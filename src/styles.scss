@@ -53,5 +53,9 @@ html, body {
     --mdc-outlined-text-field-container-shape: 8px;
   }
 
+  .mat-mdc-cell,
+  .mat-mdc-header-cell {
+    border-bottom: none !important;
+  }
   
   

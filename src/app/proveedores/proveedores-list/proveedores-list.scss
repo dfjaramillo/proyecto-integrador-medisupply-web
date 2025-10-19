@@ -116,6 +116,19 @@
     }
 
     .proveedores-table {
+      // Aseguramos que solo afecte las filas del cuerpo
+      ::ng-deep tbody tr.mat-mdc-row:nth-child(odd) {
+        background-color: #F8F8F8; // color suave
+      }
+
+      ::ng-deep tbody tr.mat-mdc-row:nth-child(even) {
+        background-color: #ffffff; // blanco base
+      }
+
+      // Prioridad sobre el hover de MDC
+      ::ng-deep tbody tr.mat-mdc-row:hover {
+        background-color: #f2f6fc !important;
+      }
       width: 100%;
       background: transparent;
 

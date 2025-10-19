@@ -24,7 +24,7 @@ describe('InventarioService', () => {
     price: 8500,
     location: 'A-03-01',
     description: 'Analgésico y antipirético',
-    product_type: 'Medio valor',
+    product_type: 'Alto valor',
     provider_id: 'ee142fcc-5e27-4e94-9b08-ac7c1202ae6b',
     photo_filename: 'test.jpg',
     photo_url: 'http://example.com/test.jpg',
@@ -126,7 +126,7 @@ describe('InventarioService', () => {
         price: 8500,
         location: 'A-03-01',
         description: 'Analgésico y antipirético',
-        product_type: 'Medio valor',
+        product_type: 'Alto valor',
         provider_id: 'ee142fcc-5e27-4e94-9b08-ac7c1202ae6b'
       };
 
@@ -157,7 +157,7 @@ describe('InventarioService', () => {
         price: 8500,
         location: 'A-03-01',
         description: 'Analgésico y antipirético',
-        product_type: 'Medio valor',
+        product_type: 'Alto valor',
         provider_id: 'ee142fcc-5e27-4e94-9b08-ac7c1202ae6b',
         photo: file
       };
