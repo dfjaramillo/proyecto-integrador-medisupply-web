@@ -9,6 +9,7 @@ import {
   ProductoResponse, 
   ApiResponse, 
   ApiListResponse,
+  ProductosListResponse,
   Provider,
   ProvidersResponse
 } from '../models/producto.model';
@@ -22,9 +23,9 @@ export class InventarioService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Obtiene la lista de productos
+   * Obtiene la lista de productos con paginación
    */
-  getProductos(params?: any): Observable<ProductoResponse[]> {
+  getProductos(params?: any): Observable<ProductosListResponse> {
     let httpParams = new HttpParams();
     
     if (params) {
@@ -35,7 +36,7 @@ export class InventarioService {
       });
     }
 
-    return this.http.get<ApiListResponse<ProductoResponse>>(this.apiUrl, { params: httpParams }).pipe(
+    return this.http.get<ApiListResponse>(this.apiUrl, { params: httpParams }).pipe(
       map(response => response.data)
     );
   }
@@ -94,7 +95,32 @@ export class InventarioService {
     return this.http.delete<ApiResponse<void>>(`${this.apiUrl}/${id}`).pipe(
       map(() => undefined)
     );
-  }  
+  }
+
+  /**
+   * Filtra productos por múltiples criterios
+   */
+  filterProductos(filters: {
+    sku?: string;
+    name?: string;
+    quantity?: string;
+    price?: string;
+    location?: string;
+    expiration_date?: string;
+  }): Observable<ProductosListResponse> {
+    let httpParams = new HttpParams();
+    
+    Object.keys(filters).forEach(key => {
+      const value = filters[key as keyof typeof filters];
+      if (value !== null && value !== undefined && value !== '') {
+        httpParams = httpParams.set(key, value.toString());
+      }
+    });
+
+    return this.http.get<ApiListResponse>(`${this.apiUrl}/filter`, { params: httpParams }).pipe(
+      map(response => response.data)
+    );
+  }
 
 
   /**

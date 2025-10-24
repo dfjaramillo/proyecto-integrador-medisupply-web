@@ -62,16 +62,28 @@ describe('InventarioService', () => {
 
   describe('getProductos', () => {
     it('should retrieve list of products', () => {
-      const mockResponse: ApiListResponse<ProductoResponse> = {
+      const mockResponse: ApiListResponse = {
         success: true,
         message: 'Success',
-        data: [mockProducto]
+        data: {
+          products: [mockProducto],
+          pagination: {
+            page: 1,
+            per_page: 10,
+            total: 1,
+            total_pages: 1,
+            has_next: false,
+            has_prev: false,
+            next_page: null,
+            prev_page: null
+          }
+        }
       };
 
-      service.getProductos().subscribe(productos => {
-        expect(productos).toEqual([mockProducto]);
-        expect(productos.length).toBe(1);
-        expect(productos[0].sku).toBe('MED-0001');
+      service.getProductos().subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.products.length).toBe(1);
+        expect(response.products[0].sku).toBe('MED-0001');
       });
 
       const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products`);
@@ -80,10 +92,22 @@ describe('InventarioService', () => {
     });
 
     it('should handle query params', () => {
-      const mockResponse: ApiListResponse<ProductoResponse> = {
+      const mockResponse: ApiListResponse = {
         success: true,
         message: 'Success',
-        data: [mockProducto]
+        data: {
+          products: [mockProducto],
+          pagination: {
+            page: 1,
+            per_page: 10,
+            total: 1,
+            total_pages: 1,
+            has_next: false,
+            has_prev: false,
+            next_page: null,
+            prev_page: null
+          }
+        }
       };
 
       service.getProductos({ sku: 'MED-0001' }).subscribe();

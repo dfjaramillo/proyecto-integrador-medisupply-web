@@ -1,3 +1,5 @@
+import { Pagination } from '../../shared/models/pagination.model';
+
 export interface Proveedor {
   id?: string;
   name: string;
@@ -39,29 +41,11 @@ export interface ApiListResponse {
   message: string;
   data: {
     providers: ProveedorResponse[];
-    pagination: {
-      page: number;
-      per_page: number;
-      total: number;
-      total_pages: number;
-      has_next: boolean;
-      has_prev: boolean;
-      next_page: number | null;
-      prev_page: number | null;
-    };
+    pagination: Pagination;
   };
 }
 
 export interface ProveedoresListResponse {
   providers: ProveedorResponse[];
-  pagination: {
-    page: number;
-    per_page: number;
-    total: number;
-    total_pages: number;
-    has_next: boolean;
-    has_prev: boolean;
-    next_page: number | null;
-    prev_page: number | null;
-  };
+  pagination: Pagination;
 }

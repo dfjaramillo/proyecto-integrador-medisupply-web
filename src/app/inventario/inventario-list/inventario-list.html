@@ -1,145 +1,202 @@
 <div class="inventario-container">
-  <div class="header">    
+  <div class="header">
     <h1>Inventario</h1>
-    <div class="breadcrumb">            
+    <div class="breadcrumb">
       <span class="breadcrumb-link">Inventario</span>
     </div>
   </div>
 
   <div class="table-container">
-
     <div class="action-bar">
-    @if (canCreateProducto()) {
-      <button 
-        mat-raised-button 
+      @if (canCreateProducto()) {
+      <button
+        mat-raised-button
         class="create-btn"
         (click)="openCreateProductoDialog()"
-        aria-label="Crear nuevo producto">        
+        aria-label="Crear nuevo producto"
+      >
         Crear producto
       </button>
-    }
-  </div>
-  
-    @if (loading()) {
-      <div class="loading-container">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>Cargando productos...</p>
-      </div>
-    } @else {
-      <div class="filter-row">
-        <input
-          type="text"
-          class="filter-input"
-          placeholder="Buscar SKU"
-          [(ngModel)]="skuFilter"
-          (input)="applyFilters()"
-          aria-label="Filtrar por SKU">
-        
-        <input
-          type="text"
-          class="filter-input"
-          placeholder="Buscar nombre"
-          [(ngModel)]="nombreFilter"
-          (input)="applyFilters()"
-          aria-label="Filtrar por nombre">
-        
-        <input
-          type="text"
-          class="filter-input"
-          placeholder="Buscar ubicación"
-          [(ngModel)]="ubicacionFilter"
-          (input)="applyFilters()"
-          aria-label="Filtrar por ubicación">
-      </div>
-
-      <table mat-table [dataSource]="paginatedProductos" class="productos-table">
-        
-        <!-- SKU Column -->
-        <ng-container matColumnDef="sku">
-          <th mat-header-cell *matHeaderCellDef>SKU</th>
-          <td mat-cell *matCellDef="let producto">{{ producto.sku }}</td>
-        </ng-container>
-
-        <!-- Nombre Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>NOMBRE</th>
-          <td mat-cell *matCellDef="let producto">{{ producto.name }}</td>
-        </ng-container>
-
-        <!-- Fecha de Vencimiento Column -->
-        <ng-container matColumnDef="expiration_date">
-          <th mat-header-cell *matHeaderCellDef>FECHA DE VENCIMIENTO</th>
-          <td mat-cell *matCellDef="let producto">{{ formatDate(producto.expiration_date) }}</td>
-        </ng-container>
-
-        <!-- Cantidad Disponible Column -->
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef>CANTIDAD DISPONIBLE</th>
-          <td mat-cell *matCellDef="let producto">{{ producto.quantity }} unidades</td>
-        </ng-container>
-
-        <!-- Precio C/U Column -->
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef>PRECIO C/U</th>
-          <td mat-cell *matCellDef="let producto">{{ formatPrice(producto.price) }}</td>
-        </ng-container>
-
-        <!-- Ubicación Column -->
-        <ng-container matColumnDef="location">
-          <th mat-header-cell *matHeaderCellDef>UBICACIÓN</th>
-          <td mat-cell *matCellDef="let producto">{{ producto.location }}</td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-        <!-- No data row -->
-        @if (paginatedProductos.length === 0) {
-          <tr class="mat-row">
-            <td class="no-data-row" [attr.colspan]="displayedColumns.length">
-              No se encontraron productos
-            </td>
-          </tr>
-        }
-      </table>
-
-      <!-- Pagination -->
-      @if (totalPages > 1) {
-        <div class="custom-pagination">
-          <div class="pagination-info">
-            Mostrando {{ ((currentPage - 1) * pageSize) + 1 }} al {{ Math.min(currentPage * pageSize, filteredProductos().length) }} de {{ filteredProductos().length }} registros
-          </div>
-          
-          <div class="pagination-buttons">
-            <button 
-              class="pagination-btn"
-              (click)="goToPage(currentPage - 1)"
-              [disabled]="currentPage === 1"
-              aria-label="Página anterior">
-              Anterior
-            </button>
-
-            @for (page of pageNumbers; track page) {
-              <button 
-                class="pagination-btn"
-                [class.active]="page === currentPage"
-                (click)="goToPage(page)"
-                [attr.aria-label]="'Ir a página ' + page"
-                [attr.aria-current]="page === currentPage ? 'page' : null">
-                {{ page }}
-              </button>
-            }
-
-            <button 
-              class="pagination-btn"
-              (click)="goToPage(currentPage + 1)"
-              [disabled]="currentPage === totalPages"
-              aria-label="Página siguiente">
-              Siguiente
-            </button>
-          </div>
-        </div>
       }
-    }
+    </div>
+
+    @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Cargando productos...</p>
+    </div>
+    } @else {
+
+    <div class="filter-row">
+      <input
+        type="text"
+        class="filter-input"
+        style="width: 128px"
+        placeholder="Buscar SKU"
+        [ngModel]="skuFilter()"
+        (input)="onSkuFilterChange($event)"
+        aria-label="Filtrar por SKU"
+        minlength="3"
+      />
+
+      <input
+        type="text"
+        class="filter-input"
+        style="width: 200px"
+        placeholder="Buscar Nombre"
+        [ngModel]="nombreFilter()"
+        (input)="onNombreFilterChange($event)"
+        aria-label="Filtrar por nombre"
+        minlength="3"
+      />
+
+      <mat-form-field appearance="outline" class="filter-datepicker" style="width: 184px">
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedDate"
+          (dateChange)="onDateChange($event.value)"
+          placeholder="Buscar Fecha"
+          aria-label="Filtrar por fecha de vencimiento"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <input
+        type="text"
+        class="filter-input"
+        style="width: 184px"
+        placeholder="Buscar Cantidad"
+        [ngModel]="cantidadFilter()"
+        (input)="onCantidadFilterChange($event)"
+        aria-label="Filtrar por cantidad"
+        minlength="3"
+      />
+
+      <input
+        type="text"
+        class="filter-input"
+        style="width: 136px"
+        placeholder="Buscar Precio"
+        [ngModel]="precioFilter()"
+        (input)="onPrecioFilterChange($event)"
+        aria-label="Filtrar por precio"
+        minlength="3"
+      />
+
+      <input
+        type="text"
+        class="filter-input"
+        style="width: 156px"
+        placeholder="Buscar Ubicación"
+        [ngModel]="ubicacionFilter()"
+        (input)="onUbicacionFilterChange($event)"
+        aria-label="Filtrar por ubicación"
+        minlength="3"
+      />
+    </div>
+
+    <table mat-table [dataSource]="paginatedProductos" class="productos-table">
+      <!-- SKU Column -->
+      <ng-container matColumnDef="sku">
+        <th mat-header-cell *matHeaderCellDef>SKU</th>
+        <td mat-cell *matCellDef="let producto">{{ producto.sku }}</td>
+      </ng-container>
+
+      <!-- Nombre Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>NOMBRE</th>
+        <td mat-cell *matCellDef="let producto">{{ producto.name }}</td>
+      </ng-container>
+
+      <!-- Fecha de Vencimiento Column -->
+      <ng-container matColumnDef="expiration_date">
+        <th mat-header-cell *matHeaderCellDef>FECHA DE VENCIMIENTO</th>
+        <td mat-cell *matCellDef="let producto">
+          {{ formatDate(producto.expiration_date) }}
+        </td>
+      </ng-container>
+
+      <!-- Cantidad Disponible Column -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>CANTIDAD DISPONIBLE</th>
+        <td mat-cell *matCellDef="let producto">
+          {{ producto.quantity }} unidades
+        </td>
+      </ng-container>
+
+      <!-- Precio C/U Column -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>PRECIO C/U</th>
+        <td mat-cell *matCellDef="let producto">
+          {{ formatPrice(producto.price) }}
+        </td>
+      </ng-container>
+
+      <!-- Ubicación Column -->
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef>UBICACIÓN</th>
+        <td mat-cell *matCellDef="let producto">{{ producto.location }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- No data row -->
+        <tr class="mat-row no-data-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No se encontraron productos que coincidan con los criterios de búsqueda
+          </td>
+        </tr>
+    </table>
+
+    <!-- Pagination -->
+    @if (pagination() && pagination()!.total_pages > 1) {
+    <div class="custom-pagination">
+      <div class="pagination-info">
+        Mostrando {{ (pagination()!.page - 1) * pagination()!.per_page + 1 }} al
+        {{
+          Math.min(
+            pagination()!.page * pagination()!.per_page,
+            pagination()!.total
+          )
+        }}
+        de {{ pagination()!.total }} registros
+      </div>
+
+      <div class="pagination-buttons">
+        <button
+          class="pagination-btn"
+          (click)="goToPage(currentPage - 1)"
+          [disabled]="!pagination()?.has_prev"
+          aria-label="Página anterior"
+        >
+          Anterior
+        </button>
+
+        @for (page of pageNumbers; track page) {
+        <button
+          class="pagination-btn"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+          [attr.aria-label]="'Ir a página ' + page"
+          [attr.aria-current]="page === currentPage ? 'page' : null"
+        >
+          {{ page }}
+        </button>
+        }
+
+        <button
+          class="pagination-btn"
+          (click)="goToPage(currentPage + 1)"
+          [disabled]="!pagination()?.has_next"
+          aria-label="Página siguiente"
+        >
+          Siguiente
+        </button>
+      </div>
+    </div>
+    } }
   </div>
 </div>

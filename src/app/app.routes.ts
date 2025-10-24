@@ -10,7 +10,8 @@ import {
   administradorGuard, 
   comprasGuard, 
   ventasGuard, 
-  logisticaGuard 
+  logisticaGuard,
+  inventarioAccessGuard 
 } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -28,11 +29,11 @@ export const routes: Routes = [
         component: UsuariosListComponent,
         canActivate: [administradorGuard]
       },
-      // Compras (Departamento de compras) - Gestión de inventario y proveedores
+      // Compras y Logistica - Gestión de inventario (solo Compras puede crear productos)
       { 
         path: 'inventario', 
         component: InventarioListComponent,
-        canActivate: [comprasGuard]
+        canActivate: [inventarioAccessGuard]
       },
       { 
         path: 'proveedores', 

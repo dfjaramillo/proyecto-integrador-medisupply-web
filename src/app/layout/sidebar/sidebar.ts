@@ -84,7 +84,7 @@ export class SidebarComponent {
    * Roles: Administrador, Compras
    */
   canSeeInventario(): boolean {
-    return this.isAdministrador() || this.isCompras();
+    return this.isAdministrador() || this.isCompras() || this.isLogistica();
   }
 
   /**
