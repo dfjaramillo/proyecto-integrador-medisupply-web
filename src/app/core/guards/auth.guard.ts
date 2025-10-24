@@ -8,13 +8,13 @@ import { AuthService } from '../../auth/services/auth.service';
 function getDefaultRouteForRole(role: string | null): string {
   switch (role) {
     case 'Administrador':
-      return '/usuarios';
+      return '/usuarios';    
     case 'Compras':
       return '/inventario';
     case 'Ventas':
       return '/ventas';
     case 'Logistica':
-      return '/logistica';
+      return '/inventario';
     default:
       return '/login';
   }
@@ -127,6 +127,30 @@ export const logisticaGuard: CanActivateFn = (route, state) => {
 
   const userRole = authService.getUserRole();
   if (userRole !== 'Administrador' && userRole !== 'Logistica') {
+    router.navigate([getDefaultRouteForRole(userRole)]);
+    return false;
+  }
+  
+  return true;
+};
+
+/**
+ * Guard for Inventario access
+ * Allows users with 'Administrador', 'Compras', or 'Logistica' role
+ */
+export const inventarioAccessGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (!authService.isAuthenticated()) {
+    router.navigate(['/login'], {
+      queryParams: { returnUrl: state.url }
+    });
+    return false;
+  }
+
+  const userRole = authService.getUserRole();
+  if (userRole !== 'Administrador' && userRole !== 'Compras' && userRole !== 'Logistica') {
     router.navigate([getDefaultRouteForRole(userRole)]);
     return false;
   }

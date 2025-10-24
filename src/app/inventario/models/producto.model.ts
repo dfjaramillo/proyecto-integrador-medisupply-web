@@ -1,3 +1,5 @@
+import { Pagination } from '../../shared/models/pagination.model';
+
 export interface Producto {
   id?: string;
   sku: string;
@@ -27,16 +29,7 @@ export interface Provider {
 
 export interface ProvidersResponse {
   providers: Provider[];
-  pagination: {
-    page: number;
-    per_page: number;
-    total: number;
-    total_pages: number;
-    has_next: boolean;
-    has_prev: boolean;
-    next_page: number | null;
-    prev_page: number | null;
-  };
+  pagination: Pagination;
 }
 
 export interface ProductoCreateRequest {
@@ -69,16 +62,22 @@ export interface ProductoResponse {
   updated_at: string;
 }
 
-// Respuesta envuelta del API
+// Respuesta envuelta del API para un solo producto
 export interface ApiResponse<T> {
   success: boolean;
   message: string;
   data: T;
 }
 
+// Respuesta para la lista de productos con paginación
+export interface ProductosListResponse {
+  products: ProductoResponse[];
+  pagination: Pagination;
+}
+
 // Para la lista de productos
-export interface ApiListResponse<T> {
+export interface ApiListResponse {
   success: boolean;
   message: string;
-  data: T[];
+  data: ProductosListResponse;
 }

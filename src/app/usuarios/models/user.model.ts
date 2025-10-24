@@ -1,3 +1,5 @@
+import { Pagination } from '../../shared/models/pagination.model';
+
 export enum UserRole {
   ADMINISTRADOR = 'Administrador',
   COMPRAS = 'Compras',
@@ -44,21 +46,10 @@ export interface CreateUserResponse {
   };
 }
 
-export interface PaginationInfo {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-  has_next: boolean;
-  has_prev: boolean;
-  next_page: number | null;
-  prev_page: number | null;
-}
-
 export interface GetUsersResponse {
   message: string;
   data: {
     users: User[];
-    pagination: PaginationInfo;
+    pagination: Pagination;
   };
 }

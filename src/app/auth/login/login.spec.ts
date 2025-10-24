@@ -28,7 +28,8 @@ describe('LoginComponent', () => {
     token_type: 'Bearer',
     'not-before-policy': 0,
     session_state: 'mock-session',
-    scope: 'openid profile email'
+    scope: 'openid profile email',
+    role: 'Administrador'
   };
 
   beforeEach(async () => {
@@ -166,6 +167,62 @@ describe('LoginComponent', () => {
         expect(component.loading()).toBe(false);
         done();
       }, 0);
+    });
+  });
+
+  describe('Role-based Navigation', () => {
+    beforeEach(() => {
+      component.form.patchValue({
+        email: 'test@example.com',
+        password: 'password123'
+      });
+    });
+
+    it('should navigate to /proveedores when role is Compras', () => {
+      const comprasResponse = { ...mockAuthResponse, role: 'Compras' };
+      authService.login.and.returnValue(of(comprasResponse));
+      
+      component.submit();
+      
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/proveedores');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/usuarios');
+    });
+
+    it('should navigate to /inventario when role is Logistica', () => {
+      const logisticaResponse = { ...mockAuthResponse, role: 'Logistica' };
+      authService.login.and.returnValue(of(logisticaResponse));
+      
+      component.submit();
+      
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/inventario');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/usuarios');
+    });
+
+    it('should navigate to /usuarios when role is Administrador', () => {
+      const adminResponse = { ...mockAuthResponse, role: 'Administrador' };
+      authService.login.and.returnValue(of(adminResponse));
+      
+      component.submit();
+      
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/usuarios');
+    });
+
+    it('should navigate to /usuarios when role is not recognized', () => {
+      const otherResponse = { ...mockAuthResponse, role: 'OtroRol' };
+      authService.login.and.returnValue(of(otherResponse));
+      
+      component.submit();
+      
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/usuarios');
+    });
+
+    it('should display success snackbar for all roles', () => {
+      const comprasResponse = { ...mockAuthResponse, role: 'Compras' };
+      authService.login.and.returnValue(of(comprasResponse));
+      
+      component.submit();
+      
+      expect(snackBar.open);
     });
   });
 

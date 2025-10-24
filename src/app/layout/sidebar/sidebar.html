@@ -3,7 +3,8 @@
     <img src="/images/logo.png" alt="MediSupply" class="sidebar-logo">
   </div>
 
-  <nav class="sidebar-nav">        
+  <nav class="sidebar-nav"> 
+    @if(isAdministrador() || canSeeProveedores()){       
       <div class="nav-section">
         <button class="section-header" (click)="toggleAdministracion()" type="button">
           <mat-icon>admin_panel_settings</mat-icon>
@@ -28,7 +29,7 @@
           }          
         </div>
       </div>    
-    
+    }
     <!-- INVENTARIO Section - Visible for Administrador and Compras -->
     @if (canSeeInventario()) {
       <div class="nav-section">      

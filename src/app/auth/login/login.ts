@@ -59,6 +59,9 @@ export class LoginComponent {
         if (response.role=='Compras') {
           this.router.navigateByUrl('/proveedores');
         }
+        if (response.role=='Logistica') {
+          this.router.navigateByUrl('/inventario');
+        }
 
         // Navigate to protected route after successful login
         this.router.navigateByUrl('/usuarios');

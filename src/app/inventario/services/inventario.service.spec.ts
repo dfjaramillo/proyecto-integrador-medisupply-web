@@ -62,16 +62,28 @@ describe('InventarioService', () => {
 
   describe('getProductos', () => {
     it('should retrieve list of products', () => {
-      const mockResponse: ApiListResponse<ProductoResponse> = {
+      const mockResponse: ApiListResponse = {
         success: true,
         message: 'Success',
-        data: [mockProducto]
+        data: {
+          products: [mockProducto],
+          pagination: {
+            page: 1,
+            per_page: 10,
+            total: 1,
+            total_pages: 1,
+            has_next: false,
+            has_prev: false,
+            next_page: null,
+            prev_page: null
+          }
+        }
       };
 
-      service.getProductos().subscribe(productos => {
-        expect(productos).toEqual([mockProducto]);
-        expect(productos.length).toBe(1);
-        expect(productos[0].sku).toBe('MED-0001');
+      service.getProductos().subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.products.length).toBe(1);
+        expect(response.products[0].sku).toBe('MED-0001');
       });
 
       const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products`);
@@ -80,10 +92,22 @@ describe('InventarioService', () => {
     });
 
     it('should handle query params', () => {
-      const mockResponse: ApiListResponse<ProductoResponse> = {
+      const mockResponse: ApiListResponse = {
         success: true,
         message: 'Success',
-        data: [mockProducto]
+        data: {
+          products: [mockProducto],
+          pagination: {
+            page: 1,
+            per_page: 10,
+            total: 1,
+            total_pages: 1,
+            has_next: false,
+            has_prev: false,
+            next_page: null,
+            prev_page: null
+          }
+        }
       };
 
       service.getProductos({ sku: 'MED-0001' }).subscribe();
@@ -219,6 +243,201 @@ describe('InventarioService', () => {
       const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products/1`);
       expect(req.request.method).toBe('DELETE');
       req.flush(mockResponse);
+    });
+  });
+
+  describe('filterProductos', () => {
+    const mockFilterResponse: ApiListResponse = {
+      success: true,
+      message: 'Productos filtrados exitosamente',
+      data: {
+        products: [mockProducto],
+        pagination: {
+          page: 1,
+          per_page: 10,
+          total: 1,
+          total_pages: 1,
+          has_next: false,
+          has_prev: false,
+          next_page: null,
+          prev_page: null
+        }
+      }
+    };
+
+    it('should filter products by SKU', () => {
+      const filters = { sku: 'MED-0001' };
+
+      service.filterProductos(filters).subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.products.length).toBe(1);
+        expect(response.products[0].sku).toBe('MED-0001');
+      });
+
+      const req = httpMock.expectOne(req => 
+        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.params.get('sku') === 'MED-0001'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(mockFilterResponse);
+    });
+
+    it('should filter products by name', () => {
+      const filters = { name: 'Acetaminofén' };
+
+      service.filterProductos(filters).subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.products[0].name).toBe('Acetaminofén');
+      });
+
+      const req = httpMock.expectOne(req => 
+        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.params.get('name') === 'Acetaminofén'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(mockFilterResponse);
+    });
+
+    it('should filter products by quantity', () => {
+      const filters = { quantity: '100' };
+
+      service.filterProductos(filters).subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.products[0].quantity).toBe(100);
+      });
+
+      const req = httpMock.expectOne(req => 
+        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.params.get('quantity') === '100'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(mockFilterResponse);
+    });
+
+    it('should filter products by price', () => {
+      const filters = { price: '8500' };
+
+      service.filterProductos(filters).subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.products[0].price).toBe(8500);
+      });
+
+      const req = httpMock.expectOne(req => 
+        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.params.get('price') === '8500'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(mockFilterResponse);
+    });
+
+    it('should filter products by location', () => {
+      const filters = { location: 'A-03-01' };
+
+      service.filterProductos(filters).subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.products[0].location).toBe('A-03-01');
+      });
+
+      const req = httpMock.expectOne(req => 
+        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.params.get('location') === 'A-03-01'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(mockFilterResponse);
+    });
+
+    it('should filter products by expiration_date', () => {
+      const filters = { expiration_date: '2025-12-31' };
+
+      service.filterProductos(filters).subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.products[0].expiration_date).toBe('2025-12-31');
+      });
+
+      const req = httpMock.expectOne(req => 
+        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.params.get('expiration_date') === '2025-12-31'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(mockFilterResponse);
+    });
+
+    it('should filter products by multiple criteria', () => {
+      const filters = {
+        sku: 'MED-0001',
+        name: 'Acetaminofén',
+        location: 'A-03-01'
+      };
+
+      service.filterProductos(filters).subscribe(response => {
+        expect(response.products).toEqual([mockProducto]);
+        expect(response.pagination).toBeDefined();
+      });
+
+      const req = httpMock.expectOne(req => 
+        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.params.get('sku') === 'MED-0001' &&
+        req.params.get('name') === 'Acetaminofén' &&
+        req.params.get('location') === 'A-03-01'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(mockFilterResponse);
+    });
+
+    it('should ignore empty filter values', () => {
+      const filters = {
+        sku: 'MED-0001',
+        name: '',
+        location: null as any,
+        quantity: undefined as any
+      };
+
+      service.filterProductos(filters).subscribe();
+
+      const req = httpMock.expectOne(req => {
+        const hasSku = req.params.get('sku') === 'MED-0001';
+        const hasNoName = !req.params.has('name');
+        const hasNoLocation = !req.params.has('location');
+        const hasNoQuantity = !req.params.has('quantity');
+        return req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+          hasSku && hasNoName && hasNoLocation && hasNoQuantity;
+      });
+      expect(req.request.method).toBe('GET');
+      req.flush(mockFilterResponse);
+    });
+
+    it('should return empty results when no products match filters', () => {
+      const emptyResponse: ApiListResponse = {
+        success: true,
+        message: 'No se encontraron productos',
+        data: {
+          products: [],
+          pagination: {
+            page: 1,
+            per_page: 10,
+            total: 0,
+            total_pages: 0,
+            has_next: false,
+            has_prev: false,
+            next_page: null,
+            prev_page: null
+          }
+        }
+      };
+
+      const filters = { sku: 'NON-EXISTENT' };
+
+      service.filterProductos(filters).subscribe(response => {
+        expect(response.products).toEqual([]);
+        expect(response.products.length).toBe(0);
+        expect(response.pagination.total).toBe(0);
+      });
+
+      const req = httpMock.expectOne(req => 
+        req.url === `${environment.inventoryApiUrl}/inventory/products/filter`
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(emptyResponse);
     });
   });
 
