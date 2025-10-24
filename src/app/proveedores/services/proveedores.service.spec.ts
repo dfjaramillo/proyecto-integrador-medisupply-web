@@ -13,7 +13,7 @@ import {
 describe('ProveedoresService', () => {
   let service: ProveedoresService;
   let httpMock: HttpTestingController;
-  const apiUrl = `${environment.providersApiUrl}/providers`;
+  const apiUrl = `${environment.apiUrl}/providers`;
 
   const mockProveedorResponse: ProveedorResponse = {
     id: '123e4567-e89b-12d3-a456-426614174000',

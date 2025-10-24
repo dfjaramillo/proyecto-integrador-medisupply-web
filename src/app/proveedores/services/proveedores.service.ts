@@ -15,7 +15,7 @@ import {
   providedIn: 'root'
 })
 export class ProveedoresService {
-  private apiUrl = `${environment.providersApiUrl}/providers`;
+  private apiUrl = `${environment.apiUrl}/providers`;
 
   constructor(private http: HttpClient) {}
 

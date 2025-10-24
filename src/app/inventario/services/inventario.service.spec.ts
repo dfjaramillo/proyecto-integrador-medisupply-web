@@ -86,7 +86,7 @@ describe('InventarioService', () => {
         expect(response.products[0].sku).toBe('MED-0001');
       });
 
-      const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/inventory/products`);
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
     });
@@ -113,7 +113,7 @@ describe('InventarioService', () => {
       service.getProductos({ sku: 'MED-0001' }).subscribe();
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products` && 
+        req.url === `${environment.apiUrl}/inventory/products` && 
         req.params.get('sku') === 'MED-0001'
       );
       expect(req.request.method).toBe('GET');
@@ -134,7 +134,7 @@ describe('InventarioService', () => {
         expect(producto.id).toBe(1);
       });
 
-      const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products/1`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/inventory/products/1`);
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
     });
@@ -165,7 +165,7 @@ describe('InventarioService', () => {
         expect(producto.sku).toBe('MED-0001');
       });
 
-      const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/inventory/products`);
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(createRequest);
       req.flush(mockResponse);
@@ -196,7 +196,7 @@ describe('InventarioService', () => {
         expect(producto).toEqual(mockProducto);
       });
 
-      const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/inventory/products`);
       expect(req.request.method).toBe('POST');
       expect(req.request.body instanceof FormData).toBe(true);
       req.flush(mockResponse);
@@ -221,7 +221,7 @@ describe('InventarioService', () => {
         expect(producto.price).toBe(9000);
       });
 
-      const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products/1`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/inventory/products/1`);
       expect(req.request.method).toBe('PUT');
       expect(req.request.body).toEqual(updateData);
       req.flush(mockResponse);
@@ -240,7 +240,7 @@ describe('InventarioService', () => {
         expect(result).toBeUndefined();
       });
 
-      const req = httpMock.expectOne(`${environment.inventoryApiUrl}/inventory/products/1`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/inventory/products/1`);
       expect(req.request.method).toBe('DELETE');
       req.flush(mockResponse);
     });
@@ -275,7 +275,7 @@ describe('InventarioService', () => {
       });
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.url === `${environment.apiUrl}/inventory/products/filter` &&
         req.params.get('sku') === 'MED-0001'
       );
       expect(req.request.method).toBe('GET');
@@ -291,7 +291,7 @@ describe('InventarioService', () => {
       });
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.url === `${environment.apiUrl}/inventory/products/filter` &&
         req.params.get('name') === 'Acetaminofén'
       );
       expect(req.request.method).toBe('GET');
@@ -307,7 +307,7 @@ describe('InventarioService', () => {
       });
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.url === `${environment.apiUrl}/inventory/products/filter` &&
         req.params.get('quantity') === '100'
       );
       expect(req.request.method).toBe('GET');
@@ -323,7 +323,7 @@ describe('InventarioService', () => {
       });
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.url === `${environment.apiUrl}/inventory/products/filter` &&
         req.params.get('price') === '8500'
       );
       expect(req.request.method).toBe('GET');
@@ -339,7 +339,7 @@ describe('InventarioService', () => {
       });
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.url === `${environment.apiUrl}/inventory/products/filter` &&
         req.params.get('location') === 'A-03-01'
       );
       expect(req.request.method).toBe('GET');
@@ -355,7 +355,7 @@ describe('InventarioService', () => {
       });
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.url === `${environment.apiUrl}/inventory/products/filter` &&
         req.params.get('expiration_date') === '2025-12-31'
       );
       expect(req.request.method).toBe('GET');
@@ -375,7 +375,7 @@ describe('InventarioService', () => {
       });
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        req.url === `${environment.apiUrl}/inventory/products/filter` &&
         req.params.get('sku') === 'MED-0001' &&
         req.params.get('name') === 'Acetaminofén' &&
         req.params.get('location') === 'A-03-01'
@@ -399,7 +399,7 @@ describe('InventarioService', () => {
         const hasNoName = !req.params.has('name');
         const hasNoLocation = !req.params.has('location');
         const hasNoQuantity = !req.params.has('quantity');
-        return req.url === `${environment.inventoryApiUrl}/inventory/products/filter` &&
+        return req.url === `${environment.apiUrl}/inventory/products/filter` &&
           hasSku && hasNoName && hasNoLocation && hasNoQuantity;
       });
       expect(req.request.method).toBe('GET');
@@ -434,7 +434,7 @@ describe('InventarioService', () => {
       });
 
       const req = httpMock.expectOne(req => 
-        req.url === `${environment.inventoryApiUrl}/inventory/products/filter`
+        req.url === `${environment.apiUrl}/inventory/products/filter`
       );
       expect(req.request.method).toBe('GET');
       req.flush(emptyResponse);
@@ -466,7 +466,7 @@ describe('InventarioService', () => {
         expect(providers[0].name).toBe('Farmacia Oeste');
       });
 
-      const req = httpMock.expectOne(`${environment.providersApiUrl}/providers`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/providers`);
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
     });

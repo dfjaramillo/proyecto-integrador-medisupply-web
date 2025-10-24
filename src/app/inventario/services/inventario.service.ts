@@ -18,7 +18,7 @@ import {
   providedIn: 'root'
 })
 export class InventarioService {
-  private apiUrl = `${environment.inventoryApiUrl}/inventory/products`;
+  private apiUrl = `${environment.apiUrl}/inventory/products`;
 
   constructor(private http: HttpClient) {}
 
@@ -127,7 +127,7 @@ export class InventarioService {
    * Obtiene la lista de proveedores
    */
   getProviders(): Observable<Provider[]> {
-    return this.http.get<{ message: string; data: ProvidersResponse }>(`${environment.providersApiUrl}/providers`).pipe(
+    return this.http.get<{ message: string; data: ProvidersResponse }>(`${environment.apiUrl}/providers`).pipe(
       map(response => response.data.providers)
     );
   }
