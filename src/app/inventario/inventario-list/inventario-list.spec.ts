@@ -392,6 +392,23 @@ describe('InventarioListComponent', () => {
     });
   });
 
+  describe('canCreateProducto', () => {
+    it('should return true for Compras role', () => {
+      authService.getUserRole.and.returnValue('Compras');
+      expect(component.canCreateProducto()).toBe(true);
+    });
+
+    it('should return true for Administrador role', () => {
+      authService.getUserRole.and.returnValue('Administrador');
+      expect(component.canCreateProducto()).toBe(true);
+    });
+
+    it('should return false for other roles', () => {
+      authService.getUserRole.and.returnValue('Ventas');
+      expect(component.canCreateProducto()).toBe(false);
+    });
+  });
+
   describe('Format methods', () => {
     it('should format price correctly', () => {
       const price = 50000;

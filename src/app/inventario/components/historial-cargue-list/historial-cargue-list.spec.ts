@@ -238,4 +238,52 @@ describe('HistorialCargueListComponent', () => {
     const panelDescription = fixture.nativeElement.querySelector('mat-panel-description');
     expect(panelDescription.textContent.trim()).toBe('2 registro(s)');
   });
+
+  it('should calculate page numbers with ellipsis for large page counts', () => {
+    component.historyPagination.set({
+      page: 5,
+      per_page: 5,
+      total: 100,
+      total_pages: 20,
+      has_next: true,
+      has_prev: true,
+      next_page: 6,
+      prev_page: 4
+    });
+    component.historyCurrentPage = 5;
+
+    const pageNumbers = component.historyPageNumbers;
+    
+    expect(pageNumbers[0]).toBe(1);
+    expect(pageNumbers).toContain(-1); // Ellipsis before
+    expect(pageNumbers).toContain(-2); // Ellipsis after
+    expect(pageNumbers[pageNumbers.length - 1]).toBe(20);
+  });
+
+  it('should calculate page numbers for pages near the end', () => {
+    component.historyPagination.set({
+      page: 18,
+      per_page: 5,
+      total: 100,
+      total_pages: 20,
+      has_next: true,
+      has_prev: true,
+      next_page: 19,
+      prev_page: 17
+    });
+    component.historyCurrentPage = 18;
+
+    const pageNumbers = component.historyPageNumbers;
+    
+    expect(pageNumbers[0]).toBe(1);
+    expect(pageNumbers).toContain(-1); // Should have ellipsis before
+    expect(pageNumbers[pageNumbers.length - 1]).toBe(20);
+  });
+
+  it('should return empty array for historyPageNumbers when no pagination', () => {
+    component.historyPagination.set(null);
+    
+    const pageNumbers = component.historyPageNumbers;
+    expect(pageNumbers).toEqual([]);
+  });
 });
