@@ -1,22 +1,7 @@
 describe('Crear Proveedor', () => {
-  const BASE_URL = 'https://proyecto-integrador-medidupply-32b261732f50.herokuapp.com';
+  const BASE_URL = 'http://localhost:4200';
 
   beforeEach(() => {
-    // Interceptar login con token de administrador
-    cy.intercept('POST', '**/auth/token', {
-      statusCode: 200,
-      body: {
-        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJhZG1pbkBtZWRpc3VwcGx5LmNvbSIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFkbWluaXN0cmFkb3IiXX0sImlhdCI6MTUxNjIzOTAyMn0.mock-signature',
-        expires_in: 3600,
-        refresh_expires_in: 7200,
-        refresh_token: 'mock-refresh-token',
-        token_type: 'Bearer',
-        'not-before-policy': 0,
-        session_state: 'mock-session',
-        scope: 'openid profile email'
-      }
-    }).as('loginRequest');
-
     // Interceptar lista de proveedores
     cy.intercept('GET', '**/providers*', {
       statusCode: 200,
@@ -40,10 +25,10 @@ describe('Crear Proveedor', () => {
 
     // Login como administrador
     cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
     cy.get('button[type="submit"]').click();
-    cy.wait('@loginRequest');
+    cy.url().should('not.include', '/login', { timeout: 10000 });
     
     // Navegar a proveedores
     cy.visit(`${BASE_URL}/proveedores`);

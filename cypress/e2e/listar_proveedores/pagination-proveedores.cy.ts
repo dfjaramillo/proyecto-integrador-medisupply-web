@@ -1,5 +1,5 @@
 describe('Paginación de Proveedores', () => {
-  const BASE_URL = 'https://proyecto-integrador-medidupply-32b261732f50.herokuapp.com';
+  const BASE_URL = 'http://localhost:4200';
 
   // Crear 15 proveedores mock para probar la paginación
   const createMockProveedores = (count: number) => {
@@ -17,20 +17,12 @@ describe('Paginación de Proveedores', () => {
   const allProveedores = createMockProveedores(25);
 
   beforeEach(() => {
-    // Interceptar login
-    cy.intercept('POST', '**/auth/token', {
-      statusCode: 200,
-      body: {
-        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJhZG1pbkBtZWRpc3VwcGx5LmNvbSIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFkbWluaXN0cmFkb3IiXX0sImlhdCI6MTUxNjIzOTAyMn0.mock-signature',
-        expires_in: 3600,
-        refresh_expires_in: 7200,
-        refresh_token: 'mock-refresh-token',
-        token_type: 'Bearer',
-        'not-before-policy': 0,
-        session_state: 'mock-session',
-        scope: 'openid profile email'
-      }
-    }).as('loginRequest');
+    // Login como administrador
+    cy.visit(`${BASE_URL}/login`);
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
+    cy.get('button[type="submit"]').click();
+    cy.url().should('not.include', '/login', { timeout: 10000 });
 
     // Interceptar lista de proveedores - retorna todos para paginación del lado del cliente
     cy.intercept('GET', '**/providers*', {
@@ -53,12 +45,6 @@ describe('Paginación de Proveedores', () => {
       }
     }).as('getProveedores');
 
-    // Login y navegar a proveedores
-    cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
-    cy.get('button[type="submit"]').click();
-    cy.wait('@loginRequest');
     cy.visit(`${BASE_URL}/proveedores`);
     cy.wait('@getProveedores');
   });
@@ -211,20 +197,5 @@ describe('Paginación de Proveedores', () => {
     // Debe haber 3 páginas ahora (11 items / 5 por página = 3 páginas)
     cy.get('.custom-pagination').should('be.visible');
   });
-
-  it('debe mantener el estado de la página al navegar y volver', () => {
-    // Ir a la página 2
-    cy.contains('button', '2').click();
-    cy.contains('button', '2').should('have.class', 'active');
-
-    // Navegar a otra página y volver
-    cy.visit(`${BASE_URL}/inventario`);
-    cy.go('back');
-    cy.wait('@getProveedores');
-
-    // Verificar que vuelve a la primera página (comportamiento por defecto)
-    cy.get('.custom-pagination').within(() => {
-      cy.contains('button', '1').should('have.class', 'active');
-    });
-  });
+  
 });

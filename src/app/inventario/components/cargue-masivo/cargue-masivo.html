@@ -58,6 +58,16 @@
             <span class="file-name">{{ selectedFile.name }}</span>
             <span class="file-size">| {{ formatFileSize(selectedFile.size) }}</span>
           </div>
+          <button
+            mat-icon-button
+            class="remove-file-btn"
+            (click)="removeFile()"
+            type="button"
+            aria-label="Eliminar archivo seleccionado"
+            title="Eliminar archivo"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
         }
 

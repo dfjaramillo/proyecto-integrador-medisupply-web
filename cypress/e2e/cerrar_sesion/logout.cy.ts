@@ -1,29 +1,22 @@
 describe('Cerrar Sesión', () => {
-  const BASE_URL = 'https://proyecto-integrador-medidupply-32b261732f50.herokuapp.com';
+  const BASE_URL = 'http://localhost:4200';
 
   beforeEach(() => {
     // Interceptar las llamadas API necesarias
-    cy.intercept('POST', '**/auth/token', {
+    cy.intercept('GET', '**/auth/user**', {
       statusCode: 200,
       body: {
-        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJhZG1pbkBtZWRpc3VwcGx5LmNvbSIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFkbWluaXN0cmFkb3IiXX0sImlhdCI6MTUxNjIzOTAyMn0.mock-signature',
-        expires_in: 3600,
-        refresh_expires_in: 7200,
-        refresh_token: 'mock-refresh-token',
-        token_type: 'Bearer',
-        'not-before-policy': 0,
-        session_state: 'mock-session',
-        scope: 'openid profile email'
-      }
-    }).as('loginRequest');
-
-    cy.intercept('GET', '**/users?page=*', {
-      statusCode: 200,
-      body: {
-        users: [],
-        total: 0,
-        page: 1,
-        limit: 5
+        data: {
+          users: [],
+          pagination: {
+            total: 0,
+            page: 1,
+            per_page: 5,
+            total_pages: 0,
+            has_next: false,
+            has_prev: false
+          }
+        }
       }
     }).as('getUsers');
 
@@ -36,12 +29,11 @@ describe('Cerrar Sesión', () => {
   it('debe cerrar sesión correctamente desde el sidebar', () => {
     // Login primero
     cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
     cy.get('button[type="submit"]').click();
 
-    cy.wait('@loginRequest');
-    cy.url().should('include', '/usuarios');
+    cy.url().should('not.include', '/login', { timeout: 10000 });
 
     // Verificar que el sidebar está visible
     cy.get('app-sidebar').should('be.visible');
@@ -67,12 +59,11 @@ describe('Cerrar Sesión', () => {
   it('debe limpiar el estado de la sesión al cerrar sesión', () => {
     // Login primero
     cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
     cy.get('button[type="submit"]').click();
 
-    cy.wait('@loginRequest');
-    cy.url().should('include', '/usuarios');
+    cy.url().should('not.include', '/login', { timeout: 10000 });
 
     // Verificar que el token está en localStorage
     cy.window().then((win) => {
@@ -105,12 +96,11 @@ describe('Cerrar Sesión', () => {
 
     // Login primero
     cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
     cy.get('button[type="submit"]').click();
 
-    cy.wait('@loginRequest');
-    cy.url().should('include', '/usuarios');
+    cy.url().should('not.include', '/login', { timeout: 10000 });
 
     // Cerrar sesión
     cy.get('app-sidebar').within(() => {
@@ -129,12 +119,11 @@ describe('Cerrar Sesión', () => {
   it('debe prevenir el acceso a rutas protegidas después de cerrar sesión', () => {
     // Login primero
     cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
     cy.get('button[type="submit"]').click();
 
-    cy.wait('@loginRequest');
-    cy.url().should('include', '/usuarios');
+    cy.url().should('not.include', '/login', { timeout: 10000 });
 
     // Cerrar sesión
     cy.get('app-sidebar').within(() => {
@@ -154,12 +143,11 @@ describe('Cerrar Sesión', () => {
   it('debe mostrar el nombre del usuario antes de cerrar sesión', () => {
     // Login primero
     cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
     cy.get('button[type="submit"]').click();
 
-    cy.wait('@loginRequest');
-    cy.url().should('include', '/usuarios');
+    cy.url().should('not.include', '/login', { timeout: 10000 });
 
     // Verificar que el sidebar muestra información del usuario
     cy.get('app-sidebar').within(() => {

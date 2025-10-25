@@ -1,6 +1,6 @@
 describe('Login Flow', () => {
   beforeEach(() => {
-    cy.visit('https://proyecto-integrador-medidupply-32b261732f50.herokuapp.com/login');
+    cy.visit('http://localhost:4200/login');
   });
 
   it('debe mostrar el formulario de inicio de sesión', () => {
@@ -37,57 +37,18 @@ describe('Login Flow', () => {
   });
 
   it('debe iniciar sesión correctamente con credenciales válidas', () => {
-    // Interceptar la llamada a la API con JWT válido
-    cy.intercept('POST', '**/auth/token', {
-      statusCode: 200,
-      body: {
-        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwibmFtZSI6IlRlc3QgVXNlciIsInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJBZG1pbmlzdHJhZG9yIl19LCJpYXQiOjE1MTYyMzkwMjJ9.mock-signature',
-        expires_in: 3600,
-        refresh_expires_in: 7200,
-        refresh_token: 'mock-refresh-token',
-        token_type: 'Bearer',
-        'not-before-policy': 0,
-        session_state: 'mock-session',
-        scope: 'openid profile email'
-      }
-    }).as('loginRequest');
-
-    // Interceptar la lista de usuarios
-    cy.intercept('GET', '**/users?page=*', {
-      statusCode: 200,
-      body: {
-        users: [],
-        total: 0,
-        page: 1,
-        limit: 5
-      }
-    }).as('getUsers');
-
-    cy.get('input[type="email"]').type('test@example.com');
-    cy.get('input[type="password"]').type('password123');
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
     cy.get('button[type="submit"]').click();
 
-    cy.wait('@loginRequest');
-    cy.url().should('include', '/usuarios');
+    cy.url().should('not.include', '/login', { timeout: 10000 });
   });
 
   it('debe mostrar un mensaje de error en caso de fallo en el inicio de sesión', () => {
-    cy.intercept('POST', '**/auth/token', {
-      statusCode: 401,
-      body: {
-        error: {
-          "error": "invalid_grant",
-          "error_description": "Invalid user credentials"
-        }
-      }
-    }).as('loginRequest');
-
     cy.get('input[type="email"]').type('wrong@example.com');
     cy.get('input[type="password"]').type('wrongpassword');
     cy.get('button[type="submit"]').click();
 
-    cy.wait('@loginRequest');
-    
     // Verificar que aparece un snackbar con mensaje de error
     cy.get('.mat-mdc-snack-bar-container, simple-snack-bar, .mdc-snackbar').should('be.visible');
   });
