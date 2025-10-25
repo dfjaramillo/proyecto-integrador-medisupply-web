@@ -237,6 +237,68 @@ describe('AuthService', () => {
     });
   });
 
+  describe('clearSession', () => {
+    it('should remove access token from localStorage', () => {
+      service.setToken('test-token');
+      expect(service.getToken()).toBe('test-token');
+      
+      service.clearSession();
+      
+      expect(service.getToken()).toBeNull();
+    });
+
+    it('should remove refresh token from localStorage', () => {
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      expect(service.getRefreshToken()).toBe('test-refresh-token');
+      
+      service.clearSession();
+      
+      expect(service.getRefreshToken()).toBeNull();
+    });
+
+    it('should remove user data from localStorage', () => {
+      localStorage.setItem('ms_user', JSON.stringify({ email: 'test@example.com', name: 'Test User', role: 'Administrador' }));
+      expect(localStorage.getItem('ms_user')).toBeTruthy();
+      
+      service.clearSession();
+      
+      expect(localStorage.getItem('ms_user')).toBeNull();
+    });
+
+    it('should clear all session data at once', () => {
+      service.setToken('test-token');
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      localStorage.setItem('ms_user', JSON.stringify({ email: 'test@example.com', name: 'Test User', role: 'Administrador' }));
+      
+      service.clearSession();
+      
+      expect(service.getToken()).toBeNull();
+      expect(service.getRefreshToken()).toBeNull();
+      expect(localStorage.getItem('ms_user')).toBeNull();
+    });
+
+    it('should not make any HTTP requests', () => {
+      service.setToken('test-token');
+      localStorage.setItem('ms_refresh_token', 'test-refresh-token');
+      
+      service.clearSession();
+      
+      // Verify no HTTP requests were made
+      httpMock.expectNone(() => true);
+    });
+
+    it('should work correctly when called multiple times', () => {
+      service.setToken('test-token');
+      
+      service.clearSession();
+      expect(service.getToken()).toBeNull();
+      
+      // Call again - should not throw error
+      service.clearSession();
+      expect(service.getToken()).toBeNull();
+    });
+  });
+
   describe('getUserRole', () => {
     it('should return null when no token is stored', () => {
       expect(service.getUserRole()).toBeNull();

@@ -219,4 +219,14 @@ export class AuthService {
         })
       );
   }
+
+  /**
+   * Clear session data without calling backend
+   * Used when token expires or is invalid
+   */
+  clearSession(): void {
+    localStorage.removeItem(this.TOKEN_KEY);
+    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    localStorage.removeItem(this.USER_KEY);
+  }
 }

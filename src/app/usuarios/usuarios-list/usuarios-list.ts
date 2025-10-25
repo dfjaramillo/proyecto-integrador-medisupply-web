@@ -157,9 +157,22 @@ export class UsuariosListComponent implements OnInit, OnDestroy {
 
   openCreateUserDialog(): void {
     const dialogRef = this.dialog.open(CreateUserComponent, {
-      width: '600px',
-      disableClose: true
-    });
+    hasBackdrop: true,
+    disableClose: true,
+    // quita la animación default de material
+    enterAnimationDuration: '0ms',
+    exitAnimationDuration: '0ms',
+    // tamaño y anclaje al borde derecho
+    width: '600px',
+    maxWidth: '800px',
+    height: '100vh',
+    panelClass: ['right-sheet'],
+    position: { right: '0' }
+  });
+    // const dialogRef = this.dialog.open(CreateUserComponent, {
+    //   width: '700px',
+    //   disableClose: true
+    // });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

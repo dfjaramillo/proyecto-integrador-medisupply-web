@@ -1,79 +1,81 @@
 <div class="create-proveedor-dialog">
   <div class="dialog-header">
     <h2>Crear proveedor</h2>
-    <button 
-      mat-icon-button 
-      (click)="onCancel()" 
-      aria-label="Cerrar diálogo"
-      class="close-button">
+    <button
+      mat-icon-button
+      class="close-btn"
+      (click)="onCancel()"
+      aria-label="Cerrar formulario de crear proveedor"
+    >
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <form [formGroup]="proveedorForm" (ngSubmit)="onSubmit()" class="proveedor-form">
-    
-    <!-- Nombre -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nombre</mat-label>
-      <input
-        matInput
-        formControlName="name"
-        placeholder="Nombre del proveedor"
-        aria-required="true">
-      @if (hasError('name', 'required')) {
+  <mat-dialog-content>
+    <form [formGroup]="proveedorForm" (ngSubmit)="onSubmit()">
+      <!-- Nombre -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Nombre del proveedor"
+          aria-required="true"
+        />
+        @if (hasError('name', 'required')) {
         <mat-error role="alert">El nombre es obligatorio</mat-error>
-      }
-      @if (hasError('name', 'proveedorName')) {
-        <mat-error role="alert">{{ getErrorMessage('name') }}</mat-error>
-      }
-    </mat-form-field>
+        } @if (hasError('name', 'proveedorName')) {
+        <mat-error role="alert">{{ getErrorMessage("name") }}</mat-error>
+        }
+      </mat-form-field>
 
-    <!-- Correo electrónico -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Correo electrónico</mat-label>
-      <input
-        matInput
-        type="email"
-        formControlName="email"
-        placeholder="correo@proveedor.com"
-        aria-required="true">
-      @if (hasError('email', 'required')) {
+      <!-- Correo electrónico -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email"
+          placeholder="correo@proveedor.com"
+          aria-required="true"
+        />
+        @if (hasError('email', 'required')) {
         <mat-error role="alert">El correo electrónico es obligatorio</mat-error>
-      }
-      @if (hasError('email', 'proveedorEmail')) {
-        <mat-error role="alert">{{ getErrorMessage('email') }}</mat-error>
-      }
-    </mat-form-field>
+        } @if (hasError('email', 'proveedorEmail')) {
+        <mat-error role="alert">{{ getErrorMessage("email") }}</mat-error>
+        }
+      </mat-form-field>
 
-    <!-- Teléfono -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Teléfono</mat-label>
-      <input
-        matInput
-        formControlName="phone"
-        placeholder="6603214878"
-        aria-required="true">
-      @if (hasError('phone', 'required')) {
+      <!-- Teléfono -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Teléfono</mat-label>
+        <input
+          matInput
+          formControlName="phone"
+          placeholder="6603214878"
+          aria-required="true"
+        />
+        @if (hasError('phone', 'required')) {
         <mat-error role="alert">El teléfono es obligatorio</mat-error>
-      }
-      @if (hasError('phone', 'proveedorPhone')) {
-        <mat-error role="alert">{{ getErrorMessage('phone') }}</mat-error>
-      }
-    </mat-form-field>
+        } @if (hasError('phone', 'proveedorPhone')) {
+        <mat-error role="alert">{{ getErrorMessage("phone") }}</mat-error>
+        }
+      </mat-form-field>
 
-    <!-- Logo -->
-    <div class="logo-upload-section">
-      <label class="logo-label">Logo</label>
-      
-      @if (!selectedFile && !previewUrl) {
+      <!-- Logo -->
+      <div class="logo-upload-section">
+        <label class="logo-label">Logo</label>
+
+        @if (!selectedFile && !previewUrl) {
         <div class="upload-area">
           <button
             type="button"
             mat-raised-button
             color="accent"
             (click)="fileInput.click()"
-            class="upload-button">
-            <mat-icon>cloud_upload</mat-icon>
+            class="upload-btn"
+          >
+            <mat-icon>upload</mat-icon>
             Subir archivo
           </button>
           <p class="upload-hint">JPG, PNG o GIF (máx. 2MB)</p>
@@ -82,54 +84,59 @@
             type="file"
             accept="image/jpeg,image/png,image/gif"
             (change)="onFileSelected($event)"
-            style="display: none;"
-            aria-label="Seleccionar logo">
+            style="display: none"
+            aria-label="Seleccionar archivo de imagen"
+          />
         </div>
-      }
-
-      @if (selectedFile && previewUrl) {
+        } @if (selectedFile && previewUrl) {
         <div class="file-preview">
-          <img [src]="previewUrl" alt="Vista previa del logo" class="preview-image">
+          <img
+            [src]="previewUrl"
+            alt="Vista previa del logo"
+            class="preview-image"
+          />
           <div class="file-info">
             <p class="file-name">{{ selectedFile.name }}</p>
-            <p class="file-size">{{ (selectedFile.size / 1024).toFixed(2) }} KB</p>
+            <p class="file-size">
+              {{ (selectedFile.size / 1024).toFixed(2) }} KB
+            </p>
           </div>
           <button
             type="button"
             mat-icon-button
             color="warn"
             (click)="removeFile()"
-            aria-label="Eliminar archivo">
+            aria-label="Eliminar imagen"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </div>
-      }
+        } @if (hasError('logo', 'logoTipo')) {
+        <mat-error role="alert" class="logo-error">{{
+          getErrorMessage("logo")
+        }}</mat-error>
+        } @if (hasError('logo', 'logoTamano')) {
+        <mat-error role="alert" class="logo-error">{{
+          getErrorMessage("logo")
+        }}</mat-error>
+        }
+      </div>
+    </form>
+  </mat-dialog-content>
 
-      @if (hasError('logo', 'logoTipo')) {
-        <mat-error role="alert" class="logo-error">{{ getErrorMessage('logo') }}</mat-error>
+  <mat-dialog-actions>
+    <button
+      mat-raised-button
+      type="submit"
+      class="submit-btn"
+      [disabled]="proveedorForm.invalid || loading()"
+      (click)="onSubmit()"
+      [attr.aria-busy]="loading()"
+    >
+      @if (!loading()) { Guardar } @else {
+      <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+      <span class="sr-only">Guardando proveedor...</span>
       }
-      @if (hasError('logo', 'logoTamano')) {
-        <mat-error role="alert" class="logo-error">{{ getErrorMessage('logo') }}</mat-error>
-      }
-    </div>
-
-    <!-- Botones de acción -->
-    <div class="form-actions">
-      @if (loading()) {
-        <mat-spinner diameter="30"></mat-spinner>
-      }
-      
-      @if (!loading()) {
-        <button
-          type="submit"
-          mat-raised-button
-          color="primary"
-          class="submit-button"
-          [disabled]="proveedorForm.invalid"
-          aria-label="Guardar proveedor">
-          Guardar
-        </button>
-      }
-    </div>
-  </form>
+    </button>
+  </mat-dialog-actions>
 </div>

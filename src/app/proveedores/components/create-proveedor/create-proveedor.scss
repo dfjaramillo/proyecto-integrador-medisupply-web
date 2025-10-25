@@ -1,39 +1,101 @@
 .create-proveedor-dialog {
-  padding: 24px;
-  max-width: 600px;
   width: 100%;
+  max-width: 700px;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+
+  /* 🧱 Estructura de layout: header fijo, content scroll, footer sticky */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* importante, el pane ya está en 100vh */
+
+  mat-icon {
+    width: 23.75px;
+    height: 12.75px; 
+    color: #ffffff;
+  }
 }
 
+/* Header normal */
 .dialog-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  padding: 24px 24px 0;
+  margin-bottom: 16px;
 
-  h2 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: 500;
-    color: #333;
-  }
+  .close-btn {
+    background-color: #0d66d0;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 
-  .close-button {
-    color: #666;
-    
     &:hover {
-      color: #333;
-      background-color: rgba(0, 0, 0, 0.04);
+      background-color: #0b5bb8;
     }
   }
 }
 
-.proveedor-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+/* El contenido debe ocupar el espacio restante y scrollear */
+mat-dialog-content {
+  padding: 0 24px 16px;
+  margin: 0;
 
-  .full-width {
-    width: 100%;
+  /* 🔑 quitar límites por defecto y permitir que crezca */
+  max-height: none;
+  flex: 1 1 auto;
+  min-height: 0; /* evita que el sticky tape el scroll */
+  overflow-y: auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/* Footer sticky al fondo del panel */
+mat-dialog-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+
+  /* Fondo y borde para “flotar” sobre el contenido */
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+
+  /* Padding pegado a los laterales del panel */
+  padding: 16px 24px 24px;
+  margin: 0;
+
+  display: block; /* deja de centrar el botón, toma todo el ancho */
+}
+
+/* Botón estilo “barra” al ancho del panel (como en el prototipo) */
+.submit-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px; /* píldora */
+  background-color: #0d66d0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:disabled {
+    background-color: #1078ff;
+    color: #ffffff;
+  }
+  &:not(:disabled):hover {
+    background-color: #0b5bb8;
   }
 }
 
@@ -59,11 +121,21 @@
       border-color: #1976d2;
     }
 
-    .upload-button {
+    .upload-btn {
+      width: 158px;
+      height: 48px;
       margin-bottom: 12px;
+      border-radius: 12px; /* píldora */
+      background-color: #28d094;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      font-style: semibold;
 
-      mat-icon {
-        margin-right: 8px;
+      gap: 8px;
+
+      &:hover {
+        background-color: #f0f0f0;
       }
     }
 
@@ -115,22 +187,22 @@
   }
 }
 
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid #eee;
+// .form-actions {
+//   display: flex;
+//   justify-content: flex-end;
+//   gap: 16px;
+//   margin-top: 24px;
+//   padding-top: 16px;
+//   border-top: 1px solid #eee;
 
-  mat-spinner {
-    margin-right: 16px;
-  }
+//   mat-spinner {
+//     margin-right: 16px;
+//   }
 
-  .submit-button {
-    min-width: 120px;
-  }
-}
+//   .submit-button {
+//     min-width: 120px;
+//   }
+// }
 
 // Responsive
 @media (max-width: 600px) {
