@@ -45,6 +45,7 @@
   .action-bar {
     display: flex;
     justify-content: flex-start;
+    gap: 16px;
     margin-bottom: 24px;
     padding: 0 2px; // Add horizontal padding
 
@@ -63,6 +64,30 @@
 
       &:hover {
         background-color: #0d66d9;
+      }
+    }
+
+    .upload-btn {
+      background-color: #28D094;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      height: 40px;
+      width: 160px;
+      padding: 0 24px;
+      border-radius: 8px;
+      
+      mat-icon {
+        margin-right: 8px;
+      }
+
+      &:hover {
+        background-color: #22b880;
+      }
+
+      &:disabled {
+        background-color: #E0E0E0;
+        color: #9E9E9E;
       }
     }
   }
@@ -300,7 +325,25 @@
             cursor: not-allowed;
           }
         }
+
+        .pagination-ellipsis {
+          min-width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #6d7183;
+          font-size: 14px;
+          font-weight: 500;
+          user-select: none;
+        }
       }
+    }
+
+    .history-section {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 2px solid #e5e7eb;
     }
   }
 }

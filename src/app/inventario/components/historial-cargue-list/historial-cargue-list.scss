@@ -1,0 +1,186 @@
+.history-expansion-panel {
+  box-shadow: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  
+  ::ng-deep .mat-expansion-panel-header {
+    font-family: "Poppins", sans-serif;
+    padding: 16px 24px;
+    
+    &:hover {
+      background-color: #f9fafb !important;
+    }
+    
+    .mat-expansion-panel-header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #41444f;
+      
+      mat-icon {
+        color: #6d7183;
+      }
+    }
+    
+    .mat-expansion-panel-header-description {
+      justify-content: flex-end;
+      align-items: center;
+      font-size: 14px;
+      color: #6d7183;
+    }
+  }
+  
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0;
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: #6d7183;
+
+  p {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+}
+
+.history-table {
+  width: 100%;
+  background: transparent;
+  margin-top: 0;
+
+  ::ng-deep tbody tr.mat-mdc-row:nth-child(odd) {
+    background-color: #F8F8F8;
+  }
+
+  ::ng-deep tbody tr.mat-mdc-row:nth-child(even) {
+    background-color: #ffffff;
+  }
+
+  ::ng-deep tbody tr.mat-mdc-row:hover {
+    background-color: #f2f6fc !important;
+  }
+
+  th {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: #6d7183;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #fafafa !important;
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  td {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #41444f;
+    padding: 16px 24px;
+    border-bottom: 1px solid #f3f4f6;
+
+    &.file-name-cell {
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      cursor: help;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      background-color: #f3f4f6;
+      color: #6d7183;
+
+      &.status-completed {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+    }
+  }
+
+  .no-data-row {
+    td {
+      text-align: center;
+      padding: 48px !important;
+      color: #6d7183;
+    }
+  }
+}
+
+// Paginación dentro del expansion panel
+.custom-pagination {
+  padding: 16px 24px;
+  background-color: #fafafa;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .pagination-info {
+    font-size: 14px;
+    color: #6d7183;
+  }
+
+  .pagination-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    .pagination-btn {
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid #e5e7eb;
+      background-color: white;
+      color: #41444f;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: "Poppins", sans-serif;
+
+      &:hover:not(:disabled) {
+        background-color: #f9fafb;
+        border-color: #0d66d0;
+        color: #0d66d0;
+      }
+
+      &.active {
+        background-color: #0d66d0;
+        color: white;
+        border-color: #0d66d0;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    .pagination-ellipsis {
+      min-width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6d7183;
+      font-size: 14px;
+      font-weight: 500;
+      user-select: none;
+    }
+  }
+}

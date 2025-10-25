@@ -1,0 +1,257 @@
+.cargue-masivo-dialog {
+  width: 100%;
+  max-width: 700px;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+
+  /* 🧱 Estructura de layout: header fijo, content scroll, footer sticky */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  mat-icon {
+    width: 23.75px;
+    height: 12.75px;
+    color: #ffffff;
+  }
+}
+
+/* Header normal */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    color: #41444f;
+  }
+
+  .close-btn {
+    background-color: #0d66d0;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+
+    mat-icon {
+      width: 20.75px;
+      height: 24.75px;
+      font-size: 20px;
+      line-height: 20px;
+    }
+
+    &:hover {
+      background-color: #0b5bb8;
+    }
+  }
+}
+
+/* El contenido debe ocupar el espacio restante y scrollear */
+mat-dialog-content {
+  padding: 0 24px;
+  margin: 0;
+
+  /* 🔑 quitar límites por defecto y permitir que crezca */
+  max-height: none;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+
+  .content-section {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 16px 0;
+  }
+
+  .step-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .step-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: #6d7183;
+      margin: 0;
+    }
+
+    .download-btn,
+    .upload-btn {
+      background-color: #28d094;
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      height: 40px;
+      width: 200px;
+      padding: 0 24px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      mat-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+      }
+
+      &:hover {
+        background-color: #22b880;
+      }
+    }
+
+    .file-info-box {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 12px 16px;
+      background-color: #f9fafb;
+      width: fit-content;
+      min-width: 300px;
+
+      .file-details {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .file-name {
+          font-size: 14px;
+          font-weight: 500;
+          color: #41444f;
+        }
+
+        .file-size {
+          font-size: 14px;
+          font-weight: 400;
+          color: #0d66d0;
+        }
+      }
+    }
+
+    .error-message {
+      padding: 12px 16px;
+      background-color: #fee2e2;
+      border: 1px solid #dc2626;
+      border-radius: 8px;
+      color: #dc2626;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .success-message {
+      padding: 12px 16px;
+      background-color: #d1fae5;
+      border: 1px solid #10b981;
+      border-radius: 8px;
+      color: #047857;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
+
+/* Footer sticky al fondo del panel */
+mat-dialog-actions {
+  padding: 24px;
+  margin: 0;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: center;
+
+  .submit-btn {
+    width: 360px;
+    min-width: 120px;
+    height: 40px;
+    background-color: #0d66d0;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    &:disabled {
+      background-color: #1078ff;
+      color: #ffffff;
+    }
+    &:not(:disabled):hover {
+      background-color: #0b5bb8;
+    }
+
+    mat-spinner {
+      display: inline-block;
+    }
+  }
+}
+
+// Accessibility: Screen reader only
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Accessibility: Focus visible
+.close-btn:focus-visible,
+.download-btn:focus-visible,
+.upload-btn:focus-visible,
+.submit-btn:focus-visible {
+  outline: 3px solid #0d66d0;
+  outline-offset: 2px;
+}
+
+// Custom Material overrides for this dialog
+::ng-deep {
+  .cargue-masivo-dialog {
+    .mat-mdc-form-field {
+      .mat-mdc-text-field-wrapper {
+        background-color: white;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .cargue-masivo-dialog {
+    max-width: 100%;
+  }
+
+  .dialog-header h2 {
+    font-size: 20px;
+  }
+
+  mat-dialog-actions {
+    .submit-btn {
+      width: 100%;
+    }
+  }
+
+  mat-dialog-content {
+    .step-section {
+      .download-btn,
+      .upload-btn {
+        width: 100%;
+      }
+
+      .file-info-box {
+        width: 100%;
+        min-width: unset;
+      }
+    }
+  }
+}

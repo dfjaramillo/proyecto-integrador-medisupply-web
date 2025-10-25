@@ -17,6 +17,14 @@
       >
         Crear producto
       </button>
+      <button
+        mat-raised-button
+        class="upload-btn"
+        (click)="openCargueMasivoDialog()"
+        aria-label="Cargue masivo de productos"
+      >
+        Cargue masivo
+      </button>
       }
     </div>
 
@@ -176,15 +184,19 @@
         </button>
 
         @for (page of pageNumbers; track page) {
-        <button
-          class="pagination-btn"
-          [class.active]="page === currentPage"
-          (click)="goToPage(page)"
-          [attr.aria-label]="'Ir a página ' + page"
-          [attr.aria-current]="page === currentPage ? 'page' : null"
-        >
-          {{ page }}
-        </button>
+          @if (page > 0) {
+            <button
+              class="pagination-btn"
+              [class.active]="page === currentPage"
+              (click)="goToPage(page)"
+              [attr.aria-label]="'Ir a página ' + page"
+              [attr.aria-current]="page === currentPage ? 'page' : null"
+            >
+              {{ page }}
+            </button>
+          } @else {
+            <span class="pagination-ellipsis" aria-hidden="true">...</span>
+          }
         }
 
         <button
@@ -197,6 +209,12 @@
         </button>
       </div>
     </div>
-    } }
+    }
+
+    <!-- Historial de Cargues Masivos -->
+    <div class="history-section">
+      <app-historial-cargue-list></app-historial-cargue-list>
+    </div>
+    }
   </div>
 </div>

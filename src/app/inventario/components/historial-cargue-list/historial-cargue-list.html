@@ -1,0 +1,124 @@
+<mat-expansion-panel class="history-expansion-panel">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon>history</mat-icon>
+      <span>Historial de Cargues Masivos</span>
+    </mat-panel-title>
+    <mat-panel-description>
+      @if (historyPagination()) {
+        {{ historyPagination()!.total }} registro(s)
+      }
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+
+  @if (historyLoading()) {
+  <div class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Cargando historial...</p>
+  </div>
+  } @else {
+  
+  <table mat-table [dataSource]="uploadHistory()" class="history-table">
+    <!-- Nombre del Archivo Column -->
+    <ng-container matColumnDef="file_name">
+      <th mat-header-cell *matHeaderCellDef>NOMBRE DEL ARCHIVO</th>
+      <td mat-cell *matCellDef="let record" class="file-name-cell" [title]="record.file_name">
+        {{ record.file_name }}
+      </td>
+    </ng-container>
+
+    <!-- Fecha Column -->
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef>FECHA</th>
+      <td mat-cell *matCellDef="let record">
+        {{ formatHistoryDate(record.created_at) }}
+      </td>
+    </ng-container>
+
+    <!-- Estado Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>ESTADO</th>
+      <td mat-cell *matCellDef="let record">
+        <span class="status-badge" [class.status-completed]="record.status === 'Finalizado'">
+          {{ record.status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Resultado Column -->
+    <ng-container matColumnDef="result">
+      <th mat-header-cell *matHeaderCellDef>RESULTADO</th>
+      <td mat-cell *matCellDef="let record">{{ record.result }}</td>
+    </ng-container>
+
+    <!-- Usuario Column -->
+    <ng-container matColumnDef="user">
+      <th mat-header-cell *matHeaderCellDef>USUARIO</th>
+      <td mat-cell *matCellDef="let record">{{ record.user }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="historyColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: historyColumns"></tr>
+
+    <!-- No data row -->
+    <tr class="mat-row no-data-row" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="historyColumns.length">
+        No hay historial de cargues masivos
+      </td>
+    </tr>
+  </table>
+
+  <!-- History Pagination -->
+  @if (historyPagination() && historyPagination()!.total_pages > 1) {
+  <div class="custom-pagination">
+    <div class="pagination-info">
+      Mostrando {{ (historyPagination()!.page - 1) * historyPagination()!.per_page + 1 }} al
+      {{
+        Math.min(
+          historyPagination()!.page * historyPagination()!.per_page,
+          historyPagination()!.total
+        )
+      }}
+      de {{ historyPagination()!.total }} registros
+    </div>
+
+    <div class="pagination-buttons">
+      <button
+        class="pagination-btn"
+        (click)="goToHistoryPage(historyCurrentPage - 1)"
+        [disabled]="!historyPagination()?.has_prev"
+        aria-label="Página anterior"
+      >
+        Anterior
+      </button>
+
+      @for (page of historyPageNumbers; track page) {
+        @if (page > 0) {
+          <button
+            class="pagination-btn"
+            [class.active]="page === historyCurrentPage"
+            (click)="goToHistoryPage(page)"
+            [attr.aria-label]="'Ir a página ' + page"
+            [attr.aria-current]="page === historyCurrentPage ? 'page' : null"
+          >
+            {{ page }}
+          </button>
+        } @else {
+          <span class="pagination-ellipsis" aria-hidden="true">...</span>
+        }
+      }
+
+      <button
+        class="pagination-btn"
+        (click)="goToHistoryPage(historyCurrentPage + 1)"
+        [disabled]="!historyPagination()?.has_next"
+        aria-label="Página siguiente"
+      >
+        Siguiente
+      </button>
+    </div>
+  </div>
+  }
+
+  }
+</mat-expansion-panel>

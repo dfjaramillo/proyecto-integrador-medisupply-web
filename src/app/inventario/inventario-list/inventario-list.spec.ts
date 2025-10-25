@@ -8,7 +8,7 @@ import { of, throwError } from 'rxjs';
 import { InventarioListComponent } from './inventario-list';
 import { InventarioService } from '../services/inventario.service';
 import { AuthService } from '../../auth/services/auth.service';
-import { ProductoResponse } from '../models/producto.model';
+import { ProductoResponse, UploadHistoryResponse } from '../models/producto.model';
 import { Pagination } from '../../shared/models/pagination.model';
 
 describe('InventarioListComponent', () => {
@@ -66,8 +66,22 @@ describe('InventarioListComponent', () => {
     prev_page: null
   };
 
+  const mockUploadHistoryResponse: UploadHistoryResponse = {
+    history: [],
+    pagination: {
+      page: 1,
+      per_page: 5,
+      total: 0,
+      total_pages: 0,
+      has_next: false,
+      has_prev: false,
+      next_page: null,
+      prev_page: null
+    }
+  };
+
   beforeEach(async () => {
-    const inventarioServiceSpy = jasmine.createSpyObj('InventarioService', ['getProductos']);
+    const inventarioServiceSpy = jasmine.createSpyObj('InventarioService', ['getProductos', 'getUploadHistory']);
     const authServiceSpy = jasmine.createSpyObj('AuthService', ['getUserRole', 'isAdmin']);
     const snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
     const dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
@@ -89,6 +103,9 @@ describe('InventarioListComponent', () => {
     snackBar = TestBed.inject(MatSnackBar) as jasmine.SpyObj<MatSnackBar>;
     dialog = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+
+    // Configure default return value for getUploadHistory
+    inventarioService.getUploadHistory.and.returnValue(of(mockUploadHistoryResponse));
 
     fixture = TestBed.createComponent(InventarioListComponent);
     component = fixture.componentInstance;
