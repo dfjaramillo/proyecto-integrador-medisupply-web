@@ -114,6 +114,15 @@ export class CargueMasivoComponent {
   }
 
   /**
+   * Remove selected file
+   */
+  removeFile(): void {
+    this.selectedFile = null;
+    this.uploadError.set(null);
+    this.successMessage.set(null);
+  }
+
+  /**
    * Submit file upload
    */
   onSubmit(): void {
@@ -160,6 +169,7 @@ export class CargueMasivoComponent {
           console.error('Error uploading file:', error);
 
           const errorMessage =
+            error.error?.details ||
             error.error?.message ||
             'Error al cargar el archivo, vuelva a intentarlo';
           this.uploadError.set(errorMessage);

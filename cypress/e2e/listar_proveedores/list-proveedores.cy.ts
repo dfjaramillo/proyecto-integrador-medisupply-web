@@ -1,5 +1,5 @@
 describe('Listar Proveedores', () => {
-  const BASE_URL = 'https://proyecto-integrador-medidupply-32b261732f50.herokuapp.com';
+  const BASE_URL = 'http://localhost:4200';
 
   const mockProveedores = [
     {
@@ -45,21 +45,13 @@ describe('Listar Proveedores', () => {
   ];
 
   beforeEach(() => {
-    // Interceptar login con token de administrador
-    cy.intercept('POST', '**/auth/token', {
-      statusCode: 200,
-      body: {
-        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJhZG1pbkBtZWRpc3VwcGx5LmNvbSIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFkbWluaXN0cmFkb3IiXX0sImlhdCI6MTUxNjIzOTAyMn0.mock-signature',
-        expires_in: 3600,
-        refresh_expires_in: 7200,
-        refresh_token: 'mock-refresh-token',
-        token_type: 'Bearer',
-        'not-before-policy': 0,
-        session_state: 'mock-session',
-        scope: 'openid profile email'
-      }
-    }).as('loginRequest');
-
+    // Login como administrador
+    cy.visit(`${BASE_URL}/login`);
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
+    cy.get('button[type="submit"]').click();
+    cy.url().should('not.include', '/login', { timeout: 10000 });
+    
     // Interceptar lista de proveedores con datos
     cy.intercept('GET', '**/providers*', {
       statusCode: 200,
@@ -81,13 +73,6 @@ describe('Listar Proveedores', () => {
       }
     }).as('getProveedores');
 
-    // Login
-    cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
-    cy.get('button[type="submit"]').click();
-    cy.wait('@loginRequest');
-    
     // Navegar a proveedores
     cy.visit(`${BASE_URL}/proveedores`);
     cy.wait('@getProveedores');
@@ -178,22 +163,7 @@ describe('Listar Proveedores', () => {
     cy.get('table tbody tr').should('have.length', 1);
     cy.get('table tbody tr').first().should('contain', 'Laboratorios Unidos');
   });
-
-  it.skip('debe mostrar mensaje cuando no hay resultados', () => {
-    // Este test está deshabilitado porque el filtrado del lado del cliente 
-    // siempre muestra los 5 proveedores mockeados y no hay forma de obtener 0 resultados
-    // sin modificar el interceptor de manera que afecte otros tests
-    
-    // Escribir un valor de búsqueda que sabemos que no existe
-    cy.get('input[placeholder*="Buscar nombre"]').clear().type('XYZ_NOEXISTE_999');
-    
-    // Esperar el debounce (400ms) + tiempo adicional
-    cy.wait(800);
-
-    // Verificar mensaje de sin resultados - puede estar en td.no-data-row o en otro elemento
-    cy.get('table').should('contain', 'No se encontraron proveedores');
-  });
-
+  
   it('debe limpiar los filtros al borrar el texto', () => {
     // Escribir y luego limpiar el filtro
     cy.get('input[placeholder*="Buscar nombre"]').type('Farmacia');

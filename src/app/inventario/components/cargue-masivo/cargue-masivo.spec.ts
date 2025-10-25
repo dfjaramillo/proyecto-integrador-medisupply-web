@@ -130,6 +130,21 @@ describe('CargueMasivoComponent', () => {
     });
   });
 
+  describe('removeFile', () => {
+    it('should clear selected file and reset messages', () => {
+      const mockFile = new File(['test'], 'test.csv', { type: 'text/csv' });
+      component.selectedFile = mockFile;
+      component.uploadError.set('Some error');
+      component.successMessage.set('Some success');
+
+      component.removeFile();
+
+      expect(component.selectedFile).toBeNull();
+      expect(component.uploadError()).toBeNull();
+      expect(component.successMessage()).toBeNull();
+    });
+  });
+
   describe('onSubmit', () => {
     it('should show error if no file selected', () => {
       component.selectedFile = null;
@@ -183,6 +198,26 @@ describe('CargueMasivoComponent', () => {
 
       expect(inventarioService.uploadProductsFile).toHaveBeenCalledWith('user123', mockFile);
       expect(component.uploadError()).toBe('Upload failed');
+    });
+
+    it('should handle upload error with details (more than 100 products)', () => {
+      const mockFile = new File(['test'], 'test.csv', { type: 'text/csv' });
+      component.selectedFile = mockFile;
+      authService.getUserId.and.returnValue('user123');
+
+      const mockError = {
+        error: {
+          success: false,
+          error: 'Error de validación',
+          details: 'Solo se permiten cargar 100 productos. El archivo contiene 1000 registros'
+        }
+      };
+      inventarioService.uploadProductsFile.and.returnValue(throwError(() => mockError));
+
+      component.onSubmit();
+
+      expect(inventarioService.uploadProductsFile).toHaveBeenCalled();
+      expect(component.uploadError()).toBe('Solo se permiten cargar 100 productos. El archivo contiene 1000 registros');
     });
 
     it('should handle upload error without message', () => {

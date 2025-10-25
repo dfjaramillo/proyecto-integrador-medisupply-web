@@ -7,13 +7,7 @@
   /* 🧱 Estructura de layout: header fijo, content scroll, footer sticky */
   display: flex;
   flex-direction: column;
-  height: 100%;
-
-  mat-icon {
-    width: 23.75px;
-    height: 12.75px;
-    color: #ffffff;
-  }
+  height: 100%;  
 }
 
 /* Header normal */
@@ -39,8 +33,7 @@
     border-radius: 10px;
 
     mat-icon {
-      width: 20.75px;
-      height: 24.75px;
+      right: 2px;   
       font-size: 20px;
       line-height: 20px;
     }
@@ -114,11 +107,16 @@ mat-dialog-content {
       background-color: #f9fafb;
       width: fit-content;
       min-width: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
 
       .file-details {
         display: flex;
         align-items: center;
         gap: 8px;
+        flex: 1;
 
         .file-name {
           font-size: 14px;
@@ -130,6 +128,30 @@ mat-dialog-content {
           font-size: 14px;
           font-weight: 400;
           color: #0d66d0;
+        }
+      }
+
+      .remove-file-btn {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6d7183;
+        flex-shrink: 0;
+
+        mat-icon {
+          color: #d61414;
+          width: 18px;
+          height: 18px;
+          font-size: 18px;
+          line-height: 18px;
+        }
+
+        &:hover {
+          color: #dc2626;
+          background-color: #fee2e2;
+          border-radius: 4px;
         }
       }
     }

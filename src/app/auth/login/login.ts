@@ -56,15 +56,9 @@ export class LoginComponent {
       next: (response) => {
         this.loading.set(false);
         this.snack.open('Inicio de sesión exitoso', 'OK', { duration: 2000 });
-        if (response.role=='Compras') {
-          this.router.navigateByUrl('/proveedores');
-        }
-        if (response.role=='Logistica') {
-          this.router.navigateByUrl('/inventario');
-        }
-
+        
         // Navigate to protected route after successful login
-        this.router.navigateByUrl('/usuarios');
+        this.router.navigateByUrl('/');
       },
       error: (err) => {
         this.loading.set(false);
