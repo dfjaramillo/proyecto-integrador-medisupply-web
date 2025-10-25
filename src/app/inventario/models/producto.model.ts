@@ -81,3 +81,24 @@ export interface ApiListResponse {
   message: string;
   data: ProductosListResponse;
 }
+
+// Historial de cargue masivo
+export interface UploadHistoryRecord {
+  id: string;
+  file_name: string;
+  created_at: string;
+  status: string;
+  result: string;
+  user: string;
+}
+
+export interface UploadHistoryResponse {
+  history: UploadHistoryRecord[];
+  pagination: Pagination;
+}
+
+export interface ApiUploadHistoryResponse {
+  success: boolean;
+  message: string;
+  data: UploadHistoryResponse;
+}

@@ -1,13 +1,10 @@
 .inventario-container {
   padding: 0;
-  margin-top: -32px; // Compensate for main-content padding to align with header
-  margin-left: -32px;
-  margin-right: -32px;
+  margin: -32px -32px 0;
 
   .header {
     background-color: #f5f5f5;
     padding: 16px 32px;
-
     margin-bottom: 32px;
 
     h1 {
@@ -24,7 +21,7 @@
       font-size: 14px;
 
       .breadcrumb-link {
-        color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+        color: #0d66d0;
         cursor: pointer;
 
         &:hover {
@@ -45,24 +42,39 @@
   .action-bar {
     display: flex;
     justify-content: flex-start;
+    gap: 16px;
     margin-bottom: 24px;
-    padding: 0 2px; // Add horizontal padding
+    padding: 0 2px;
 
-    .create-btn {
-      background-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+    button {
       color: white;
       font-size: 14px;
       font-weight: 500;
       height: 40px;
-      width: 146px;
       padding: 0 24px;
       border-radius: 8px;
       mat-icon {
         margin-right: 8px;
       }
+    }
 
+    .create-btn {
+      background-color: #0d66d0;
+      width: 146px;
       &:hover {
         background-color: #0d66d9;
+      }
+    }
+
+    .upload-btn {
+      background-color: #28D094;
+      width: 160px;
+      &:hover {
+        background-color: #22b880;
+      }
+      &:disabled {
+        background-color: #E0E0E0;
+        color: #9E9E9E;
       }
     }
   }
@@ -72,7 +84,7 @@
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 17px;
-    margin: 0 32px; // Add horizontal margins
+    margin: 0 32px;
 
     .filter-row {
       display: grid;
@@ -96,24 +108,21 @@
 
         &:focus {
           outline: none;
-          border-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+          border-color: #0d66d0;
         }
       }
 
       .filter-datepicker {
         width: 100%;
-
         ::ng-deep {
           .mat-mdc-text-field-wrapper {
             padding: 0;
             height: 42px;
           }
-
           .mat-mdc-form-field-flex {
             height: 42px;
             align-items: center;
           }
-
           .mat-mdc-form-field-infix {
             padding: 0 12px;
             border-top: none;
@@ -123,11 +132,9 @@
             padding-top: 0 !important;
             padding-bottom: 0 !important;
           }
-
           .mat-mdc-form-field-subscript-wrapper {
             display: none;
           }
-
           .mat-mdc-text-field-wrapper.mdc-text-field--outlined {
             .mdc-notched-outline__leading,
             .mdc-notched-outline__notch,
@@ -136,33 +143,28 @@
               border-radius: 4px;
             }
           }
-
-          .mat-mdc-text-field-wrapper.mdc-text-field--outlined:hover {
-            .mdc-notched-outline__leading,
-            .mdc-notched-outline__notch,
-            .mdc-notched-outline__trailing {
-              border-color: #0d66d0;
-            }
-          }
-
+          .mat-mdc-text-field-wrapper.mdc-text-field--outlined:hover,
           .mat-mdc-text-field-wrapper.mdc-text-field--focused {
             .mdc-notched-outline__leading,
             .mdc-notched-outline__notch,
             .mdc-notched-outline__trailing {
               border-color: #0d66d0 !important;
+            }
+          }
+          .mat-mdc-text-field-wrapper.mdc-text-field--focused {
+            .mdc-notched-outline__leading,
+            .mdc-notched-outline__notch,
+            .mdc-notched-outline__trailing {
               border-width: 1px !important;
             }
           }
-
           .mat-mdc-form-field-focus-overlay {
             background-color: transparent;
           }
-
           .mat-mdc-floating-label {
             font-size: 14px;
             color: #9ca3af;
           }
-
           input.mat-mdc-input-element {
             font-size: 14px;
             color: #41444f;
@@ -171,17 +173,14 @@
             padding: 0;
             margin: 0;
             line-height: 42px;
-
             &::placeholder {
               color: #9ca3af;
               opacity: 1;
             }
           }
-
           .mat-datepicker-toggle {
             color: #6d7183;
           }
-
           .mdc-notched-outline__notch {
             border-right: none;
             border-left: none;
@@ -205,24 +204,17 @@
     }
 
     .productos-table {
-      
-      // Aseguramos que solo afecte las filas del cuerpo
+      width: 100%;
+      background: transparent;
       ::ng-deep tbody tr.mat-mdc-row:nth-child(odd) {
-        background-color: #F8F8F8; // color suave
+        background-color: #F8F8F8;
       }
-
       ::ng-deep tbody tr.mat-mdc-row:nth-child(even) {
-        background-color: #ffffff; // blanco base
+        background-color: #ffffff;
       }
-
-      // Prioridad sobre el hover de MDC
       ::ng-deep tbody tr.mat-mdc-row:hover {
         background-color: #f2f6fc !important;
       }
-
-      width: 100%;
-      background: transparent;
-
       th {
         font-size: 12px;
         font-weight: 600;
@@ -232,17 +224,11 @@
         padding: 16px 12px;
         border-bottom: 1px solid #e5e7eb;
       }
-
       td {
         font-size: 14px;
         color: #41444f;
         padding: 16px 12px;
       }
-
-      tr:hover {
-        background-color: #f9fafb;
-      }
-
       .no-data-row {
         text-align: center;
         color: #6d7183;
@@ -285,14 +271,14 @@
 
           &:hover:not(:disabled) {
             background-color: #f9fafb;
-            border-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
-            color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+            border-color: #0d66d0;
+            color: #0d66d0;
           }
 
           &.active {
-            background-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+            background-color: #0d66d0;
             color: white;
-            border-color: #0d66d0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
+            border-color: #0d66d0;
           }
 
           &:disabled {
@@ -300,7 +286,25 @@
             cursor: not-allowed;
           }
         }
+
+        .pagination-ellipsis {
+          min-width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #6d7183;
+          font-size: 14px;
+          font-weight: 500;
+          user-select: none;
+        }
       }
+    }
+
+    .history-section {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 2px solid #e5e7eb;
     }
   }
 }

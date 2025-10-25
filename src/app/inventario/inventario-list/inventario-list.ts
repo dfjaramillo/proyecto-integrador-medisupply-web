@@ -16,6 +16,8 @@ import { AuthService } from '../../auth/services/auth.service';
 import { ProductoResponse } from '../models/producto.model';
 import { Pagination } from '../../shared/models/pagination.model';
 import { CreateProductoComponent } from '../components/create-producto/create-producto';
+import { CargueMasivoComponent } from '../components/cargue-masivo/cargue-masivo';
+import { HistorialCargueListComponent } from '../components/historial-cargue-list/historial-cargue-list';
 import { MatFormField, MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDatepickerToggle, MatDatepicker } from "@angular/material/datepicker";
@@ -39,7 +41,8 @@ import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/cor
     MatInputModule,
     MatFormField,
     MatDatepickerToggle,
-    MatDatepicker
+    MatDatepicker,
+    HistorialCargueListComponent
 ],
  providers: [
     provideNativeDateAdapter(),
@@ -317,7 +320,50 @@ export class InventarioListComponent implements OnInit, OnDestroy {
 
   get pageNumbers(): number[] {
     const totalPages = this.pagination()?.total_pages || 0;
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
+    const current = this.currentPage;
+    const delta = 2; // Número de páginas a mostrar a cada lado de la página actual
+    const pages: number[] = [];
+
+    // Siempre mostrar la primera página
+    if (totalPages > 0) {
+      pages.push(1);
+    }
+
+    // Calcular el rango de páginas a mostrar
+    let start = Math.max(2, current - delta);
+    let end = Math.min(totalPages - 1, current + delta);
+
+    // Ajustar si estamos cerca del inicio
+    if (current <= delta + 2) {
+      end = Math.min(totalPages - 1, delta * 2 + 2);
+    }
+
+    // Ajustar si estamos cerca del final
+    if (current >= totalPages - delta - 1) {
+      start = Math.max(2, totalPages - delta * 2 - 1);
+    }
+
+    // Agregar puntos suspensivos al inicio si es necesario
+    if (start > 2) {
+      pages.push(-1); // -1 representa "..."
+    }
+
+    // Agregar páginas del rango
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    // Agregar puntos suspensivos al final si es necesario
+    if (end < totalPages - 1) {
+      pages.push(-2); // -2 representa "..."
+    }
+
+    // Siempre mostrar la última página (si hay más de una página)
+    if (totalPages > 1) {
+      pages.push(totalPages);
+    }
+
+    return pages;
   }
 
   get totalPages(): number {
@@ -354,6 +400,35 @@ export class InventarioListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'created') {
+        this.loadProductos();
+      }
+    });
+  }
+
+  openCargueMasivoDialog(): void {
+    const dialogRef = this.dialog.open(CargueMasivoComponent, {
+    hasBackdrop: true,
+    disableClose: true,
+    // quita la animación default de material
+    enterAnimationDuration: '0ms',
+    exitAnimationDuration: '0ms',
+    // tamaño y anclaje al borde derecho
+    width: '600px',
+    maxWidth: '800px',
+    height: '100vh',
+    panelClass: ['right-sheet'],
+    position: { right: '0' }
+  });
+    // const dialogRef = this.dialog.open(CargueMasivoComponent, {
+    //   width: '700px',
+    //   disableClose: true
+    // });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'uploaded') {
+        this.snackBar.open('Productos cargados exitosamente', 'Cerrar', {
+          duration: 3000
+        });
         this.loadProductos();
       }
     });

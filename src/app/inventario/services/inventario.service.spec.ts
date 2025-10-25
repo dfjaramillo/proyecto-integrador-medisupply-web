@@ -471,4 +471,48 @@ describe('InventarioService', () => {
       req.flush(mockResponse);
     });
   });
+
+  describe('uploadProductsFile', () => {
+    it('should upload a file successfully', () => {
+      const mockFile = new File(['test content'], 'test.csv', { type: 'text/csv' });
+      const userId = 'user-123';
+      const mockResponse = {
+        success: true,
+        message: 'Archivo cargado exitosamente',
+        data: { history_id: 'history-456' }
+      };
+
+      service.uploadProductsFile(userId, mockFile).subscribe(response => {
+        expect(response.success).toBe(true);
+        expect(response.message).toBe('Archivo cargado exitosamente');
+        expect(response.data.history_id).toBe('history-456');
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/inventory/products/import`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body instanceof FormData).toBe(true);
+      req.flush(mockResponse);
+    });
+
+    it('should handle upload error', () => {
+      const mockFile = new File(['test content'], 'test.csv', { type: 'text/csv' });
+      const userId = 'user-123';
+      const mockError = {
+        error: {
+          success: false,
+          message: 'Error al procesar archivo'
+        }
+      };
+
+      service.uploadProductsFile(userId, mockFile).subscribe({
+        next: () => fail('should have failed'),
+        error: (error) => {
+          expect(error.error).toBeDefined();
+        }
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/inventory/products/import`);
+      req.flush(mockError, { status: 400, statusText: 'Bad Request' });
+    });
+  });
 });

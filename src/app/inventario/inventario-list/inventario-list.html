@@ -17,6 +17,14 @@
       >
         Crear producto
       </button>
+      <button
+        mat-raised-button
+        class="upload-btn"
+        (click)="openCargueMasivoDialog()"
+        aria-label="Cargue masivo de productos"
+      >
+        Cargue masivo
+      </button>
       }
     </div>
 
@@ -50,7 +58,11 @@
         minlength="3"
       />
 
-      <mat-form-field appearance="outline" class="filter-datepicker" style="width: 184px">
+      <mat-form-field
+        appearance="outline"
+        class="filter-datepicker"
+        style="width: 184px"
+      >
         <input
           matInput
           [matDatepicker]="picker"
@@ -59,7 +71,10 @@
           placeholder="Buscar Fecha"
           aria-label="Filtrar por fecha de vencimiento"
         />
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
@@ -144,11 +159,12 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
       <!-- No data row -->
-        <tr class="mat-row no-data-row" *matNoDataRow>
-          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
-            No se encontraron productos que coincidan con los criterios de búsqueda
-          </td>
-        </tr>
+      <tr class="mat-row no-data-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          No se encontraron productos que coincidan con los criterios de
+          búsqueda
+        </td>
+      </tr>
     </table>
 
     <!-- Pagination -->
@@ -175,7 +191,7 @@
           Anterior
         </button>
 
-        @for (page of pageNumbers; track page) {
+        @for (page of pageNumbers; track page) { @if (page > 0) {
         <button
           class="pagination-btn"
           [class.active]="page === currentPage"
@@ -185,7 +201,9 @@
         >
           {{ page }}
         </button>
-        }
+        } @else {
+        <span class="pagination-ellipsis" aria-hidden="true">...</span>
+        } }
 
         <button
           class="pagination-btn"
@@ -196,6 +214,13 @@
           Siguiente
         </button>
       </div>
+    </div>
+    }
+
+    <!-- Historial de Cargues Masivos -->
+    @if(canCreateProducto()) {
+    <div class="history-section">
+      <app-historial-cargue-list></app-historial-cargue-list>
     </div>
     } }
   </div>

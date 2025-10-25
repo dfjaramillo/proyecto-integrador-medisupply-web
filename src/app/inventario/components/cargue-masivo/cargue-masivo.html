@@ -1,0 +1,94 @@
+<div class="cargue-masivo-dialog">
+  <div class="dialog-header">
+    <h2>Cargue masivo</h2>
+    <button
+      mat-icon-button
+      class="close-btn"
+      (click)="onCancel()"
+      type="button"
+      aria-label="Cerrar formulario de cargue masivo"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <div class="content-section">
+      <!-- Paso 1: Descargar plantilla -->
+      <div class="step-section">
+        <p class="step-label">1. Obtén la plantilla que debes diligenciar</p>
+        <button
+          mat-raised-button
+          class="download-btn"
+          (click)="downloadTemplate()"
+          type="button"
+        >
+          <mat-icon>download</mat-icon>
+          Descargar plantilla
+        </button>
+      </div>
+
+      <!-- Paso 2: Cargar archivo -->
+      <div class="step-section">
+        <p class="step-label">2. Sube el archivo a la plataforma</p>
+        
+        @if (!selectedFile) {
+        <button
+          mat-raised-button
+          class="upload-btn"
+          (click)="fileInput.click()"
+          type="button"
+        >
+          <mat-icon>upload</mat-icon>
+          Cargar plantilla
+        </button>
+        <input
+          #fileInput
+          type="file"
+          accept=".csv,.xlsx,.xls"
+          (change)="onFileSelected($event)"
+          style="display: none"
+          aria-label="Seleccionar archivo"
+        />
+        }
+
+        @if (selectedFile) {
+        <div class="file-info-box">
+          <div class="file-details">
+            <span class="file-name">{{ selectedFile.name }}</span>
+            <span class="file-size">| {{ formatFileSize(selectedFile.size) }}</span>
+          </div>
+        </div>
+        }
+
+        @if (uploadError()) {
+        <div class="error-message" role="alert">
+          {{ uploadError() }}
+        </div>
+        }
+
+        @if (successMessage()) {
+        <div class="success-message" role="alert">
+          {{ successMessage() }}
+        </div>
+        }
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+      mat-raised-button
+      type="button"
+      class="submit-btn"
+      [disabled]="!selectedFile || loading()"
+      (click)="onSubmit()"
+      [attr.aria-busy]="loading()"
+    >
+      @if (!loading()) { Guardar } @else {
+      <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+      <span class="sr-only">Cargando archivo...</span>
+      }
+    </button>
+  </mat-dialog-actions>
+</div>
