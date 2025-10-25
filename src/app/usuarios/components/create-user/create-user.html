@@ -1,7 +1,13 @@
 <div class="create-user-dialog">
   <div class="dialog-header">
-    <h2 mat-dialog-title>Crear usuario</h2>
-    <button mat-icon-button (click)="onCancel()" class="close-btn" type="button">
+    <h2>Crear usuario</h2>
+    <button
+      mat-icon-button
+      class="close-btn"
+      (click)="onCancel()"
+      type="button"
+      aria-label="Cerrar formulario de crear usuario"
+    >
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -109,18 +115,18 @@
     </form>
   </mat-dialog-content>
 
-  <mat-dialog-actions align="center">
+  <mat-dialog-actions>
     <button
       mat-raised-button
-      color="primary"
+      type="submit"
+      class="submit-btn"
+      [disabled]="form.invalid || loading()"
       (click)="onSubmit()"
-      [disabled]="loading()"
-      type="button"
-      class="submit-btn">
-      @if (loading()) {
-        <mat-spinner diameter="20"></mat-spinner>
-      } @else {
-        Guardar
+      [attr.aria-busy]="loading()"
+    >
+      @if (!loading()) { Guardar } @else {
+      <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+      <span class="sr-only">Guardando usuario...</span>
       }
     </button>
   </mat-dialog-actions>

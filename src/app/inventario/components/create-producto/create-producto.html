@@ -1,147 +1,151 @@
 <div class="create-producto-dialog">
   <div class="dialog-header">
     <h2>Crear producto</h2>
-    <button 
-      mat-icon-button 
+    <button
+      mat-icon-button
       class="close-btn"
       (click)="onCancel()"
-      aria-label="Cerrar formulario de crear producto">
+      aria-label="Cerrar formulario de crear producto"
+    >
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
   <mat-dialog-content>
     <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
-      
       <!-- SKU -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>SKU</mat-label>
-        <input 
-          matInput 
-          formControlName="sku" 
+        <input
+          matInput
+          formControlName="sku"
           placeholder="MED-0001"
           aria-required="true"
-          aria-describedby="sku-hint">
+          aria-describedby="sku-hint"
+        />
         <mat-hint id="sku-hint">Formato: MED-XXXX (4 dígitos)</mat-hint>
         @if (hasError('sku', 'required')) {
-          <mat-error role="alert">El SKU es obligatorio</mat-error>
-        }
-        @if (hasError('sku', 'skuFormat')) {
-          <mat-error role="alert">{{ getErrorMessage('sku') }}</mat-error>
-        }
-        @if (hasError('sku', 'skuExists')) {
-          <mat-error role="alert">{{ getErrorMessage('sku') }}</mat-error>
+        <mat-error role="alert">El SKU es obligatorio</mat-error>
+        } @if (hasError('sku', 'skuFormat')) {
+        <mat-error role="alert">{{ getErrorMessage("sku") }}</mat-error>
+        } @if (hasError('sku', 'skuExists')) {
+        <mat-error role="alert">{{ getErrorMessage("sku") }}</mat-error>
         }
       </mat-form-field>
 
       <!-- Nombre -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Nombre</mat-label>
-        <input 
-          matInput 
-          formControlName="name" 
+        <input
+          matInput
+          formControlName="name"
           placeholder="Ej: Acetaminofén"
-          aria-required="true">
+          aria-required="true"
+        />
         @if (hasError('name', 'required')) {
-          <mat-error role="alert">El nombre es obligatorio</mat-error>
-        }
-        @if (hasError('name', 'minlength') || hasError('name', 'productName')) {
-          <mat-error role="alert">{{ getErrorMessage('name') }}</mat-error>
+        <mat-error role="alert">El nombre es obligatorio</mat-error>
+        } @if (hasError('name', 'minlength') || hasError('name', 'productName'))
+        {
+        <mat-error role="alert">{{ getErrorMessage("name") }}</mat-error>
         }
       </mat-form-field>
 
       <!-- Fecha de vencimiento -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Fecha de vencimiento</mat-label>
-        <input 
-          matInput 
-          [matDatepicker]="picker" 
+        <input
+          matInput
+          [matDatepicker]="picker"
           formControlName="expiration_date"
           placeholder="Seleccione una fecha"
-          aria-required="true">
+          aria-required="true"
+        />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         @if (hasError('expiration_date', 'required')) {
-          <mat-error role="alert">La fecha de vencimiento es obligatoria</mat-error>
-        }
-        @if (hasError('expiration_date', 'futureDate')) {
-          <mat-error role="alert">{{ getErrorMessage('expiration_date') }}</mat-error>
+        <mat-error role="alert"
+          >La fecha de vencimiento es obligatoria</mat-error
+        >
+        } @if (hasError('expiration_date', 'futureDate')) {
+        <mat-error role="alert">{{
+          getErrorMessage("expiration_date")
+        }}</mat-error>
         }
       </mat-form-field>
 
       <!-- Cantidad a registrar -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Cantidad a registrar</mat-label>
-        <input 
-          matInput 
-          type="number" 
-          formControlName="quantity" 
+        <input
+          matInput
+          type="number"
+          formControlName="quantity"
           placeholder="1500"
           min="1"
           max="9999"
           aria-required="true"
-          aria-describedby="cantidad-hint">
+          aria-describedby="cantidad-hint"
+        />
         <mat-hint id="cantidad-hint">Rango: 1-9999 unidades</mat-hint>
         @if (hasError('quantity', 'required')) {
-          <mat-error role="alert">La cantidad es obligatoria</mat-error>
-        }
-        @if (hasError('quantity', 'cantidad')) {
-          <mat-error role="alert">{{ getErrorMessage('quantity') }}</mat-error>
+        <mat-error role="alert">La cantidad es obligatoria</mat-error>
+        } @if (hasError('quantity', 'cantidad')) {
+        <mat-error role="alert">{{ getErrorMessage("quantity") }}</mat-error>
         }
       </mat-form-field>
 
       <!-- Precio c/u (COP) -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Precio c/u (COP)</mat-label>
-        <input 
-          matInput 
-          type="number" 
-          formControlName="price" 
+        <input
+          matInput
+          type="number"
+          formControlName="price"
           placeholder="8500"
           min="0"
           step="0.01"
-          aria-required="true">
-        <span matPrefix style="padding-left: 16px;">$&nbsp;</span>
+          aria-required="true"
+        />
+        <span matPrefix style="padding-left: 16px">$&nbsp;</span>
         @if (hasError('price', 'required')) {
-          <mat-error role="alert">El precio es obligatorio</mat-error>
-        }
-        @if (hasError('price', 'precio')) {
-          <mat-error role="alert">{{ getErrorMessage('price') }}</mat-error>
+        <mat-error role="alert">El precio es obligatorio</mat-error>
+        } @if (hasError('price', 'precio')) {
+        <mat-error role="alert">{{ getErrorMessage("price") }}</mat-error>
         }
       </mat-form-field>
 
       <!-- Ubicación (Pasillo - Estante - Nivel) -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Ubicación (Pasillo - Estante - Nivel)</mat-label>
-        <input 
-          matInput 
-          formControlName="location" 
+        <input
+          matInput
+          formControlName="location"
           placeholder="A-03-01"
           aria-required="true"
-          aria-describedby="ubicacion-hint">
+          aria-describedby="ubicacion-hint"
+        />
         <mat-hint id="ubicacion-hint">Formato: P-EE-NN (ej: A-03-02)</mat-hint>
         @if (hasError('location', 'required')) {
-          <mat-error role="alert">La ubicación es obligatoria</mat-error>
-        }
-        @if (hasError('location', 'ubicacionFormat')) {
-          <mat-error role="alert">{{ getErrorMessage('location') }}</mat-error>
+        <mat-error role="alert">La ubicación es obligatoria</mat-error>
+        } @if (hasError('location', 'ubicacionFormat')) {
+        <mat-error role="alert">{{ getErrorMessage("location") }}</mat-error>
         }
       </mat-form-field>
 
       <!-- Descripción -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Descripción</mat-label>
-        <textarea 
-          matInput 
-          formControlName="description" 
+        <textarea
+          matInput
+          formControlName="description"
           rows="3"
           placeholder="Amoxicilina es un antibiótico de la familia de las penicilinas..."
-          aria-required="true"></textarea>
+          aria-required="true"
+        ></textarea>
         @if (hasError('description', 'required')) {
-          <mat-error role="alert">La descripción es obligatoria</mat-error>
-        }
-        @if (hasError('description', 'minlength')) {
-          <mat-error role="alert">{{ getErrorMessage('description') }}</mat-error>
+        <mat-error role="alert">La descripción es obligatoria</mat-error>
+        } @if (hasError('description', 'minlength')) {
+        <mat-error role="alert">{{ getErrorMessage("description") }}</mat-error>
         }
       </mat-form-field>
 
@@ -150,11 +154,11 @@
         <mat-label>Tipo de producto</mat-label>
         <mat-select formControlName="product_type" aria-required="true">
           @for (tipo of tiposProducto; track tipo) {
-            <mat-option [value]="tipo">{{ tipo }}</mat-option>
+          <mat-option [value]="tipo">{{ tipo }}</mat-option>
           }
         </mat-select>
         @if (hasError('product_type', 'required')) {
-          <mat-error role="alert">El tipo de producto es obligatorio</mat-error>
+        <mat-error role="alert">El tipo de producto es obligatorio</mat-error>
         }
       </mat-form-field>
 
@@ -166,77 +170,97 @@
           formControlName="provider_id"
           [matAutocomplete]="auto"
           placeholder="Buscar proveedor..."
-          aria-required="true">
-        <mat-autocomplete 
-          #auto="matAutocomplete" 
+          aria-required="true"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
           [displayWith]="displayProvider"
-          (optionSelected)="onProviderSelected($event.option.value)">
+          (optionSelected)="onProviderSelected($event.option.value)"
+        >
           @for (provider of filteredProviders(); track provider.id) {
-            <mat-option [value]="provider">{{ provider.name }}</mat-option>
+          <mat-option [value]="provider">{{ provider.name }}</mat-option>
           }
         </mat-autocomplete>
         @if (hasError('provider_id', 'required')) {
-          <mat-error role="alert">El proveedor es obligatorio</mat-error>
+        <mat-error role="alert">El proveedor es obligatorio</mat-error>
         }
       </mat-form-field>
 
       <!-- Foto -->
-      <div class="foto-section">
-        <label class="foto-label">Foto</label>
-        <div class="foto-upload">
-          @if (!previewUrl) {
-            <button 
-              type="button"
-              mat-raised-button 
-              class="upload-btn"
-              (click)="fileInput.click()"
-              aria-label="Subir archivo de imagen">
-              <mat-icon>upload</mat-icon>
-              Subir archivo
-            </button>
-            <input 
-              #fileInput
-              type="file" 
-              accept="image/jpeg,image/jpg,image/png,image/gif"
-              (change)="onFileSelected($event)"
-              style="display: none"
-              aria-label="Seleccionar archivo de imagen">
-            <p class="foto-hint">JPG, PNG o GIF - Máximo 2MB</p>
-          } @else {
-            <div class="preview-container">
-              <img [src]="previewUrl" alt="Vista previa del producto" class="preview-image">
-              <button 
-                type="button"
-                mat-icon-button 
-                class="remove-btn"
-                (click)="removeFile()"
-                aria-label="Eliminar imagen">
-                <mat-icon>close</mat-icon>
-              </button>
-            </div>
-          }
-          @if (hasError('photo', 'imagenTipo') || hasError('photo', 'imagenTamano')) {
-            <p class="error-text" role="alert">{{ getErrorMessage('photo') }}</p>
-          }
-        </div>
-      </div>
+      <!-- Logo -->
+      <div class="logo-upload-section">
+        <label class="logo-label">Foto</label>
 
+        @if (!selectedFile && !previewUrl) {
+        <div class="upload-area">
+          <button
+            type="button"
+            mat-raised-button
+            color="accent"
+            (click)="fileInput.click()"
+            class="upload-btn"
+          >
+            <mat-icon>upload</mat-icon>
+            Subir archivo
+          </button>
+          <p class="upload-hint">JPG, PNG o GIF (máx. 2MB)</p>
+          <input
+            #fileInput
+            type="file"
+            accept="image/jpeg,image/png,image/gif"
+            (change)="onFileSelected($event)"
+            style="display: none"
+            aria-label="Seleccionar archivo de imagen"
+          />
+        </div>
+        } @if (selectedFile && previewUrl) {
+        <div class="file-preview">
+          <img
+            [src]="previewUrl"
+            alt="Vista previa del producto"
+            class="preview-image"
+          />
+          <div class="file-info">
+            <p class="file-name">{{ selectedFile.name }}</p>
+            <p class="file-size">
+              {{ (selectedFile.size / 1024).toFixed(2) }} KB
+            </p>
+          </div>
+          <button
+            type="button"
+            mat-icon-button
+            color="warn"
+            (click)="removeFile()"
+            aria-label="Eliminar imagen"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+        } @if (hasError('logo', 'imagenTipo')) {
+        <mat-error role="alert" class="logo-error">{{
+          getErrorMessage("logo")
+        }}</mat-error>
+        } @if (hasError('logo', 'imagenTamano')) {
+        <mat-error role="alert" class="logo-error">{{
+          getErrorMessage("logo")
+        }}</mat-error>
+        }
+      </div>
     </form>
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <button 
-      mat-raised-button 
-      type="submit" 
+    <button
+      mat-raised-button
+      type="submit"
       class="submit-btn"
       [disabled]="productoForm.invalid || loading()"
       (click)="onSubmit()"
-      [attr.aria-busy]="loading()">
-      @if (!loading()) {
-        Guardar
-      } @else {
-        <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
-        <span class="sr-only">Guardando producto...</span>
+      [attr.aria-busy]="loading()"
+    >
+      @if (!loading()) { Guardar } @else {
+      <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+      <span class="sr-only">Guardando producto...</span>
       }
     </button>
   </mat-dialog-actions>
