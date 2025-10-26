@@ -25,6 +25,8 @@ export class SidebarComponent {
   // Collapsible sections state
   administracionExpanded = signal(true);
   ventasExpanded = signal(true);
+  // Sidebar collapsed state for mobile/responsive
+  sidebarCollapsed = signal(false);
 
   constructor() {
     // Get user role on component initialization
@@ -121,6 +123,17 @@ export class SidebarComponent {
 
   toggleVentas(): void {
     this.ventasExpanded.set(!this.ventasExpanded());
+  }
+
+  toggleSidebar(): void {
+    this.sidebarCollapsed.set(!this.sidebarCollapsed());
+  }
+
+  closeSidebar(): void {
+    // Close sidebar on mobile when a nav item is clicked
+    if (window.innerWidth <= 768) {
+      this.sidebarCollapsed.set(true);
+    }
   }
 
 

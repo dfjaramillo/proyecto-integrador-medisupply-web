@@ -13,17 +13,19 @@ RUN npm install --no-audit --no-fund
 
 # Copy source and run build
 COPY . .
-RUN npm run build
+RUN npm run build -- --configuration development
 
 
 ### Runtime: minimal node image that runs server.js and serves dist/
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-# Only install production dependencies
+# Set to development mode
+ENV NODE_ENV=development
+
+# Install ALL dependencies (including devDependencies for development)
 COPY package.json package-lock.json* ./
-ENV NODE_ENV=production
-RUN npm install --omit=dev --no-audit --no-fund
+RUN npm install --no-audit --no-fund
 
 # Copy built Angular files from builder
 COPY --from=builder /app/dist ./dist

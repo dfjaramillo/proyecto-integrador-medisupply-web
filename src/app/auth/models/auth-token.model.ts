@@ -10,6 +10,7 @@ export interface AuthTokenResponse {
   email?: string;
   name?: string;
   role?: string;
+  id?: string;
 }
 
 export interface LoginRequest {
@@ -18,6 +19,7 @@ export interface LoginRequest {
 }
 
 export interface StoredUser {
+  id?: string | null;
   email?: string | null;
   name?: string | null;
   role?: string | null;

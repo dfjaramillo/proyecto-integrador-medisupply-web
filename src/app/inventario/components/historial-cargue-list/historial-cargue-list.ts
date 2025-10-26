@@ -132,7 +132,7 @@ export class HistorialCargueListComponent implements OnInit {
    * Formatea la fecha del historial
    */
   formatHistoryDate(dateString: string): string {
-    return new Date(dateString).toLocaleString('en-US', {
+    return new Date(dateString).toLocaleString('es-CO', {
       year: 'numeric',
       month: 'short',
       day: '2-digit',

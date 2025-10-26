@@ -30,7 +30,8 @@ export class AuthService {
           const userInfo: StoredUser = {
             email: response.email ?? null,
             name: response.name ?? null,
-            role: response.role ?? null
+            role: response.role ?? null,
+            id: response.id ?? null
           };
           try {
             localStorage.setItem(this.USER_KEY, JSON.stringify(userInfo));
@@ -156,8 +157,9 @@ export class AuthService {
    * Get user ID (subject) from JWT token
    */
   getUserId(): string | null {
-    const decodedToken = this.getDecodedToken();
-    return decodedToken?.sub || null;
+    const stored = this.getStoredUser();
+    if (stored?.id) return stored.id;    
+    return  null;
   }
 
   /**

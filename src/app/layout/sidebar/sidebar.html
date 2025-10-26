@@ -1,4 +1,15 @@
-<aside class="sidebar">
+<!-- Mobile overlay backdrop -->
+<div class="sidebar-overlay" 
+     [class.show]="!sidebarCollapsed()" 
+     (click)="toggleSidebar()">
+</div>
+
+<!-- Mobile toggle button -->
+<button class="sidebar-toggle" (click)="toggleSidebar()" type="button" aria-label="Toggle sidebar">
+  <mat-icon>{{ sidebarCollapsed() ? 'menu' : 'close' }}</mat-icon>
+</button>
+
+<aside class="sidebar" [class.collapsed]="sidebarCollapsed()">
   <div class="sidebar-header">
     <img src="/images/logo.png" alt="MediSupply" class="sidebar-logo">
   </div>
@@ -16,13 +27,13 @@
         
         <div class="nav-items pl-20" [class.collapsed]="!administracionExpanded()">
           @if(isAdministrador()){
-          <a class="nav-item" routerLink="/usuarios" routerLinkActive="active">
+          <a class="nav-item" routerLink="/usuarios" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>person</mat-icon>
             <span>Usuarios</span>
           </a>
           }
           @if(canSeeProveedores()){
-          <a class="nav-item" routerLink="/proveedores" routerLinkActive="active">
+          <a class="nav-item" routerLink="/proveedores" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>business</mat-icon>
             <span>Proveedores</span>
           </a>
@@ -33,7 +44,7 @@
     <!-- INVENTARIO Section - Visible for Administrador and Compras -->
     @if (canSeeInventario()) {
       <div class="nav-section">      
-        <a class="nav-item" routerLink="/inventario" routerLinkActive="active">
+        <a class="nav-item" routerLink="/inventario" routerLinkActive="active" (click)="closeSidebar()">
           <mat-icon>inventory_2</mat-icon>
           <span>INVENTARIO</span>
         </a>

@@ -10,6 +10,12 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  transition: margin-left 0.3s ease;
+
+  // Mobile: no margin since sidebar is off-canvas
+  @media (max-width: 768px) {
+    margin-left: 0;
+  }
 }
 
 .main-header {
@@ -23,6 +29,11 @@
 
   .header-content {
     width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 60px 0 16px; // Extra left padding for mobile toggle button
+    height: 64px;
   }
 }
 
@@ -38,5 +49,10 @@
 
   .content-container {
     width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+    border-radius: 12px;
   }
 }
