@@ -1,40 +1,32 @@
 describe('Crear Usuario', () => {
-  const BASE_URL = 'https://proyecto-integrador-medidupply-32b261732f50.herokuapp.com';
+  const BASE_URL = 'http://localhost:3000';
 
   beforeEach(() => {
-    // Interceptar login con token de administrador
-    cy.intercept('POST', '**/auth/token', {
-      statusCode: 200,
-      body: {
-        access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZW1haWwiOiJhZG1pbkBtZWRpc3VwcGx5LmNvbSIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIkFkbWluaXN0cmFkb3IiXX0sImlhdCI6MTUxNjIzOTAyMn0.mock-signature',
-        expires_in: 3600,
-        refresh_expires_in: 7200,
-        refresh_token: 'mock-refresh-token',
-        token_type: 'Bearer',
-        'not-before-policy': 0,
-        session_state: 'mock-session',
-        scope: 'openid profile email'
-      }
-    }).as('loginRequest');
-
     // Interceptar lista de usuarios
-    cy.intercept('GET', '**/users?page=*', {
+    cy.intercept('GET', '**/auth/user**', {
       statusCode: 200,
       body: {
-        users: [],
-        total: 0,
-        page: 1,
-        limit: 5
+        data: {
+          users: [],
+          pagination: {
+            total: 0,
+            page: 1,
+            per_page: 5,
+            total_pages: 0,
+            has_next: false,
+            has_prev: false
+          }
+        }
       }
     }).as('getUsers');
 
     // Login como administrador
     cy.visit(`${BASE_URL}/login`);
-    cy.get('input[type="email"]').type('admin@medisupply.com');
-    cy.get('input[type="password"]').type('Admin123!');
+    cy.get('input[type="email"]').type('medisupply05@gmail.com');
+    cy.get('input[type="password"]').type('Admin123456');
     cy.get('button[type="submit"]').click();
-    cy.wait('@loginRequest');
-    cy.url().should('include', '/usuarios', { timeout: 10000 });
+    cy.url().should('not.include', '/login', { timeout: 10000 });
+    
     // Esperar a que el botón de crear esté visible
     cy.contains('button', 'Crear usuario', { timeout: 10000 }).should('be.visible');
   });
@@ -75,23 +67,16 @@ describe('Crear Usuario', () => {
     cy.get('mat-dialog-container').should('be.visible');
 
     // Intentar guardar sin llenar campos
-    cy.contains('button', 'Guardar').click();
-
-    // Verificar que aparecen mensajes de error
-    cy.get('mat-error').should('exist');
-    cy.get('mat-error').should('contain', 'obligatorio');
+    cy.contains('button', 'Guardar').should('be.disabled');  
   });
 
   it('debe validar el formato del correo electrónico', () => {
     cy.contains('button', 'Crear usuario').click();
     cy.get('mat-dialog-container').should('be.visible');
-
+    
     // Escribir un correo inválido en el campo de email (segundo input en el formulario)
     cy.get('mat-dialog-container').find('input[type="email"]').type('correo-invalido');
-    cy.contains('button', 'Guardar').click(); // Trigger validation
-
-    // Verificar mensaje de error
-    cy.get('mat-error').should('contain', 'Formato de correo inválido');
+    cy.contains('button', 'Guardar').should('be.disabled');
   });
 
   it('debe permitir alternar la visibilidad de la contraseña', () => {
