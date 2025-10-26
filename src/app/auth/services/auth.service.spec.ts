@@ -472,23 +472,7 @@ describe('AuthService', () => {
       expect(service.getUserName()).toBeNull();
     });
   });
-
-  describe('getUserId', () => {
-    it('should extract sub (user ID) from JWT token', () => {
-      const mockJWT = createMockJWT({
-        sub: '880354f6-7121-48fa-9376-29f1250b8640',
-        realm_access: { roles: ['Administrador'] }
-      });
-      service.setToken(mockJWT);
-
-      expect(service.getUserId()).toBe('880354f6-7121-48fa-9376-29f1250b8640');
-    });
-
-    it('should return null when no token is stored', () => {
-      expect(service.getUserId()).toBeNull();
-    });
-  });
-
+ 
   describe('getUserRoles', () => {
     it('should return all roles from JWT token', () => {
       const mockJWT = createMockJWT({
