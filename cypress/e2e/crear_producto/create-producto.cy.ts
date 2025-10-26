@@ -1,5 +1,5 @@
 describe('Crear Producto', () => {
-  const BASE_URL = 'http://localhost:4200';
+  const BASE_URL = 'http://localhost:3000';
 
   beforeEach(() => {
     // Interceptar lista de productos vacía
@@ -118,7 +118,7 @@ describe('Crear Producto', () => {
         message: 'Producto creado exitosamente',
         data: {
           id: 1,
-          sku: 'TEST-001',
+          sku: 'MED-1001',
           name: 'Producto Test',
           expiration_date: '2025-12-31',
           quantity: 100,
@@ -134,7 +134,7 @@ describe('Crear Producto', () => {
         }
       }
     }).as('createProducto');
-
+    
     // Interceptar la lista actualizada con el nuevo producto
     cy.intercept('GET', '**/inventory/products?page=1&per_page=5', {
       statusCode: 200,
@@ -145,7 +145,7 @@ describe('Crear Producto', () => {
           products: [
             {
               id: 1,
-              sku: 'TEST-001',
+              sku: 'MED-1001',
               name: 'Producto Test',
               expiration_date: '2025-12-31',
               quantity: 100,
@@ -173,19 +173,19 @@ describe('Crear Producto', () => {
         }
       }
     }).as('getProductosUpdated');
-
+    
     // Abrir formulario
     cy.contains('button', 'Crear producto').click();
     cy.contains('h2', 'Crear producto').should('be.visible');
     
     // Llenar formulario
-    cy.get('input[formcontrolname="sku"]').type('TEST-001');
+    cy.get('input[formcontrolname="sku"]').type('MED-1001');
     cy.get('input[formcontrolname="name"]').type('Producto Test');
     cy.get('input[formcontrolname="expiration_date"]').type('2025-12-31');
     cy.get('input[formcontrolname="quantity"]').clear().type('100');
     cy.get('input[formcontrolname="price"]').clear().type('50000');
     cy.get('input[formcontrolname="location"]').type('A-01-01', {force: true});
-    cy.get('textarea[formcontrolname="description"]').type('Producto de prueba');
+    cy.get('textarea[formcontrolname="description"]').type('Descripción del producto de prueba');
     
     // Seleccionar tipo de producto
     cy.get('mat-select[formcontrolname="product_type"]').click();
@@ -204,7 +204,7 @@ describe('Crear Producto', () => {
     
     // Verificar que el producto aparece en la lista
     cy.wait('@getProductosUpdated');
-    cy.contains('TEST-001').should('be.visible');
+    cy.contains('MED-1001').should('be.visible');
     cy.contains('Producto Test').should('be.visible');
   });
 
@@ -223,11 +223,11 @@ describe('Crear Producto', () => {
     cy.contains('button', 'Crear producto').click();
     
     // Llenar formulario
-    cy.get('input[formcontrolname="sku"]').type('TEST-001');
+    cy.get('input[formcontrolname="sku"]').type('MED-1001');
     cy.get('input[formcontrolname="name"]').type('Producto Test');
     cy.get('input[formcontrolname="expiration_date"]').type('2025-12-31');
     cy.get('input[formcontrolname="quantity"]').clear().type('100');
-    cy.get('input[formcontrolname="price"]').clear().type('50000');
+    cy.get('input[formcontrolname="price"]').clear().type('5000');
     cy.get('input[formcontrolname="location"]').type('A-01-01', {force: true});
     cy.get('textarea[formcontrolname="description"]').type('Producto de prueba');
     
@@ -243,7 +243,7 @@ describe('Crear Producto', () => {
     cy.wait('@createProductoDuplicado');
     
     // Verificar mensaje de error
-    cy.contains('El SKU ya existe').should('be.visible');
+    cy.contains('El SKU ya existe en el sistema').should('be.visible');
   });
 
   it('Debería cerrar el formulario al cancelar', () => {

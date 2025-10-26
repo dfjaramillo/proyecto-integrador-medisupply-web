@@ -1,5 +1,5 @@
 describe('Listar Productos', () => {
-  const BASE_URL = 'http://localhost:4200';
+  const BASE_URL = 'http://localhost:3000';
 
   const mockProductos = [
     {

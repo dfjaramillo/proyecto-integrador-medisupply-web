@@ -1,5 +1,5 @@
 describe('Paginación de Proveedores', () => {
-  const BASE_URL = 'http://localhost:4200';
+  const BASE_URL = 'http://localhost:3000';
 
   // Crear 15 proveedores mock para probar la paginación
   const createMockProveedores = (count: number) => {

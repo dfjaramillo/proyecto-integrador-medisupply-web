@@ -1,5 +1,5 @@
 describe('Crear Usuario', () => {
-  const BASE_URL = 'http://localhost:4200';
+  const BASE_URL = 'http://localhost:3000';
 
   beforeEach(() => {
     // Interceptar lista de usuarios
@@ -67,23 +67,16 @@ describe('Crear Usuario', () => {
     cy.get('mat-dialog-container').should('be.visible');
 
     // Intentar guardar sin llenar campos
-    cy.contains('button', 'Guardar').click();
-
-    // Verificar que aparecen mensajes de error
-    cy.get('mat-error').should('exist');
-    cy.get('mat-error').should('contain', 'obligatorio');
+    cy.contains('button', 'Guardar').should('be.disabled');  
   });
 
   it('debe validar el formato del correo electrónico', () => {
     cy.contains('button', 'Crear usuario').click();
     cy.get('mat-dialog-container').should('be.visible');
-
+    
     // Escribir un correo inválido en el campo de email (segundo input en el formulario)
     cy.get('mat-dialog-container').find('input[type="email"]').type('correo-invalido');
-    cy.contains('button', 'Guardar').click(); // Trigger validation
-
-    // Verificar mensaje de error
-    cy.get('mat-error').should('contain', 'Formato de correo inválido');
+    cy.contains('button', 'Guardar').should('be.disabled');
   });
 
   it('debe permitir alternar la visibilidad de la contraseña', () => {

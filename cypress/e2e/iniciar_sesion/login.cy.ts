@@ -1,6 +1,6 @@
 describe('Login Flow', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200/login');
+    cy.visit('http://localhost:3000/login');
   });
 
   it('debe mostrar el formulario de inicio de sesión', () => {

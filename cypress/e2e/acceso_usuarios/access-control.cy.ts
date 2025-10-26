@@ -1,5 +1,5 @@
 describe('Control de Acceso a Proveedores', () => {
-  const BASE_URL = 'http://localhost:4200';
+  const BASE_URL = 'http://localhost:3000';
 
   const mockProveedores = {
     message: 'Proveedores obtenidos exitosamente',
@@ -65,7 +65,7 @@ describe('Control de Acceso a Proveedores', () => {
       // Login real como usuario de compras (sin mock)
       cy.visit(`${BASE_URL}/login`);
       cy.get('input[type="email"]').type('compras@correo.com');
-      cy.get('input[type="password"]').type('Dfz2323.');
+      cy.get('input[type="password"]').type('Password123.');
       cy.get('button[type="submit"]').click();
       
       // Esperar a que se complete el login y redirija

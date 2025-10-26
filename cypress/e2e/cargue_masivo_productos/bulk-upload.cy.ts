@@ -1,5 +1,5 @@
 describe('Cargue Masivo de Productos', () => {
-  const BASE_URL = 'http://localhost:4200';
+  const BASE_URL = 'http://localhost:3000';
 
   beforeEach(() => {
     // Interceptar lista de productos vacía
