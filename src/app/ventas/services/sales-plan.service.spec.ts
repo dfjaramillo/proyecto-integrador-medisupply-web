@@ -317,4 +317,106 @@ describe('SalesPlanService', () => {
       req.flush({ message: 'No autorizado' }, { status: 403, statusText: 'Forbidden' });
     });
   });
+
+  describe('getClients', () => {
+    it('should return list of clients', () => {
+      const mockResponse = {
+        message: 'Lista de usuarios obtenida exitosamente',
+        data: {
+          users: [
+            {
+              id: '52689ceb-563d-4ae5-b697-d33825222857',
+              name: 'Clínica Familiar',
+              email: 'contacto92@yahoo.com',
+              institution_type: 'Clínica',
+              phone: '3521102599',
+              role: 'Cliente'
+            },
+            {
+              id: 'ed3f536f-a154-4ee6-9dbd-68a7a61f88e7',
+              name: 'Clínica Test 1981',
+              email: 'cliente_1761801159366_1981@test.com',
+              institution_type: 'Clínica',
+              phone: '3001234567',
+              role: 'Cliente'
+            }
+          ],
+          pagination: {
+            page: 1,
+            per_page: 10,
+            total: 2,
+            total_pages: 1,
+            has_next: false,
+            has_prev: false,
+            next_page: null,
+            prev_page: null
+          }
+        }
+      };
+
+      service.getClients().subscribe(clients => {
+        expect(clients.length).toBe(2);
+        expect(clients[0]).toEqual({
+          id: '52689ceb-563d-4ae5-b697-d33825222857',
+          name: 'Clínica Familiar'
+        });
+        expect(clients[1]).toEqual({
+          id: 'ed3f536f-a154-4ee6-9dbd-68a7a61f88e7',
+          name: 'Clínica Test 1981'
+        });
+      });
+
+      const req = httpMock.expectOne(
+        req => req.url === `${environment.apiUrl}/auth/user/get` && 
+               req.params.get('role') === 'Cliente'
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(mockResponse);
+    });
+
+    it('should return empty array when no clients found', () => {
+      const mockResponse = {
+        message: 'Lista de usuarios obtenida exitosamente',
+        data: {
+          users: [],
+          pagination: {
+            page: 1,
+            per_page: 10,
+            total: 0,
+            total_pages: 0,
+            has_next: false,
+            has_prev: false,
+            next_page: null,
+            prev_page: null
+          }
+        }
+      };
+
+      service.getClients().subscribe(clients => {
+        expect(clients.length).toBe(0);
+      });
+
+      const req = httpMock.expectOne(
+        req => req.url === `${environment.apiUrl}/auth/user/get` && 
+               req.params.get('role') === 'Cliente'
+      );
+      req.flush(mockResponse);
+    });
+
+    it('should handle error response', (done) => {
+      service.getClients().subscribe({
+        next: () => fail('should have failed'),
+        error: (error) => {
+          expect(error.status).toBe(500);
+          done();
+        }
+      });
+
+      const req = httpMock.expectOne(
+        req => req.url === `${environment.apiUrl}/auth/user/get` && 
+               req.params.get('role') === 'Cliente'
+      );
+      req.flush({ message: 'Internal server error' }, { status: 500, statusText: 'Internal Server Error' });
+    });
+  });
 });

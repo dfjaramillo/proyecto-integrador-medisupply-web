@@ -78,6 +78,9 @@ describe('CreateProductoComponent', () => {
     fixture = TestBed.createComponent(CreateProductoComponent);
     component = fixture.componentInstance;
     
+    // Mock console.error to prevent test output pollution
+    spyOn(console, 'error').and.callFake(() => {});
+    
     // Override ngOnInit to prevent automatic provider loading
     spyOn(component, 'ngOnInit');
     

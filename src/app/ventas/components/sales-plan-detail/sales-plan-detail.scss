@@ -48,7 +48,7 @@
 }
 
 /* El contenido debe ocupar el espacio restante y scrollear */
-.dialog-content {
+mat-dialog-content {
   padding: 0 24px 16px;
   margin: 0;
 
@@ -107,7 +107,7 @@
 }
 
 /* Footer sticky al fondo del panel */
-.dialog-actions {
+mat-dialog-actions {
   position: sticky;
   bottom: 0;
   z-index: 2;

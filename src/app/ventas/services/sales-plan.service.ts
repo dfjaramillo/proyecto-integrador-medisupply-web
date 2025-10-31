@@ -25,6 +25,7 @@ export class SalesPlanService {
     per_page?: number;
     seller_id?: string;
     client_id?: string;
+    client_name?: string;
     name?: string;
     start_date?: string;
     end_date?: string;
@@ -52,5 +53,52 @@ export class SalesPlanService {
     return this.http
       .get<SalesPlanDetailResponse>(`${this.apiUrl}/${id}`)
       .pipe(map((response) => response.data));
+  }
+
+  /**
+   * Crea un nuevo plan de ventas
+   */
+  createSalesPlan(data: {
+    name: string;
+    client_id: string;
+    seller_id: string;
+    start_date: string;
+    end_date: string;
+    target_revenue: number;
+    objectives?: string;
+  }): Observable<SalesPlan> {
+    return this.http
+      .post<SalesPlanDetailResponse>(`${this.apiUrl}/create`, data)
+      .pipe(map((response) => response.data));
+  }
+
+  /**
+   * Obtiene la lista de clientes disponibles para el vendedor
+   */
+  getClients(): Observable<Array<{ id: string; name: string }>> {
+    const params = new HttpParams().set('role', 'Cliente');
+    
+    return this.http
+      .get<{ 
+        message: string; 
+        data: { 
+          users: Array<{ 
+            id: string; 
+            name: string;
+            email: string;
+            institution_type: string;
+            phone: string;
+            role: string;
+          }> 
+        } 
+      }>(`${environment.apiUrl}/auth/user/get`, { params })
+      .pipe(
+        map((response) => 
+          response.data.users.map(user => ({
+            id: user.id,
+            name: user.name
+          }))
+        )
+      );
   }
 }

@@ -40,6 +40,9 @@ describe('CargueMasivoComponent', () => {
 
     fixture = TestBed.createComponent(CargueMasivoComponent);
     component = fixture.componentInstance;
+    
+    // Mock console.error to prevent test output pollution
+    spyOn(console, 'error').and.callFake(() => {});
   });
 
   it('should create', () => {

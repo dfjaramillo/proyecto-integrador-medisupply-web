@@ -5,41 +5,41 @@
       mat-icon-button
       (click)="onClose()"
       class="close-btn"
-      aria-label="Cerrar diálogo"
+      aria-label="Cerrar diálogo de detalle de plan de ventas"
     >
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <div class="dialog-content">
+  <mat-dialog-content>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre del plan</mat-label>
-      <input matInput [value]="plan.name" readonly />
+      <input matInput [value]="plan.name" readonly aria-describedby="plan-name-desc" />
     </mat-form-field>
 
     <div class="date-row">
       <mat-form-field appearance="outline" class="half-width">
         <mat-label>Fecha de inicio</mat-label>
-        <input matInput [value]="formatDate(plan.start_date)" readonly />
+        <input matInput [value]="formatDate(plan.start_date)" readonly aria-describedby="start-date-desc" />
         <mat-icon matSuffix>calendar_today</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="half-width">
         <mat-label>Fecha de fin</mat-label>
-        <input matInput [value]="formatDate(plan.end_date)" readonly />
+        <input matInput [value]="formatDate(plan.end_date)" readonly aria-describedby="end-date-desc" />
         <mat-icon matSuffix>calendar_today</mat-icon>
       </mat-form-field>
     </div>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Cliente</mat-label>
-      <input matInput [value]="plan.client_name" readonly />
+      <input matInput [value]="plan.client_name" readonly aria-describedby="client-desc" />
       <mat-icon matSuffix>arrow_drop_down</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Ganancias proyectadas</mat-label>
-      <input matInput [value]="formatCurrency(plan.target_revenue)" readonly />
+      <input matInput [value]="formatCurrency(plan.target_revenue)" readonly aria-describedby="revenue-desc" />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
@@ -49,13 +49,14 @@
         [value]="plan.objectives"
         readonly
         rows="8"
+        aria-describedby="objectives-desc"
       ></textarea>
     </mat-form-field>
-  </div>
+  </mat-dialog-content>
 
-  <div class="dialog-actions">
+  <mat-dialog-actions>
     <button mat-raised-button class="close-button" (click)="onClose()">
       Cerrar
     </button>
-  </div>
+  </mat-dialog-actions>
 </div>

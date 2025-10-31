@@ -29,6 +29,9 @@ describe('AuthService', () => {
     
     // Clear localStorage before each test
     localStorage.clear();
+    
+    // Mock console.error to prevent test output pollution
+    spyOn(console, 'error').and.callFake(() => {});
   });
 
   afterEach(() => {
@@ -284,7 +287,7 @@ describe('AuthService', () => {
       service.clearSession();
       
       // Verify no HTTP requests were made
-      httpMock.expectNone(() => true);
+      expect(() => httpMock.expectNone(() => true)).not.toThrow();
     });
 
     it('should work correctly when called multiple times', () => {

@@ -1,0 +1,171 @@
+<div class="create-sales-plan-dialog">
+  <div class="dialog-header">
+    <h2>Crear Plan de Ventas</h2>
+    <button
+      mat-icon-button
+      class="close-btn"
+      (click)="onCancel()"
+      [disabled]="loading()"
+      aria-label="Cerrar formulario de crear plan de ventas"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <form [formGroup]="salesPlanForm" (ngSubmit)="onSubmit()">
+      <!-- Nombre del Plan -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nombre del Plan</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Ej: Plan Trimestre Q1 2025"
+          [disabled]="loading()"
+          aria-required="true"
+        />
+        @if (hasError('name', 'required')) {
+        <mat-error role="alert">{{ getErrorMessage('name') }}</mat-error>
+        } @if (hasError('name', 'minlength') || hasError('name', 'maxlength')) {
+        <mat-error role="alert">{{ getErrorMessage('name') }}</mat-error>
+        } @if (hasError('name', 'alphabetic')) {
+        <mat-error role="alert">{{ getErrorMessage('name') }}</mat-error>
+        } @if (salesPlanForm.get('name')?.hasError('duplicate')) {
+        <mat-error role="alert">Ya existe un plan de ventas con este nombre</mat-error>
+        } @if (salesPlanForm.get('name')?.hasError('serverError')) {
+        <mat-error role="alert">{{ salesPlanForm.get('name')?.errors?.['serverError'] }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Cliente -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Cliente</mat-label>
+        <mat-select
+          formControlName="client_id"
+          placeholder="Seleccione un cliente"
+          [disabled]="loading() || loadingClients()"
+          aria-required="true"
+        >
+          <mat-option *ngFor="let client of clients()" [value]="client.id">
+            {{ client.name }}
+          </mat-option>
+        </mat-select>
+        @if (hasError('client_id', 'required')) {
+        <mat-error role="alert">{{ getErrorMessage('client_id') }}</mat-error>
+        } @if (salesPlanForm.get('client_id')?.hasError('serverError')) {
+        <mat-error role="alert">{{ salesPlanForm.get('client_id')?.errors?.['serverError'] }}</mat-error>
+        }
+        @if (loadingClients()) {
+        <mat-hint>Cargando clientes...</mat-hint>
+        }
+      </mat-form-field>
+
+      <!-- Rango de Fechas -->
+      <div class="date-range">
+        <mat-form-field appearance="outline" class="date-field">
+          <mat-label>Fecha de Inicio</mat-label>
+          <input
+            matInput
+            [matDatepicker]="startPicker"
+            formControlName="start_date"
+            placeholder="DD/MM/AAAA"
+            [disabled]="loading()"
+            aria-required="true"
+          />
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+          @if (hasError('start_date', 'required')) {
+          <mat-error role="alert">{{ getErrorMessage('start_date') }}</mat-error>
+          } @if (salesPlanForm.get('start_date')?.hasError('serverError')) {
+          <mat-error role="alert">{{ salesPlanForm.get('start_date')?.errors?.['serverError'] }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="date-field">
+          <mat-label>Fecha de Fin</mat-label>
+          <input
+            matInput
+            [matDatepicker]="endPicker"
+            formControlName="end_date"
+            placeholder="DD/MM/AAAA"
+            [disabled]="loading()"
+            aria-required="true"
+          />
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+          @if (hasError('end_date', 'required')) {
+          <mat-error role="alert">{{ getErrorMessage('end_date') }}</mat-error>
+          } @if (salesPlanForm.get('end_date')?.hasError('serverError')) {
+          <mat-error role="alert">{{ salesPlanForm.get('end_date')?.errors?.['serverError'] }}</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <!-- Error de rango de fechas -->
+      @if (salesPlanForm.hasError('dateRange') && (salesPlanForm.get('start_date')?.touched || salesPlanForm.get('end_date')?.touched)) {
+      <div class="form-error">
+        <mat-icon>error</mat-icon>
+        <span>{{ getDateRangeError() }}</span>
+      </div>
+      }
+
+      <!-- Ganancias Proyectadas -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Ganancias Proyectadas (COP)</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="target_revenue"
+          placeholder="Ej: 25000000.50"
+          step="0.01"
+          [disabled]="loading()"
+          aria-required="true"
+          aria-describedby="revenue-hint"
+        />
+        <mat-hint id="revenue-hint">Máximo 2 decimales</mat-hint>
+        @if (hasError('target_revenue', 'required')) {
+        <mat-error role="alert">{{ getErrorMessage('target_revenue') }}</mat-error>
+        } @if (hasError('target_revenue', 'min')) {
+        <mat-error role="alert">{{ getErrorMessage('target_revenue') }}</mat-error>
+        } @if (hasError('target_revenue', 'decimal')) {
+        <mat-error role="alert">{{ getErrorMessage('target_revenue') }}</mat-error>
+        } @if (salesPlanForm.get('target_revenue')?.hasError('serverError')) {
+        <mat-error role="alert">{{ salesPlanForm.get('target_revenue')?.errors?.['serverError'] }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Objetivos (Opcional) -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Objetivos (Opcional)</mat-label>
+        <textarea
+          matInput
+          formControlName="objectives"
+          placeholder="Describa los objetivos del plan de ventas..."
+          rows="4"
+          [disabled]="loading()"
+        ></textarea>
+        @if (hasError('objectives', 'maxlength')) {
+        <mat-error role="alert">{{ getErrorMessage('objectives') }}</mat-error>
+        } @if (salesPlanForm.get('objectives')?.hasError('serverError')) {
+        <mat-error role="alert">{{ salesPlanForm.get('objectives')?.errors?.['serverError'] }}</mat-error>
+        }
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+      mat-raised-button
+      type="submit"
+      class="submit-btn"
+      [disabled]="salesPlanForm.invalid || loading()"
+      (click)="onSubmit()"
+      [attr.aria-busy]="loading()"
+    >
+      @if (!loading()) { Guardar } @else {
+      <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+      <span class="sr-only">Guardando plan de ventas...</span>
+      }
+    </button>
+  </mat-dialog-actions>
+</div>
