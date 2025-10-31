@@ -1,0 +1,61 @@
+<div class="sales-plan-detail-dialog">
+  <div class="dialog-header">
+    <h2>Detalle de plan de ventas</h2>
+    <button
+      mat-icon-button
+      (click)="onClose()"
+      class="close-btn"
+      aria-label="Cerrar diálogo"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del plan</mat-label>
+      <input matInput [value]="plan.name" readonly />
+    </mat-form-field>
+
+    <div class="date-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Fecha de inicio</mat-label>
+        <input matInput [value]="formatDate(plan.start_date)" readonly />
+        <mat-icon matSuffix>calendar_today</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Fecha de fin</mat-label>
+        <input matInput [value]="formatDate(plan.end_date)" readonly />
+        <mat-icon matSuffix>calendar_today</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Cliente</mat-label>
+      <input matInput [value]="plan.client_name" readonly />
+      <mat-icon matSuffix>arrow_drop_down</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ganancias proyectadas</mat-label>
+      <input matInput [value]="formatCurrency(plan.target_revenue)" readonly />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Objetivos</mat-label>
+      <textarea
+        matInput
+        [value]="plan.objectives"
+        readonly
+        rows="8"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-raised-button class="close-button" (click)="onClose()">
+      Cerrar
+    </button>
+  </div>
+</div>

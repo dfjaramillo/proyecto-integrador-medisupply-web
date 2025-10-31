@@ -57,5 +57,18 @@ html, body {
   .mat-mdc-header-cell {
     border-bottom: none !important;
   }
+
+  /* Estilos para paneles laterales (right-sheet) */
+  .right-sheet {
+    .mat-mdc-dialog-container {
+      padding: 0 !important;
+      overflow: hidden !important;
+      
+      .mat-mdc-dialog-surface {
+        border-radius: 0 !important;
+        overflow: hidden !important;
+      }
+    }
+  }
   
   

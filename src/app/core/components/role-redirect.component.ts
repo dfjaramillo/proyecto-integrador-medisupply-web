@@ -29,7 +29,7 @@ export class RoleRedirectComponent implements OnInit {
         this.router.navigate(['/inventario']);
         break;
       case 'Ventas':
-        this.router.navigate(['/ventas']);
+        this.router.navigate(['/planes-ventas']);
         break;
       case 'Logistica':
         this.router.navigate(['/logistica']);
