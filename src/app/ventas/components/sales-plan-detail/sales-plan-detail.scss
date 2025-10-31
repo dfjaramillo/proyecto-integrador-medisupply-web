@@ -1,0 +1,155 @@
+.sales-plan-detail-dialog {
+  width: 100%;
+  max-width: 700px;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+
+  /* 🧱 Estructura de layout: header fijo, content scroll, footer sticky */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* importante, el pane ya está en 100vh */
+
+  mat-icon {
+    width: 23.75px;
+    height: 12.75px;
+  }
+}
+
+/* Header normal */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+  margin-bottom: 16px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #41444f;
+    margin: 0;
+  }
+
+  .close-btn {
+    background-color: #0d66d0;
+    color: #ffffff;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0b5bb8;
+    }
+  }
+}
+
+/* El contenido debe ocupar el espacio restante y scrollear */
+.dialog-content {
+  padding: 0 24px 16px;
+  margin: 0;
+
+  /* 🔑 quitar límites por defecto y permitir que crezca */
+  max-height: none;
+  flex: 1 1 auto;
+  min-height: 0; /* evita que el sticky tape el scroll */
+  overflow-y: auto;
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .date-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+
+  .half-width {
+    flex: 1;
+    margin-bottom: 0;
+
+    @media (max-width: 600px) {
+      margin-bottom: 16px;
+    }
+  }
+
+  mat-form-field {
+    ::ng-deep {
+      .mat-mdc-text-field-wrapper {
+        background-color: #f9fafb;
+      }
+
+      .mat-mdc-form-field-focus-overlay {
+        background-color: transparent;
+      }
+
+      input,
+      textarea {
+        color: #41444f;
+        cursor: default;
+      }
+
+      .mat-mdc-form-field-icon-suffix {
+        color: #9ca3af;
+      }
+    }
+  }
+}
+
+/* Footer sticky al fondo del panel */
+.dialog-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+
+  /* Fondo y borde para "flotar" sobre el contenido */
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+
+  /* Padding pegado a los laterales del panel */
+  padding: 16px 24px 24px;
+  margin: 0;
+
+  display: block; /* deja de centrar el botón, toma todo el ancho */
+}
+
+/* Botón estilo "barra" al ancho del panel */
+.close-button {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #0d66d0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:not(:disabled):hover {
+    background-color: #0b5bb8;
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .sales-plan-detail-dialog {
+    padding: 16px;
+  }
+
+  .dialog-header h2 {
+    font-size: 18px;
+  }
+}

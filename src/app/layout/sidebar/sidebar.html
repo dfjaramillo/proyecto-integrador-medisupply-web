@@ -62,7 +62,7 @@
     } -->
 
     <!-- VENTAS Section - Visible for Administrador and Ventas -->
-    <!-- @if (canSeeVentas()) {
+    @if (canSeeVentas()) {
       <div class="nav-section">
         <button class="section-header" (click)="toggleVentas()" type="button">
           <mat-icon>attach_money</mat-icon>
@@ -70,9 +70,24 @@
           <mat-icon class="expand-icon" [class.expanded]="ventasExpanded()">
             expand_more
           </mat-icon>
-        </button>          
+        </button>
+        
+        <div class="nav-items pl-20" [class.collapsed]="!ventasExpanded()">
+          <a class="nav-item" routerLink="/planes-ventas" routerLinkActive="active" (click)="closeSidebar()">
+            <mat-icon>assignment</mat-icon>
+            <span>Planes de ventas</span>
+          </a>
+          <!-- <a class="nav-item" routerLink="/reporte-operativo" routerLinkActive="active" (click)="closeSidebar()">
+            <mat-icon>bar_chart</mat-icon>
+            <span>Reporte operativo</span>
+          </a>
+          <a class="nav-item" routerLink="/informe-vendedores" routerLinkActive="active" (click)="closeSidebar()">
+            <mat-icon>description</mat-icon>
+            <span>Informe de vendedores</span>
+          </a> -->
+        </div>
       </div>
-    } -->
+    }
   </nav>
 
   <div class="sidebar-footer">

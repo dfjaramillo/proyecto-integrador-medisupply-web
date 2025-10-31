@@ -4,6 +4,7 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout';
 import { UsuariosListComponent } from './usuarios/usuarios-list/usuarios-list';
 import { InventarioListComponent } from './inventario/inventario-list/inventario-list';
 import { ProveedoresListComponent } from './proveedores/proveedores-list/proveedores-list';
+import { SalesPlanListComponent } from './ventas/sales-plan-list/sales-plan-list';
 import { RoleRedirectComponent } from './core/components/role-redirect.component';
 import { 
   authGuard, 
@@ -40,12 +41,12 @@ export const routes: Routes = [
         component: ProveedoresListComponent,
         canActivate: [comprasGuard]
       },
-      // Ventas (Gerente de cuenta/vendedor) - Módulo de ventas (placeholder para futuro)
-      // { 
-      //   path: 'ventas', 
-      //   component: VentasComponent,
-      //   canActivate: [ventasGuard]
-      // },
+      // Ventas (Gerente de cuenta/vendedor) - Planes de ventas
+      { 
+        path: 'planes-ventas', 
+        component: SalesPlanListComponent,
+        canActivate: [ventasGuard]
+      },
       // Logística (Personal logístico) - Módulo de logística (placeholder para futuro)
       // { 
       //   path: 'logistica', 
