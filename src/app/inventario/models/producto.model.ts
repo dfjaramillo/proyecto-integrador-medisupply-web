@@ -16,7 +16,7 @@ export interface Producto {
   updated_at?: Date | string;
 }
 
-export type TipoProducto = 'Cadena fría' | 'Seguridad' | 'Alto valor';
+export type TipoProducto = 'Cadena de frío' | 'Seguridad' | 'Alto valor';
 
 export interface Provider {
   id: string;

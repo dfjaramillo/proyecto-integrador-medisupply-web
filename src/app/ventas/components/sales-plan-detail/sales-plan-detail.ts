@@ -55,10 +55,12 @@ export class SalesPlanDetailComponent {
   }
 
   /**
-   * Formatea el valor monetario (30.266.999)
+   * Formatea el valor monetario ($30.266.999)
    */
   formatCurrency(value: number): string {
     return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
       minimumFractionDigits: 0,
       maximumFractionDigits: 3,
     }).format(value);

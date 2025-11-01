@@ -110,34 +110,35 @@ describe('SalesPlanDetailComponent', () => {
     it('should format large numbers with thousands separators', () => {
       const formatted = component.formatCurrency(mockSalesPlan.target_revenue);
       
-      expect(formatted).toBe('30.266.999');
+      // Accept both "$30.266.999" and "$ 30.266.999"
+      expect(formatted).toMatch(/^\$\s?30\.266\.999$/);
     });
 
     it('should format millions correctly', () => {
       const value = 45000000;
       const formatted = component.formatCurrency(value);
       
-      expect(formatted).toBe('45.000.000');
+      expect(formatted).toMatch(/^\$\s?45\.000\.000$/);
     });
 
     it('should format small numbers without separators', () => {
       const value = 999;
       const formatted = component.formatCurrency(value);
       
-      expect(formatted).toBe('999');
+      expect(formatted).toMatch(/^\$\s?999$/);
     });
 
     it('should format thousands correctly', () => {
       const value = 1500;
       const formatted = component.formatCurrency(value);
       
-      expect(formatted).toBe('1.500');
+      expect(formatted).toMatch(/^\$\s?1\.500$/);
     });
 
     it('should handle zero', () => {
       const formatted = component.formatCurrency(0);
       
-      expect(formatted).toBe('0');
+      expect(formatted).toMatch(/^\$\s?0$/);
     });
 
     it('should not include decimals for whole numbers', () => {
@@ -145,7 +146,7 @@ describe('SalesPlanDetailComponent', () => {
       const formatted = component.formatCurrency(value);
       
       expect(formatted).not.toContain(',');
-      expect(formatted).toBe('100.000');
+      expect(formatted).toMatch(/^\$\s?100\.000$/);
     });
   });
 

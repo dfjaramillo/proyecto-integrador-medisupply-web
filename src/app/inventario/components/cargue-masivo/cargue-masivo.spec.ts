@@ -160,7 +160,7 @@ describe('CargueMasivoComponent', () => {
 
     it('should show error if user ID not available', () => {
       component.selectedFile = new File(['test'], 'test.csv', { type: 'text/csv' });
-      authService.getUserId.and.returnValue(null);
+      authService.getUserId.and.returnValue("");
 
       component.onSubmit();
 
