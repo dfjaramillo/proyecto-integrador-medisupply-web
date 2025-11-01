@@ -156,10 +156,10 @@ export class AuthService {
   /**
    * Get user ID (subject) from JWT token
    */
-  getUserId(): string | null {
+  getUserId(): string {
     const stored = this.getStoredUser();
     if (stored?.id) return stored.id;    
-    return  null;
+    return  "";
   }
 
   /**

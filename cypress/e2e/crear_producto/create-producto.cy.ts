@@ -125,7 +125,7 @@ describe('Crear Producto', () => {
           price: 50000,
           location: 'A-01-01',
           description: 'Producto de prueba',
-          product_type: 'Cadena fría',
+          product_type: 'Cadena de frío',
           provider_id: 'provider-123',
           photo_filename: null,
           photo_url: null,
@@ -152,7 +152,7 @@ describe('Crear Producto', () => {
               price: 50000,
               location: 'A-01-01',
               description: 'Producto de prueba',
-              product_type: 'Cadena fría',
+              product_type: 'Cadena de frío',
               provider_id: 'provider-123',
               photo_filename: null,
               photo_url: null,
@@ -189,7 +189,7 @@ describe('Crear Producto', () => {
     
     // Seleccionar tipo de producto
     cy.get('mat-select[formcontrolname="product_type"]').click();
-    cy.get('mat-option').contains('Cadena fría').click();
+    cy.get('mat-option').contains('Cadena de frío').click();
     
     // Seleccionar proveedor
     cy.wait(500); // Esperar a que carguen los proveedores
@@ -232,7 +232,7 @@ describe('Crear Producto', () => {
     cy.get('textarea[formcontrolname="description"]').type('Producto de prueba');
     
     cy.get('mat-select[formcontrolname="product_type"]').click();
-    cy.get('mat-option').contains('Cadena fría').click();
+    cy.get('mat-option').contains('Cadena de frío').click();
     
     cy.wait(500);
     cy.get('input[formcontrolname="provider_id"]').type('Farmacia Test');

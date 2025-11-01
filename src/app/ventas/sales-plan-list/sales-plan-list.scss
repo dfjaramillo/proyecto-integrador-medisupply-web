@@ -60,7 +60,7 @@
 
     .create-btn {
       background-color: #0d66d0;
-      width: 146px;
+      width: 199px;
       &:hover {
         background-color: #0d66d9;
       }
@@ -78,8 +78,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
-      margin-bottom: 16px;
-      max-width: 1200px;
+      margin-bottom: 16px;      
 
       .filter-input {
         width: 100%;

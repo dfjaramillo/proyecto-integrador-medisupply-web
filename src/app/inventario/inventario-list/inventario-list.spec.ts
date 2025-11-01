@@ -30,7 +30,7 @@ describe('InventarioListComponent', () => {
       price: 50000,
       location: 'Bodega A',
       description: 'Descripción del producto test 1',
-      product_type: 'Cadena fría',
+      product_type: 'Cadena de frío',
       provider_id: 'provider-1',
       photo_filename: null,
       photo_url: null,
