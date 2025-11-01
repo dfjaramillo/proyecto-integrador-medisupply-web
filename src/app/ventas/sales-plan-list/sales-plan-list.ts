@@ -10,10 +10,14 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { SalesPlanService } from '../services/sales-plan.service';
 import { AuthService } from '../../auth/services/auth.service';
 import { SalesPlan, SalesPlanPagination } from '../models/sales-plan.model';
 import { SalesPlanDetailComponent } from '../components/sales-plan-detail';
+import { CreateSalesPlanComponent } from '../components/create-sales-plan/create-sales-plan';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -30,6 +34,13 @@ import { forkJoin } from 'rxjs';
     FormsModule,
     MatInputModule,
     MatFormFieldModule,
+    MatDatepickerModule,
+    MatDatepickerToggle,
+    MatDatepicker,
+  ],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'es-CO' }
   ],
   templateUrl: './sales-plan-list.html',
   styleUrls: ['./sales-plan-list.scss'],
@@ -41,8 +52,8 @@ export class SalesPlanListComponent implements OnInit {
 
   // Filtros
   nameFilter = '';
-  startDateFilter = '';
-  endDateFilter = '';
+  startDateFilter: Date | null = null;
+  endDateFilter: Date | null = null;
   clientFilter = '';
   
   // Debounce timeout for filters
@@ -129,16 +140,14 @@ export class SalesPlanListComponent implements OnInit {
     }
 
     if (this.clientFilter.trim()) {
-      params.client_id = this.clientFilter.trim();
+      params.client_name = this.clientFilter.trim();
     }
 
-    if (this.startDateFilter.trim()) {
-      // Convertir a formato ISO si es necesario
+    if (this.startDateFilter) {
       params.start_date = this.formatDateForAPI(this.startDateFilter);
     }
 
-    if (this.endDateFilter.trim()) {
-      // Convertir a formato ISO si es necesario
+    if (this.endDateFilter) {
       params.end_date = this.formatDateForAPI(this.endDateFilter);
     }
 
@@ -167,23 +176,17 @@ export class SalesPlanListComponent implements OnInit {
   /**
    * Formatea la fecha para enviar al API (formato ISO)
    */
-  private formatDateForAPI(dateString: string): string {
-    // Si ya está en formato ISO, retornar tal cual
-    if (dateString.includes('T') && dateString.includes('Z')) {
-      return dateString;
-    }
-
-    // Intentar parsear diferentes formatos comunes
-    try {
-      const date = new Date(dateString);
-      if (!isNaN(date.getTime())) {
-        return date.toISOString();
+  private formatDateForAPI(date: Date | string): string {
+    if (typeof date === 'string') {
+      // Si es un string ISO, devolverlo tal cual
+      if (date.includes('T') && date.includes('Z')) {
+        return date;
       }
-    } catch (e) {
-      console.error('Error parsing date:', e);
+      // Si es un string de fecha simple, convertirlo a Date y luego a ISO
+      return new Date(date).toISOString();
     }
-
-    return dateString;
+    // Si es un Date object, convertirlo a ISO
+    return date.toISOString();
   }
 
   /**
@@ -207,6 +210,30 @@ export class SalesPlanListComponent implements OnInit {
   }
 
   /**
+   * Abre el diálogo para crear un nuevo plan de ventas
+   */
+  openCreate(): void {
+    const dialogRef = this.dialog.open(CreateSalesPlanComponent, {
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms',
+      width: '600px',
+      maxWidth: '800px',
+      height: '100vh',
+      panelClass: ['right-sheet'],
+      position: { right: '0' },
+      disableClose: true // Evita cerrar accidentalmente mientras se edita
+    });
+
+    // Recargar la lista cuando se cierre el diálogo si se creó un plan
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'created') {
+        this.currentPage = 1;
+        this.loadSalesPlans();
+      }
+    });
+  }
+
+  /**
    * Maneja el cambio en los filtros con debounce
    */
   onFilterChange(): void {
@@ -220,6 +247,22 @@ export class SalesPlanListComponent implements OnInit {
       this.currentPage = 1;
       this.loadSalesPlans();
     }, 500);
+  }
+
+  /**
+   * Maneja el cambio de fecha de inicio
+   */
+  onStartDateChange(date: Date | null): void {
+    this.startDateFilter = date;
+    this.onFilterChange();
+  }
+
+  /**
+   * Maneja el cambio de fecha de fin
+   */
+  onEndDateChange(date: Date | null): void {
+    this.endDateFilter = date;
+    this.onFilterChange();
   }
 
   /**

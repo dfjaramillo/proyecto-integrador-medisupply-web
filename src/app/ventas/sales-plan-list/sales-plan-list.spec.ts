@@ -65,6 +65,9 @@ describe('SalesPlanListComponent', () => {
 
     fixture = TestBed.createComponent(SalesPlanListComponent);
     component = fixture.componentInstance;
+    
+    // Mock console.error to prevent test output pollution
+    spyOn(console, 'error').and.callFake(() => {});
   });
 
   it('should create', () => {
@@ -166,6 +169,8 @@ describe('SalesPlanListComponent', () => {
     it('should include filters in request params', () => {
       mockSalesPlanService.getSalesPlans.and.returnValue(of(mockResponse));
       component.nameFilter = 'Plan Test';
+      component.startDateFilter = new Date('2025-01-01');
+      component.endDateFilter = new Date('2025-12-31');
       component.clientFilter = 'client-123';
 
       component.loadSalesPlans();
@@ -173,7 +178,9 @@ describe('SalesPlanListComponent', () => {
       expect(mockSalesPlanService.getSalesPlans).toHaveBeenCalledWith(
         jasmine.objectContaining({
           name: 'Plan Test',
-          client_id: 'client-123'
+          start_date: '2025-01-01T00:00:00.000Z',
+          end_date: '2025-12-31T00:00:00.000Z',
+          client_name: 'client-123'
         })
       );
     });

@@ -1,0 +1,151 @@
+.create-sales-plan-dialog {
+  width: 100%;
+  max-width: 700px;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+
+  /* 🧱 Estructura de layout: header fijo, content scroll, footer sticky */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* importante, el pane ya está en 100vh */
+
+  mat-icon {
+    width: 23.75px;
+    height: 12.75px;
+  }
+}
+
+/* Header normal */
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+  margin-bottom: 16px;
+
+  .close-btn {
+    background-color: #0d66d0;
+    color: #ffffff;
+    border-radius: 8px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0b5bb8;
+    }
+  }
+}
+
+/* El contenido debe ocupar el espacio restante y scrollear */
+mat-dialog-content {
+  padding: 0 24px 16px;
+  margin: 0;
+
+  /* 🔑 quitar límites por defecto y permitir que crezca */
+  max-height: none;
+  flex: 1 1 auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .date-range {
+    display: flex;
+    gap: 16px;
+
+    .date-field {
+      flex: 1;
+    }
+  }
+
+  .form-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: #ffebee;
+    border-radius: 4px;
+    color: #c62828;
+    font-size: 14px;
+    margin-top: -8px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+/* Footer con botones */
+mat-dialog-actions {
+  padding: 16px 24px;
+  margin: 0;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  .submit-btn {
+    background-color: #0d66d0;
+    color: white;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 500;
+    width: 360px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    &:hover:not(:disabled) {
+      background-color: #0b5bb8;
+    }
+
+    &:disabled {
+      background-color: rgba(13, 102, 208, 0.4);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    mat-spinner {
+      width: 20px !important;
+      height: 20px !important;
+    }
+  }
+}
+
+/* Accesibilidad */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .create-sales-plan-dialog {
+    width: 100vw;
+  }
+
+  .date-range {
+    flex-direction: column;
+  }
+}

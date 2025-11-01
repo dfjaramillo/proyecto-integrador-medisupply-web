@@ -55,6 +55,10 @@ describe('LoginComponent', () => {
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    
+    // Mock console.error to prevent test output pollution
+    spyOn(console, 'error').and.callFake(() => {});
+    
     fixture.detectChanges();
   });
 
@@ -222,7 +226,7 @@ describe('LoginComponent', () => {
       
       component.submit();
       
-      expect(snackBar.open);
+      expect(snackBar.open)
     });
   });
 
@@ -240,7 +244,6 @@ describe('LoginComponent', () => {
     });
 
     it('should log error on failed login', () => {
-      spyOn(console, 'error');
       component.submit();
       expect(console.error).toHaveBeenCalledWith('Login error:', errorResponse);
     });
@@ -254,7 +257,6 @@ describe('LoginComponent', () => {
     });
 
     it('should log error to console', () => {
-      spyOn(console, 'error');
       component.submit();
       expect(console.error).toHaveBeenCalledWith('Login error:', errorResponse);
     });
