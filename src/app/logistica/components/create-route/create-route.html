@@ -1,0 +1,116 @@
+<div class="create-route-dialog">
+  <div class="dialog-header">
+    <h2>Crear ruta</h2>
+    <button
+      mat-icon-button
+      class="close-btn"
+      (click)="onCancel()"
+      [disabled]="loading()"
+      aria-label="Cerrar formulario de crear ruta"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <form [formGroup]="routeForm" (ngSubmit)="onSubmit()">
+      <!-- Camión -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Camión</mat-label>
+        <mat-select
+          formControlName="assigned_truck"
+          placeholder="Seleccione un camión"
+          [disabled]="loading() || loadingTrucks()"
+          (selectionChange)="validateTruckAvailability()"
+          aria-required="true"
+        >
+          <mat-option *ngFor="let truck of trucks()" [value]="truck.plate">
+            {{ truck.label }}
+          </mat-option>
+        </mat-select>
+        @if (routeForm.get('assigned_truck')?.touched && routeForm.get('assigned_truck')?.hasError('required')) {
+        <mat-error role="alert">{{ getErrorMessage('assigned_truck') }}</mat-error>
+        }
+        @if (routeForm.get('assigned_truck')?.hasError('truckUnavailable')) {
+        <mat-error role="alert">{{ getErrorMessage('assigned_truck') }}</mat-error>
+        }
+        @if (loadingTrucks()) {
+        <mat-hint>Cargando camiones...</mat-hint>
+        }
+      </mat-form-field>
+
+      <!-- Tipo de productos -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tipo de productos</mat-label>
+        <mat-select
+          formControlName="product_type"
+          placeholder="Seleccione el tipo de productos"
+          [disabled]="loading()"
+          aria-required="true"
+        >
+          <mat-option *ngFor="let type of productTypes" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+        @if (routeForm.get('product_type')?.touched && routeForm.get('product_type')?.hasError('required')) {
+        <mat-error role="alert">{{ getErrorMessage('product_type') }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- Fecha de entrega -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Fecha de entrega</mat-label>
+        <input
+          matInput
+          [matDatepicker]="datePicker"
+          formControlName="delivery_date"
+          placeholder="DD/MM/AAAA"
+          [min]="minDate"
+          [disabled]="loading()"
+          (dateChange)="validateTruckAvailability()"
+          aria-required="true"
+        />
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+        @if (routeForm.get('delivery_date')?.touched && routeForm.get('delivery_date')?.hasError('required')) {
+        <mat-error role="alert">{{ getErrorMessage('delivery_date') }}</mat-error>
+        }
+        @if (routeForm.get('delivery_date')?.hasError('futureDate')) {
+        <mat-error role="alert">{{ getErrorMessage('delivery_date') }}</mat-error>
+        }
+      </mat-form-field>
+
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <div class="dialog-actions">
+      <button
+        mat-button
+        type="button"
+        class="cancel-btn"
+        (click)="onCancel()"
+        [disabled]="loading()"
+        aria-label="Cancelar creación de ruta"
+      >
+        Cancelar
+      </button>
+
+      <button
+        mat-raised-button
+        type="submit"
+        class="submit-btn"
+        (click)="onSubmit()"
+        [disabled]="loading() || routeForm.invalid"
+        aria-label="Generar ruta"
+      >
+        @if (loading()) {
+        <mat-spinner diameter="20"></mat-spinner>
+        <span>Generando...</span>
+        } @else {
+        <span>Generar ruta</span>
+        }
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

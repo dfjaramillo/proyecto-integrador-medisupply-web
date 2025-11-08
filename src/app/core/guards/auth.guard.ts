@@ -14,7 +14,7 @@ function getDefaultRouteForRole(role: string | null): string {
     case 'Ventas':
       return '/planes-ventas';
     case 'Logistica':
-      return '/inventario';
+      return '/logistica/rutas';
     default:
       return '/login';
   }

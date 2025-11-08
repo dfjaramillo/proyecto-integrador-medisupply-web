@@ -5,6 +5,7 @@ import { UsuariosListComponent } from './usuarios/usuarios-list/usuarios-list';
 import { InventarioListComponent } from './inventario/inventario-list/inventario-list';
 import { ProveedoresListComponent } from './proveedores/proveedores-list/proveedores-list';
 import { SalesPlanListComponent } from './ventas/sales-plan-list/sales-plan-list';
+import { RoutesListComponent } from './logistica/routes-list/routes-list';
 import { RoleRedirectComponent } from './core/components/role-redirect.component';
 import { 
   authGuard, 
@@ -47,12 +48,12 @@ export const routes: Routes = [
         component: SalesPlanListComponent,
         canActivate: [ventasGuard]
       },
-      // Logística (Personal logístico) - Módulo de logística (placeholder para futuro)
-      // { 
-      //   path: 'logistica', 
-      //   component: LogisticaComponent,
-      //   canActivate: [logisticaGuard]
-      // },
+      // Logística (Personal logístico) - Gestión de rutas de entrega
+      { 
+        path: 'logistica/rutas', 
+        component: RoutesListComponent,
+        canActivate: [logisticaGuard]
+      },
       // Default redirect based on user role
       { 
         path: '', 

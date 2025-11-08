@@ -1,0 +1,12 @@
+<div class="route-map-container">
+  <!-- Elemento del mapa -->
+  <div class="google-map"></div>
+  
+  <!-- Spinner de carga sobre el mapa -->
+  @if (loading()) {
+  <div class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Cargando mapa...</p>
+  </div>
+  }
+</div>
