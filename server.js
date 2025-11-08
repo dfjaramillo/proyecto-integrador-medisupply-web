@@ -4,6 +4,16 @@ const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3000;
+// Expose runtime config (no secrets stored in repo). Provide Google Maps API Key from env var.
+app.get('/config.js', (req, res) => {
+  const cfg = {
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ''
+  };
+  // Prevent caching so rotations propagate quickly
+  res.setHeader('Content-Type', 'application/javascript');
+  res.setHeader('Cache-Control', 'no-store');
+  res.send('window.__APP_CONFIG = ' + JSON.stringify(cfg) + ';');
+});
 
 // Try to find the built Angular output folder inside dist/
 function findDistFolder() {
