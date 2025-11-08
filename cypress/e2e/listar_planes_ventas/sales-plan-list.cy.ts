@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 describe('Listar Planes de Ventas', () => {
-  const BASE_URL = 'http://localhost:4200';
+  const BASE_URL = 'http://localhost:3000';
 
   beforeEach(() => {
     // Interceptar lista de planes de ventas
