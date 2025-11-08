@@ -8,6 +8,23 @@
   <link rel="icon" type="image/x-icon" href="images/logoMedi.png">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Google Maps API is loaded dynamically via /config.js to avoid exposing keys in source -->
+  <script src="/config.js"></script>
+  <script>
+    (function() {
+      const cfg = window.__APP_CONFIG || {};
+      if (!cfg.googleMapsApiKey) {
+        console.error('Google Maps API key not provided. Set GOOGLE_MAPS_API_KEY environment variable.');
+        return;
+      }
+      const script = document.createElement('script');
+      const libs = 'geometry,places';
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(cfg.googleMapsApiKey)}&libraries=${libs}`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>

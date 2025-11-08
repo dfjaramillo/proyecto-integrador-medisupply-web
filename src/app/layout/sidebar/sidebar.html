@@ -52,14 +52,14 @@
     }
 
     <!-- LOGÍSTICA Section - Visible for Administrador and Logistica -->
-    <!-- @if (canSeeLogistica()) {
+    @if (canSeeLogistica()) {
       <div class="nav-section">      
-        <a class="nav-item" routerLink="/logistica" routerLinkActive="active">
+        <a class="nav-item" routerLink="/logistica/rutas" routerLinkActive="active" (click)="closeSidebar()">
           <mat-icon>route</mat-icon>
           <span>LOGÍSTICA</span>
         </a>
       </div>
-    } -->
+    }
 
     <!-- VENTAS Section - Visible for Administrador and Ventas -->
     @if (canSeeVentas()) {

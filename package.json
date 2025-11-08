@@ -54,6 +54,7 @@
     "@angular/compiler-cli": "^20.1.0",
     "@angular/platform-browser-dynamic": "^20.1.0",
     "@cypress/schematic": "^4.1.4",
+    "@types/google.maps": "^3.58.1",
     "@types/jasmine": "~5.1.0",
     "cypress": "^15.4.0",
     "jasmine-core": "~5.8.0",

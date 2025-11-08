@@ -1,0 +1,200 @@
+<div class="routes-container">
+  <!-- Vista de mapa (cuando se selecciona una ruta) -->
+  @if (selectedRouteId()) {
+    <div class="map-view">
+      <div class="map-header">
+        <button
+          mat-icon-button
+          class="back-btn"
+          (click)="closeMap()"
+          aria-label="Volver al listado"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="map-title">Volver</span>
+      </div>
+      <div class="map-content">
+        <app-route-map [routeId]="selectedRouteId()!"></app-route-map>
+      </div>
+    </div>
+  } @else {
+  <!-- Vista de tabla (listado de rutas) -->
+  <div class="header">
+    <h1>Logística</h1>
+    <div class="breadcrumb">
+      <span class="breadcrumb-link">Logística</span>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <div class="action-bar">
+      <button
+        mat-raised-button
+        class="create-btn"
+        aria-label="Crear ruta de entrega"
+        (click)="openCreate()"
+      >
+        Crear ruta de entrega
+      </button>
+    </div>
+
+    @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Cargando rutas...</p>
+    </div>
+    } @else {
+
+    <div class="filter-row">
+      <input
+        type="text"
+        class="filter-input"
+        placeholder="Buscar código"
+        [(ngModel)]="routeCodeFilter"
+        (input)="onFilterChange()"
+        aria-label="Filtrar por código de ruta"
+      />
+
+      <input
+        type="text"
+        class="filter-input"
+        placeholder="Buscar camión"
+        [(ngModel)]="truckFilter"
+        (input)="onFilterChange()"
+        aria-label="Filtrar por camión"
+      />
+
+      <mat-form-field appearance="outline" class="filter-datepicker">
+        <input
+          matInput
+          [matDatepicker]="datePicker"
+          [(ngModel)]="dateFilter"
+          (dateChange)="onDateChange($event.value)"
+          placeholder="Buscar fecha"
+          aria-label="Filtrar por fecha de entrega"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="datePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datePicker></mat-datepicker>
+      </mat-form-field>
+
+      <input
+        type="text"
+        class="filter-input"
+        placeholder="Buscar estado"
+        [(ngModel)]="productTypeFilter"
+        (input)="onFilterChange()"
+        aria-label="Filtrar por tipo de producto"
+      />
+    </div>
+
+    <table mat-table [dataSource]="routes()" class="routes-table">
+      <!-- Código de ruta Column -->
+      <ng-container matColumnDef="route_code">
+        <th mat-header-cell *matHeaderCellDef>CÓDIGO DE RUTA</th>
+        <td mat-cell *matCellDef="let route">{{ route.route_code }}</td>
+      </ng-container>
+
+      <!-- Camión asignado Column -->
+      <ng-container matColumnDef="assigned_truck">
+        <th mat-header-cell *matHeaderCellDef>CAMIÓN ASIGNADO</th>
+        <td mat-cell *matCellDef="let route">{{ route.assigned_truck }}</td>
+      </ng-container>
+
+      <!-- Fecha de entrega Column -->
+      <ng-container matColumnDef="delivery_date">
+        <th mat-header-cell *matHeaderCellDef>FECHA DE ENTREGA</th>
+        <td mat-cell *matCellDef="let route">
+          {{ formatDate(route.delivery_date) }}
+        </td>
+      </ng-container>
+
+      <!-- Tipo de productos Column -->
+      <ng-container matColumnDef="orders_count">
+        <th mat-header-cell *matHeaderCellDef>TIPO DE PRODUCTOS</th>
+        <td mat-cell *matCellDef="let route">
+          Cadena de frío
+        </td>
+      </ng-container>
+
+      <!-- Acciones Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>ACCIONES</th>
+        <td mat-cell *matCellDef="let route">
+          <button
+            mat-icon-button
+            (click)="openDetail(route)"
+            class="action-btn view-btn"
+            aria-label="Ver ruta en mapa"
+            title="Ver en mapa"
+          >
+            <mat-icon>map</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- No data row -->
+      <tr class="mat-row no-data-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          No se encontraron rutas con los filtros aplicados.
+        </td>
+      </tr>
+    </table>
+
+    <!-- Pagination -->
+    @if (pagination() && pagination()!.total_pages > 1) {
+    <div class="custom-pagination">
+      <div class="pagination-info">
+        Mostrando {{ (currentPage - 1) * pageSize + 1 }} al
+        {{
+          Math.min(
+            currentPage * pageSize,
+            pagination()!.total
+          )
+        }}
+        de {{ pagination()!.total }} registros
+      </div>
+
+      <div class="pagination-buttons">
+        <button
+          class="pagination-btn"
+          (click)="goToPage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          aria-label="Página anterior"
+        >
+          Anterior
+        </button>
+
+        @for (page of getPages(); track page) { @if (page > 0) {
+        <button
+          class="pagination-btn"
+          [class.active]="page === currentPage"
+          (click)="goToPage(page)"
+          [attr.aria-label]="'Ir a página ' + page"
+          [attr.aria-current]="page === currentPage ? 'page' : null"
+        >
+          {{ page }}
+        </button>
+        } @else {
+        <span class="pagination-ellipsis" aria-hidden="true">...</span>
+        } }
+
+        <button
+          class="pagination-btn"
+          (click)="goToPage(currentPage + 1)"
+          [disabled]="currentPage === pagination()!.total_pages"
+          aria-label="Página siguiente"
+        >
+          Siguiente
+        </button>
+      </div>
+    </div>
+    } }
+  </div>
+  }
+</div>

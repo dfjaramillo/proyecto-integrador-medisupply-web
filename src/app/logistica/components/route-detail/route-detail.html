@@ -1,0 +1,71 @@
+<div class="route-detail-dialog">
+  <div class="dialog-header">
+    <div class="header-content">
+      <button
+        mat-icon-button
+        class="back-btn"
+        (click)="onClose()"
+        aria-label="Volver al listado"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>{{ route.route_code }}</h2>
+    </div>
+  </div>
+
+  <mat-dialog-content>
+    <!-- Información de la ruta -->
+    <div class="route-info">
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">Código de Ruta:</span>
+          <span class="value">{{ route.route_code }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Camión Asignado:</span>
+          <span class="value">{{ route.assigned_truck }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Fecha de Entrega:</span>
+          <span class="value">{{ formatDate(route.delivery_date) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="label">Tipo de Productos:</span>
+          <span class="value">Cadena de frío</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenedor del mapa - siempre presente -->
+    <div class="map-container">
+      <!-- Elemento del mapa de Google Maps -->
+      <div class="google-map"></div>
+      
+      <!-- Spinner de carga sobre el mapa -->
+      @if (loading()) {
+      <div class="loading-overlay">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Cargando mapa...</p>
+      </div>
+      }
+      
+      <!-- Leyenda del mapa -->
+      @if (mapInitialized()) {
+      <div class="map-legend">
+        <div class="legend-item">
+          <span class="legend-marker start"></span>
+          <span class="legend-text">Punto de inicio</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-marker waypoint"></span>
+          <span class="legend-text">Punto de entrega</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-marker end"></span>
+          <span class="legend-text">Punto final</span>
+        </div>
+      </div>
+      }
+    </div>
+  </mat-dialog-content>
+</div>
