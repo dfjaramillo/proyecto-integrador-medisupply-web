@@ -48,6 +48,12 @@ export const routes: Routes = [
         component: SalesPlanListComponent,
         canActivate: [ventasGuard]
       },
+      // Ventas - Reporte operativo
+      {
+        path: 'ventas/reporte-operativo',
+        loadComponent: () => import('./ventas/reports/operational-report/operational-report').then(m => m.OperationalReportComponent),
+        canActivate: [ventasGuard]
+      },
       // Logística (Personal logístico) - Gestión de rutas de entrega
       { 
         path: 'logistica/rutas', 

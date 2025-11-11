@@ -43,6 +43,8 @@
     "angular-material": "^1.2.5",
     "bootstrap": "^5.3.3",
     "express": "^4.18.2",
+    "chart.js": "^4.4.4",
+  "ng2-charts": "^5.0.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "^0.15.0"

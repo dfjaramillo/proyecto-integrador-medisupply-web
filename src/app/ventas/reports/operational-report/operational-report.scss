@@ -1,0 +1,14 @@
+.report-container { padding: 24px; }
+.breadcrumb { font-size: 13px; color: #6d7183; margin-bottom: 16px; }
+.loading, .error, .empty { text-align: center; padding: 40px 0; }
+.grid { display: grid; gap: 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid { align-items: stretch; }
+@media (max-width: 1024px) {
+	.grid { grid-template-columns: 1fr; }
+}
+.card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+.card h2 { font-size: 16px; margin: 0 0 16px; font-weight: 500; }
+.chart-wrapper { position: relative; height: 260px; }
+.filters { display: flex; gap: 12px; margin-bottom: 12px; }
+.clients-table { width: 100%; }
+.empty-mini { padding: 12px; color: #6d7183; font-size: 14px; }

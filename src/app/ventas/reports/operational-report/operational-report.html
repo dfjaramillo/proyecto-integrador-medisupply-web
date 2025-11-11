@@ -1,0 +1,85 @@
+<div class="report-container">
+  <h1>Reporte operativo</h1>
+  <div class="breadcrumb">Ventas – Reporte operativo</div>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="loading()">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Cargando reporte...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error" *ngIf="error()">
+    <p>{{ error() }}</p>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty" *ngIf="isEmptyState()">
+    No hay datos para el período seleccionado.
+  </div>
+
+  <div class="grid" *ngIf="!loading() && !error() && !isEmptyState()">
+    <!-- Distribución mensual de pedidos -->
+    <div class="card">
+      <h2>Distribución mensual de pedidos durante el último año</h2>
+      <div class="chart-wrapper">
+        <canvas baseChart
+          [data]="ordersBarConfig().data"
+          [type]="ordersBarConfig().type"
+          [options]="ordersBarConfig().options"></canvas>
+      </div>
+    </div>
+
+    <!-- TOP 5 Clientes -->
+    <div class="card">
+      <h2>TOP 5 Clientes con más pedidos en el último semestre</h2>
+      <div class="filters">
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar nombre</mat-label>
+          <input matInput [(ngModel)]="clientNameFilter" (input)="onClientFilterChange()" placeholder="Nombre cliente" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar fecha</mat-label>
+          <input matInput [(ngModel)]="clientDateFilter" placeholder="Fecha" />
+        </mat-form-field>
+      </div>
+      <table mat-table [dataSource]="topClients()" class="clients-table" *ngIf="topClients().length; else noClients">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>CLIENTE</th>
+          <td mat-cell *matCellDef="let c">{{ c.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="orders">
+          <th mat-header-cell *matHeaderCellDef>CANTIDAD DE PEDIDOS</th>
+          <td mat-cell *matCellDef="let c">{{ c.orders }}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedClientColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedClientColumns"></tr>
+      </table>
+      <ng-template #noClients>
+        <div class="empty-mini">No hay datos para el período seleccionado.</div>
+      </ng-template>
+    </div>
+
+    <!-- Crecimiento mensual ventas -->
+    <div class="card">
+      <h2>Crecimiento mensual de ventas (COP)</h2>
+      <div class="chart-wrapper">
+        <canvas baseChart
+          [data]="amountLineConfig().data"
+          [type]="amountLineConfig().type"
+          [options]="amountLineConfig().options"></canvas>
+      </div>
+    </div>
+
+    <!-- TOP 10 Productos -->
+    <div class="card">
+      <h2>TOP 10 Productos más vendidos</h2>
+      <div class="chart-wrapper">
+        <canvas baseChart
+          [data]="productsBarConfig().data"
+          [type]="productsBarConfig().type"
+          [options]="productsBarConfig().options"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

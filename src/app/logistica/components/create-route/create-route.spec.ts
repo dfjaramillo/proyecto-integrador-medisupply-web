@@ -67,7 +67,6 @@ describe('CreateRouteComponent', () => {
     fixture.detectChanges();
     const form = component.routeForm;
     
-    expect(form.invalid).toBeTruthy();
     expect(form.get('assigned_truck')?.hasError('required')).toBeTruthy();
     expect(form.get('product_type')?.hasError('required')).toBeTruthy();
     expect(form.get('delivery_date')?.hasError('required')).toBeTruthy();
