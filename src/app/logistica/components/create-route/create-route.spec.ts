@@ -20,6 +20,14 @@ describe('CreateRouteComponent', () => {
     { plate: 'TRK-003', label: 'TRK-003' }
   ];
 
+  // Helper to produce ISO date string (YYYY-MM-DD) in the future relative to today
+  const futureDateStr = (daysAhead: number = 1) => {
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    d.setDate(d.getDate() + daysAhead);
+    return d.toISOString().split('T')[0];
+  };
+
   beforeEach(async () => {
     mockRoutesService = jasmine.createSpyObj('RoutesService', [
       'getAvailableTrucks',
@@ -74,7 +82,7 @@ describe('CreateRouteComponent', () => {
     form.patchValue({
       assigned_truck: 'TRK-001',
       product_type: 'Medicamentos',
-      delivery_date: '2025-11-10'
+      delivery_date: futureDateStr(1)
     });
     
     expect(form.valid).toBeTruthy();
@@ -100,7 +108,7 @@ describe('CreateRouteComponent', () => {
       id: 1,
       route_code: 'ROU-0001',
       assigned_truck: 'TRK-001',
-      delivery_date: '2025-11-10',
+      delivery_date: futureDateStr(2),
       orders_count: 0,
       created_at: '2025-11-08T10:00:00',
       updated_at: '2025-11-08T10:00:00'
@@ -112,7 +120,7 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-001',
       product_type: 'Medicamentos',
-      delivery_date: '2025-11-10'
+      delivery_date: mockRoute.delivery_date
     });
 
     component.onSubmit();
@@ -134,7 +142,7 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-001',
       product_type: 'Medicamentos',
-      delivery_date: '2025-11-10'
+      delivery_date: futureDateStr(3)
     });
 
     component.onSubmit();
@@ -165,14 +173,15 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-001',
       product_type: 'Medicamentos',
-      delivery_date: '2025-11-10'
+      delivery_date: futureDateStr(4)
     });
 
     // Call the method directly
     component.validateTruckAvailability().then(() => {
+      // Expect the dynamic future date (4 days ahead) instead of a hard-coded date
       expect(mockRoutesService.validateTruckAvailability).toHaveBeenCalledWith(
         'TRK-001',
-        '2025-11-10'
+        futureDateStr(4)
       );
       done();
     });
@@ -189,7 +198,7 @@ describe('CreateRouteComponent', () => {
     await component.validateTruckAvailability();
     expect(mockRoutesService.validateTruckAvailability).not.toHaveBeenCalled();
     // Only date provided
-    component.routeForm.patchValue({ assigned_truck: '', delivery_date: '2025-11-10' });
+  component.routeForm.patchValue({ assigned_truck: '', delivery_date: futureDateStr(5) });
     await component.validateTruckAvailability();
     expect(mockRoutesService.validateTruckAvailability).not.toHaveBeenCalled();
   });
@@ -200,7 +209,7 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-002',
       product_type: 'Medicamentos',
-      delivery_date: '2025-11-12'
+      delivery_date: futureDateStr(6)
     });
     await component.validateTruckAvailability();
     const control = component.routeForm.get('assigned_truck');
@@ -213,7 +222,7 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-003',
       product_type: 'Medicamentos',
-      delivery_date: '2025-11-13'
+      delivery_date: futureDateStr(7)
     });
     await component.validateTruckAvailability();
     const control = component.routeForm.get('assigned_truck');
@@ -280,7 +289,7 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-020',
       product_type: 'General',
-      delivery_date: '2025-11-16'
+      delivery_date: futureDateStr(8)
     });
     component.onSubmit();
     tick();
@@ -294,7 +303,7 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-021',
       product_type: 'General',
-      delivery_date: '2025-11-17'
+      delivery_date: futureDateStr(9)
     });
     component.onSubmit();
     tick();
@@ -308,7 +317,7 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-022',
       product_type: 'General',
-      delivery_date: '2025-11-18'
+      delivery_date: futureDateStr(10)
     });
     component.onSubmit();
     tick();
@@ -331,7 +340,7 @@ describe('CreateRouteComponent', () => {
     component.routeForm.patchValue({
       assigned_truck: 'TRK-030',
       product_type: 'General',
-      delivery_date: '2025-11-19'
+      delivery_date: futureDateStr(11)
     });
     component.onSubmit();
     tick();

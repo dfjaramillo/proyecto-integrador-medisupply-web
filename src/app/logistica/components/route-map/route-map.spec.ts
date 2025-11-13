@@ -34,10 +34,10 @@ describe('RouteMapComponent', () => {
       id: 1,
       route_code: 'ROU-0001',
       assigned_truck: 'TRK-001',
-      delivery_date: '2025-11-10',
+      delivery_date: '2025-11-20',
       orders_count: 2,
-      created_at: '2025-11-08T10:00:00',
-      updated_at: '2025-11-08T10:00:00'
+      created_at: '2025-11-10T10:00:00',
+      updated_at: '2025-11-10T10:00:00'
     },
     clients: [
       {
@@ -46,8 +46,8 @@ describe('RouteMapComponent', () => {
         email: 'cliente1@test.com',
         address: 'Calle 123',
         phone: '1234567890',
-        latitude: 4.6097,
-        longitude: -74.0817
+        latitude: 4.6107,
+        longitude: -74.0810
       },
       {
         id: 'client-2',
@@ -55,8 +55,8 @@ describe('RouteMapComponent', () => {
         email: 'cliente2@test.com',
         address: 'Calle 456',
         phone: '0987654321',
-        latitude: 4.6500,
-        longitude: -74.1000
+        latitude: 4.6117,
+        longitude: -74.0820
       }
     ]
   };
@@ -75,78 +75,72 @@ describe('RouteMapComponent', () => {
     fixture = TestBed.createComponent(RouteMapComponent);
     component = fixture.componentInstance;
     component.routeId = 1;
-  // Map initialization is now skipped under Karma to avoid external script dependency.
-  // Tests that asserted markers/directions will be adapted to validate skip behavior instead.
-  component.enableMapInitInTests = false;
-    setupGoogleStub();
+    (window as any).__karma__ = {}; // simulate Karma
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load route detail on init', () => {
+  it('should load route detail and skip map init with enableMapInitInTests=false (no markers)', fakeAsync(() => {
+    component.enableMapInitInTests = false;
     fixture.detectChanges();
+    tick(300); // allow any timers to settle
     expect(mockRoutesService.getRouteById).toHaveBeenCalledWith(1);
     expect(component.clients.length).toBe(2);
-  });
-
-  it('should skip map initialization under Karma (no markers)', fakeAsync(() => {
-    fixture.detectChanges();
-    tick(300);
     expect(component.markers.length).toBe(0);
+    expect(component.lastDirectionsRequest).toBeNull();
     expect(component.loading()).toBeFalse();
   }));
 
-  it('should calculate map center including warehouse and clients', () => {
+  it('should initialize map and build markers/directions when enableMapInitInTests=true', fakeAsync(() => {
+    component.enableMapInitInTests = true;
+    setupGoogleStub();
     fixture.detectChanges();
-    const center = component.getMapCenterForTest();
-    // Simple sanity assertions: center lat between min/max of points
-    const lats = [4.6097, 4.6097, 4.65];
-    const lngs = [-74.0817, -74.0817, -74.10];
-    expect(center.lat).toBeGreaterThanOrEqual(Math.min(...lats));
-    expect(center.lat).toBeLessThanOrEqual(Math.max(...lats));
-    expect(center.lng).toBeGreaterThanOrEqual(Math.min(...lngs));
-    expect(center.lng).toBeLessThanOrEqual(Math.max(...lngs));
-  });
-
-  it('should not build directions request when map init skipped', fakeAsync(() => {
-    fixture.detectChanges();
-    tick(300);
-    expect(component.lastDirectionsRequest).toBeNull();
+    tick(250); // 200ms setTimeout + buffer
+    expect(component.clients.length).toBe(2);
+    // warehouse start + 2 clients + warehouse end
+    expect(component.markers.length).toBe(4);
+    expect(component.lastDirectionsRequest).not.toBeNull();
+    expect(component.lastDirectionsRequest.waypoints.length).toBe(2);
+    expect(component.loading()).toBeFalse();
   }));
 
-  it('should handle zero clients gracefully with skipped map (no markers)', fakeAsync(() => {
+  it('should calculate map center averaging warehouse + clients', fakeAsync(() => {
+    component.enableMapInitInTests = false;
+    fixture.detectChanges();
+    tick(10);
+    const center = component.getMapCenterForTest();
+    const expectedLat = (4.6097 + 4.6107 + 4.6117) / 3;
+    const expectedLng = (-74.0817 + -74.0810 + -74.0820) / 3;
+    expect(center.lat).toBeCloseTo(expectedLat, 5);
+    expect(center.lng).toBeCloseTo(expectedLng, 5);
+  }));
+
+  it('should handle zero clients gracefully (center = warehouse)', fakeAsync(() => {
     mockRoutesService.getRouteById.and.returnValue(of({ route: mockRouteDetail.route, clients: [] }));
     fixture = TestBed.createComponent(RouteMapComponent);
     component = fixture.componentInstance;
     component.routeId = 1;
+    component.enableMapInitInTests = false;
     fixture.detectChanges();
-    tick(300);
+    tick(50);
+    const center = component.getMapCenterForTest();
+    expect(center.lat).toBeCloseTo(4.6097, 5);
+    expect(center.lng).toBeCloseTo(-74.0817, 5);
     expect(component.markers.length).toBe(0);
     expect(component.lastDirectionsRequest).toBeNull();
   }));
 
-  it('should handle error when loading route detail', () => {
-    mockRoutesService.getRouteById.and.returnValue(
-      throwError(() => new Error('Error loading route'))
-    );
-
+  it('should set loading false on error while fetching route detail', fakeAsync(() => {
+    mockRoutesService.getRouteById.and.returnValue(throwError(() => new Error('fail')));
+    fixture = TestBed.createComponent(RouteMapComponent);
+    component = fixture.componentInstance;
+    component.routeId = 1;
+    component.enableMapInitInTests = false;
     fixture.detectChanges();
-    expect(component.loading()).toBe(false);
-  });
-
-  it('should have correct number of clients', () => {
-    fixture.detectChanges();
-    expect(component.clients.length).toBe(2);
-    expect(component.clients[0].name).toBe('Cliente 1');
-  });
-
-  it('should set loading to true initially', () => {
-    expect(component.loading()).toBe(true);
-  });
-
-  it('should require routeId input', () => {
-    expect(component.routeId).toBeDefined();
-  });
+    tick(10);
+    expect(component.loading()).toBeFalse();
+    expect(component.clients.length).toBe(0);
+  }));
 });

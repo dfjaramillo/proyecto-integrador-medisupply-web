@@ -10,13 +10,16 @@ import { MatTableModule } from '@angular/material/table';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { AuthService } from '../../../auth/services/auth.service';
+import { forkJoin } from 'rxjs';
 
 interface TopClient {
+  id: string;
   name: string;
   orders: number;
 }
 
 interface TopProduct {
+  id: number;
   name: string;
   orders: number;
 }
@@ -49,9 +52,10 @@ export class OperationalReportComponent implements OnInit {
   // Monthly data
   monthly = signal<{ label: string; orders: number; amount: number }[]>([]);
 
-  // Top clients/products (placeholder simulated until backend endpoints exist)
+  // Top clients/products
   topClients = signal<TopClient[]>([]);
   topProducts = signal<TopProduct[]>([]);
+  private originalTopClients: TopClient[] = [];
 
   // Access control
   canViewAll = signal(false);
@@ -160,18 +164,36 @@ export class OperationalReportComponent implements OnInit {
   private loadReport(): void {
     this.loading.set(true);
     this.error.set(null);
-    this.reportsService.getMonthlyReport().subscribe({
-      next: data => {
+    forkJoin({
+      monthly: this.reportsService.getMonthlyReport(),
+      topClients: this.reportsService.getTopClients(),
+      topProducts: this.reportsService.getTopProducts()
+    }).subscribe({
+      next: ({ monthly, topClients, topProducts }) => {
         this.monthly.set(
-          data.monthly_data.map(m => ({
+          monthly.monthly_data.map(m => ({
             label: m.label,
             orders: m.orders_count,
             amount: m.total_amount
           }))
         );
-        // Simulate placeholder top clients/products (subset derived from monthly totals)
-        this.topClients.set(this.buildMockTopClients(data.monthly_data));
-        this.topProducts.set(this.buildMockTopProducts(data.monthly_data));
+
+        // Map backend top clients
+        this.originalTopClients = topClients.map(tc => ({
+          id: tc.client_id,
+          name: tc.client_name,
+          orders: tc.orders_count
+        }));
+        // Keep only top 5 initially (backend already sends top N but enforce just in case)
+        this.topClients.set(this.originalTopClients.slice(0, 5));
+
+        // Map backend top products (limit top 10)
+        const mappedProducts = topProducts.map(p => ({
+          id: p.product_id,
+            name: p.product_name,
+            orders: p.total_sold
+        })).sort((a,b) => b.orders - a.orders).slice(0,10);
+        this.topProducts.set(mappedProducts);
         this.loading.set(false);
       },
       error: err => {
@@ -194,41 +216,14 @@ export class OperationalReportComponent implements OnInit {
 
   private applyClientFiltersLocally(): void {
     const nameTerm = this.clientNameFilter.trim().toLowerCase();
-    let clients = this.buildMockTopClientsFromCurrentMonthly();
+    let clients = [...this.originalTopClients];
     if (nameTerm) {
       clients = clients.filter(c => c.name.toLowerCase().includes(nameTerm));
     }
     this.topClients.set(clients.slice(0, 5));
   }
 
-  private buildMockTopClients(monthlyData: any[]): TopClient[] {
-    // Aggregate orders by pseudo-client names (demo only)
-    const buckets: Record<string, number> = {};
-    monthlyData.forEach(m => {
-      if (m.orders_count > 0) {
-        buckets[`Cliente ${m.month_short}`] = (buckets[`Cliente ${m.month_short}`] || 0) + m.orders_count;
-      }
-    });
-    return Object.entries(buckets)
-      .map(([name, orders]) => ({ name, orders }))
-      .sort((a, b) => b.orders - a.orders)
-      .slice(0, 5);
-  }
-
-  private buildMockTopClientsFromCurrentMonthly(): TopClient[] {
-    return this.topClients().slice();
-  }
-
-  private buildMockTopProducts(monthlyData: any[]): TopProduct[] {
-    // Derive pseudo products (demo only)
-    const products: TopProduct[] = [];
-    monthlyData.forEach(m => {
-      if (m.orders_count > 0) {
-        products.push({ name: `Prod ${m.month_short}`, orders: m.orders_count });
-      }
-    });
-    return products.sort((a, b) => b.orders - a.orders).slice(0, 10);
-  }
+  // (Placeholder removed: products now come from backend)
 
   isEmptyState(): boolean {
     return !this.loading() && this.monthly().length === 0 && !this.error();

@@ -41,8 +41,34 @@ describe('OperationalReportComponent', () => {
     ])
   };
 
+  const topClientsPayload = {
+    success: true,
+    message: 'ok',
+    data: {
+      period: { start_date: '2024-01-01', end_date: '2024-06-30', months: 6 },
+      top_clients: [
+        { client_id: '1', orders_count: 10, client_name: 'Cliente Ene' },
+        { client_id: '2', orders_count: 9, client_name: 'Cliente Feb' },
+        { client_id: '3', orders_count: 8, client_name: 'Cliente Mar' },
+        { client_id: '4', orders_count: 7, client_name: 'Cliente Abr' },
+        { client_id: '5', orders_count: 6, client_name: 'Cliente May' }
+      ]
+    }
+  };
+
+  const topProductsPayload = {
+    success: true,
+    message: 'ok',
+    data: {
+      top_products: [
+        { product_id: 101, total_sold: 15, product_name: 'Producto A' },
+        { product_id: 102, total_sold: 12, product_name: 'Producto B' }
+      ]
+    }
+  };
+
   beforeEach(() => {
-    reportsService = jasmine.createSpyObj('ReportsService', ['getMonthlyReport']);
+    reportsService = jasmine.createSpyObj('ReportsService', ['getMonthlyReport', 'getTopClients', 'getTopProducts']);
     authService = jasmine.createSpyObj('AuthService', ['getUserRole']);
     authService.getUserRole.and.returnValue('Administrador');
 
@@ -61,6 +87,8 @@ describe('OperationalReportComponent', () => {
 
   it('should show loading then populate charts on success', () => {
     reportsService.getMonthlyReport.and.returnValue(of(monthlyPayload));
+    reportsService.getTopClients.and.returnValue(of(topClientsPayload.data.top_clients));
+    reportsService.getTopProducts.and.returnValue(of(topProductsPayload.data.top_products));
     component.ngOnInit();
 
     expect(component.loading()).toBeFalse();
@@ -72,6 +100,8 @@ describe('OperationalReportComponent', () => {
 
   it('should expose empty state when monthly_data is empty', () => {
     reportsService.getMonthlyReport.and.returnValue(of({ ...monthlyPayload, monthly_data: [] }));
+    reportsService.getTopClients.and.returnValue(of(topClientsPayload.data.top_clients));
+    reportsService.getTopProducts.and.returnValue(of(topProductsPayload.data.top_products));
     component.ngOnInit();
     expect(component.monthly().length).toBe(0);
     expect(component.isEmptyState()).toBeTrue();
@@ -79,6 +109,8 @@ describe('OperationalReportComponent', () => {
 
   it('should set error signal on service failure', () => {
     reportsService.getMonthlyReport.and.returnValue(throwError(() => new Error('backend fail')));
+    reportsService.getTopClients.and.returnValue(of(topClientsPayload.data.top_clients));
+    reportsService.getTopProducts.and.returnValue(of(topProductsPayload.data.top_products));
     component.ngOnInit();
     expect(component.error()).toBeTruthy();
     expect(component.loading()).toBeFalse();
@@ -86,6 +118,8 @@ describe('OperationalReportComponent', () => {
 
   it('should debounce client name filter and reduce topClients', fakeAsync(() => {
     reportsService.getMonthlyReport.and.returnValue(of(monthlyPayload));
+    reportsService.getTopClients.and.returnValue(of(topClientsPayload.data.top_clients));
+    reportsService.getTopProducts.and.returnValue(of(topProductsPayload.data.top_products));
     component.ngOnInit();
     const initial = component.topClients().length; // up to 5
     expect(initial).toBeGreaterThan(0);
@@ -95,5 +129,8 @@ describe('OperationalReportComponent', () => {
     const filtered = component.topClients();
     expect(filtered.length).toBeLessThan(initial);
     expect(filtered.every(c => c.name.toLowerCase().includes('ene'))).toBeTrue();
+    // Ensure products mapped
+    expect(component.topProducts().length).toBe(2);
+    expect(component.topProducts()[0].name).toBe('Producto A');
   }));
 });
