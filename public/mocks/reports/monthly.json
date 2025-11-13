@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "message": "ok",
+  "data": {
+    "period": {
+      "start_date": "2025-06-01",
+      "end_date": "2025-11-30",
+      "months": 6
+    },
+    "summary": {
+      "total_orders": 310,
+      "total_amount": 3100000,
+      "months_with_data": 6,
+      "average_orders_per_month": 51.6,
+      "average_amount_per_month": 516666.67
+    },
+    "monthly_data": [
+      { "year": 2025, "month": 6, "month_name": "Junio", "month_short": "Jun", "label": "Junio", "orders_count": 45, "total_amount": 450000 },
+      { "year": 2025, "month": 7, "month_name": "Julio", "month_short": "Jul", "label": "Julio", "orders_count": 52, "total_amount": 520000 },
+      { "year": 2025, "month": 8, "month_name": "Agosto", "month_short": "Ago", "label": "Agosto", "orders_count": 48, "total_amount": 480000 },
+      { "year": 2025, "month": 9, "month_name": "Septiembre", "month_short": "Sep", "label": "Septiembre", "orders_count": 55, "total_amount": 550000 },
+      { "year": 2025, "month": 10, "month_name": "Octubre", "month_short": "Oct", "label": "Octubre", "orders_count": 60, "total_amount": 600000 },
+      { "year": 2025, "month": 11, "month_name": "Noviembre", "month_short": "Nov", "label": "Noviembre", "orders_count": 50, "total_amount": 500000 }
+    ]
+  }
+}

@@ -1,15 +1,3 @@
-<!doctype html>
-<html lang="es-CO">
-<head>
-  <meta charset="utf-8">
-  <title>MediSupply - Sistema de Gestión Médica</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="images/logoMedi.png">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="styles.css"></head>
-<body>
-  <app-root></app-root>
-<script src="main.js" type="module"></script></body>
-</html>
+sku,name,expiration_date,quantity,price,location,description,product_type,provider_id
+MED-0001,Paracetamol 500mg,2026-12-31,150,5500.00,A-01-01,Analgesico y antipiretico de venta libre,Alto valor,550e8400-e29b-41d4-a716-446655440000
+MED-0002,Amoxicilina 500mg,2026-06-30,200,12500.00,B-02-03,Antibiotico de amplio espectro,Seguridad,550e8400-e29b-41d4-a716-446655440001

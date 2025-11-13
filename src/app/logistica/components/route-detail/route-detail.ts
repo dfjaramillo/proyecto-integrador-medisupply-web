@@ -63,6 +63,13 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
         this.route = data.route;
         this.clients = data.clients;
         
+        // Evitar inicializar Google Maps durante pruebas unitarias (Karma)
+        const isKarma = typeof (window as any) !== 'undefined' && !!(window as any).__karma__;
+        if (isKarma) {
+          this.loading.set(false);
+          return;
+        }
+
         // Inicializar el mapa después de cargar los datos
         setTimeout(() => {
           this.waitForGoogleMapsAndElement(0);

@@ -55,7 +55,8 @@ export class RouteMapComponent implements OnInit, AfterViewInit {
         console.log('Route detail loaded:', data);
         this.clients = data.clients;
         
-        // En pruebas unitarias (Karma), evitamos inicializar Google Maps para no depender del DOM ni del script externo
+        // En pruebas unitarias (Karma), normalmente evitamos inicializar Google Maps.
+        // Sin embargo, si enableMapInitInTests=true permitimos inicializar para aumentar cobertura.
         const isKarma = typeof (window as any) !== 'undefined' && !!(window as any).__karma__;
         if (isKarma && !this.enableMapInitInTests) {
           this.loading.set(false);
