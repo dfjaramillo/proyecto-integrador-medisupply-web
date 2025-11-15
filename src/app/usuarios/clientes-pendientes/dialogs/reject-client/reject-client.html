@@ -1,0 +1,32 @@
+<div class="reject-container">
+  <div class="dialog-header">
+    <h2>Rechazar cliente</h2>
+    <button mat-icon-button (click)="close()">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+
+  <div class="dialog-body">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Justificación</mat-label>
+      <textarea
+        matInput
+        rows="6"
+        placeholder="Redacta el motivo de rechazo"
+        [value]="justification()"
+        (input)="onJustificationChange($event)"></textarea>
+      <mat-hint align="end">{{ justification().length }}/500</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="dialog-footer">
+    <button
+      mat-raised-button
+      color="primary"
+      class="save-button"
+      [disabled]="!canSave"
+      (click)="save()">
+      Guardar
+    </button>
+  </div>
+</div>

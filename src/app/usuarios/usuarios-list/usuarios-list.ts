@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { FormsModule } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -30,7 +31,8 @@ import { AuthService } from '../../auth/services/auth.service';
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FormsModule
   ],
   templateUrl: './usuarios-list.html',
   styleUrls: ['./usuarios-list.scss']
@@ -47,6 +49,8 @@ export class UsuariosListComponent implements OnInit, OnDestroy {
   totalPages = signal(0);
   currentPage = signal(0);
   pageSize = signal(5);
+
+  selectedRole: string = '';
 
   displayedColumns: string[] = ['name', 'email', 'role'];
   
@@ -195,7 +199,7 @@ export class UsuariosListComponent implements OnInit, OnDestroy {
   }
 
   onRoleFilterChange(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
+    const value = event as unknown as string;
     this.roleFilter.set(value.toLowerCase());
     this.roleFilter$.next(value);
   }

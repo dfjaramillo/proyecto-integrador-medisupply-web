@@ -31,44 +31,57 @@
       </div>
     } @else {
       
-      <!-- Filter inputs -->
-      <div class="filter-row">
-        <input
-          type="text"
-          class="filter-input"
-          placeholder="Buscar nombre"
-          [value]="nameFilter()"
-          (input)="onNameFilterChange($event)">
-        <input
-          type="text"
-          class="filter-input"
-          placeholder="Buscar correo"
-          [value]="emailFilter()"
-          (input)="onEmailFilterChange($event)">
-        <input
-          type="text"
-          class="filter-input"
-          placeholder="Buscar rol"
-          [value]="roleFilter()"
-          (input)="onRoleFilterChange($event)">
-      </div>
-
       <table mat-table [dataSource]="filteredUsers" class="users-table">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>NOMBRE</th>
+          <th mat-header-cell *matHeaderCellDef>
+            NOMBRE
+            <div class="filter-header">
+              <input
+                type="text"
+                class="filter-input"
+                placeholder="Buscar nombre"
+                [value]="nameFilter()"
+                (input)="onNameFilterChange($event)" />
+            </div>
+          </th>
           <td mat-cell *matCellDef="let user">{{ user.name }}</td>
         </ng-container>
 
         <!-- Email Column -->
         <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef>CORREO ELECTRÓNICO</th>
+          <th mat-header-cell *matHeaderCellDef>
+            CORREO ELECTRÓNICO
+            <div class="filter-header">
+              <input
+                type="text"
+                class="filter-input"
+                placeholder="Buscar correo"
+                [value]="emailFilter()"
+                (input)="onEmailFilterChange($event)" />
+            </div>
+          </th>
           <td mat-cell *matCellDef="let user">{{ user.email }}</td>
         </ng-container>
 
         <!-- Role Column -->
         <ng-container matColumnDef="role">
-          <th mat-header-cell *matHeaderCellDef>ROL</th>
+          <th mat-header-cell *matHeaderCellDef>
+            ROL
+            <div class="filter-header">
+              <select
+                class="filter-input filter-select"
+                [(ngModel)]="selectedRole"
+                (ngModelChange)="onRoleFilterChange($event)">
+                <option value="">Todos</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Cliente">Cliente</option>
+                <option value="Ventas">Ventas</option>
+                <option value="Logistica">Logistica</option>
+                <option value="Compras">Compras</option>
+              </select>
+            </div>
+          </th>
           <td mat-cell *matCellDef="let user">{{ user.role || '-' }}</td>
         </ng-container>
 

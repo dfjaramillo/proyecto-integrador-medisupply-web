@@ -32,12 +32,7 @@
 
     <!-- TOP 5 Clientes -->
     <div class="card">
-      <h2>TOP 5 Clientes con más pedidos en el último semestre</h2>      
-      <!-- Filtro por nombre (debounced client-side) -->
-      <mat-form-field appearance="outline" class="client-filter" floatLabel="always">
-        <mat-label>Nombre cliente</mat-label>
-  <input matInput placeholder="Nombre cliente" data-cy="client-name-filter-input" [(ngModel)]="clientNameFilter" (ngModelChange)="onClientFilterChange()" />
-      </mat-form-field>
+      <h2>TOP 5 Clientes con más pedidos en el último semestre</h2>            
       <table mat-table [dataSource]="topClients()" class="clients-table" *ngIf="topClients().length; else noClients">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>CLIENTE</th>

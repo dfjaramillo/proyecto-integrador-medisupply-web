@@ -27,80 +27,38 @@
     </div>
     } @else {
 
-    <div class="filter-row">
-      <input
-        type="text"
-        class="filter-input"
-        placeholder="Buscar nombre"
-        [(ngModel)]="nameFilter"
-        (input)="onFilterChange()"
-        aria-label="Filtrar por nombre"
-        
-      />
-
-      <mat-form-field
-        appearance="outline"
-        class="filter-datepicker"
-        
-      >
-        <input
-          matInput
-          [matDatepicker]="startPicker"
-          [(ngModel)]="startDateFilter"
-          (dateChange)="onStartDateChange($event.value)"
-          placeholder="Buscar fecha inicio"
-          aria-label="Filtrar por fecha de inicio"
-          
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="startPicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #startPicker></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field
-        appearance="outline"
-        class="filter-datepicker"
-        
-      >
-        <input
-          matInput
-          [matDatepicker]="endPicker"
-          [(ngModel)]="endDateFilter"
-          (dateChange)="onEndDateChange($event.value)"
-          placeholder="Buscar fecha fin"
-          aria-label="Filtrar por fecha de fin"
-          
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="endPicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #endPicker></mat-datepicker>
-      </mat-form-field>
-
-      <input
-        type="text"
-        class="filter-input"
-        placeholder="Buscar cliente"
-        [(ngModel)]="clientFilter"
-        (input)="onFilterChange()"
-        aria-label="Filtrar por cliente"
-        
-      />
-    </div>
-
     <table mat-table [dataSource]="salesPlans()" class="sales-plan-table">
       <!-- Nombre Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>NOMBRE</th>
+        <th mat-header-cell *matHeaderCellDef>
+          NOMBRE
+          <div class="filter-header">
+            <input
+              type="text"
+              class="filter-input"
+              placeholder="Buscar nombre"
+              [(ngModel)]="nameFilter"
+              (input)="onFilterChange()"
+              aria-label="Filtrar por nombre" />
+          </div>
+        </th>
         <td mat-cell *matCellDef="let plan">{{ plan.name }}</td>
       </ng-container>
 
       <!-- Fecha de inicio Column -->
       <ng-container matColumnDef="start_date">
-        <th mat-header-cell *matHeaderCellDef>FECHA DE INICIO</th>
+        <th mat-header-cell *matHeaderCellDef>
+          FECHA DE INICIO
+          <div class="filter-header">
+            <input
+              type="date"
+              class="filter-input"
+              placeholder="Buscar fecha inicio"
+              [ngModel]="startDateFilter"
+              (ngModelChange)="onStartDateChange($event)"
+              aria-label="Filtrar por fecha de inicio" />
+          </div>
+        </th>
         <td mat-cell *matCellDef="let plan">
           {{ formatDate(plan.start_date) }}
         </td>
@@ -108,7 +66,18 @@
 
       <!-- Fecha de fin Column -->
       <ng-container matColumnDef="end_date">
-        <th mat-header-cell *matHeaderCellDef>FECHA DE FIN</th>
+        <th mat-header-cell *matHeaderCellDef>
+          FECHA DE FIN
+          <div class="filter-header">
+            <input
+              type="date"
+              class="filter-input"
+              placeholder="Buscar fecha fin"
+              [ngModel]="endDateFilter"
+              (ngModelChange)="onEndDateChange($event)"
+              aria-label="Filtrar por fecha de fin" />
+          </div>
+        </th>
         <td mat-cell *matCellDef="let plan">
           {{ formatDate(plan.end_date) }}
         </td>
@@ -116,7 +85,18 @@
 
       <!-- Cliente Column -->
       <ng-container matColumnDef="client_id">
-        <th mat-header-cell *matHeaderCellDef>CLIENTE</th>
+        <th mat-header-cell *matHeaderCellDef>
+          CLIENTE
+          <div class="filter-header">
+            <input
+              type="text"
+              class="filter-input"
+              placeholder="Buscar cliente"
+              [(ngModel)]="clientFilter"
+              (input)="onFilterChange()"
+              aria-label="Filtrar por cliente" />
+          </div>
+        </th>
         <td mat-cell *matCellDef="let plan">{{ plan.client_name }}</td>
       </ng-container>
 

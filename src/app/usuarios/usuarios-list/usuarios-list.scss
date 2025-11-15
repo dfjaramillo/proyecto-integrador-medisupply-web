@@ -1,4 +1,25 @@
 .usuarios-container {
+  .users-table {
+    .filter-header {
+      margin-top: 8px;
+    }
+
+    .filter-input {
+      width: 100%;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .filter-input:focus {
+      border-color: #2563eb;
+    }
+  }
+}
+
+.usuarios-container {
   padding: 0;
   margin-top: -32px; // Compensate for main-content padding to align with header
   margin-left: -32px;
@@ -101,6 +122,10 @@
       }
     }
 
+      .filter-select {
+        color: #9ca3af;
+        height: 34px;
+      }
     .loading-container {
       display: flex;
       flex-direction: column;
