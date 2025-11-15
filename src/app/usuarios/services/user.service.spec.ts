@@ -171,7 +171,7 @@ describe('UserService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${environment.apiUrl}/auth/user?page=1&per_page=100&role=Cliente`
+        `${environment.apiUrl}/auth/user?page=1&per_page=5&role=Cliente`
       );
       expect(req.request.method).toBe('GET');
       req.flush(response);
@@ -197,7 +197,7 @@ describe('UserService', () => {
       });
 
       const req = httpMock.expectOne(
-        `${environment.apiUrl}/auth/user?page=1&per_page=100&role=Ventas`
+        `${environment.apiUrl}/auth/user?page=1&per_page=5&role=Ventas`
       );
       expect(req.request.method).toBe('GET');
       req.flush(response);
