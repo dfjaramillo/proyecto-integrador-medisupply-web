@@ -152,6 +152,58 @@ describe('UserService', () => {
     });
   });
 
+  describe('getClients', () => {
+    it('should request clients with role Cliente and map only Cliente users', () => {
+      const response: GetUsersResponse = {
+        message: 'Success',
+        data: {
+          users: [
+            { ...mockUsers[0], role: 'Cliente' },
+            { ...mockUsers[1], role: UserRole.VENTAS }
+          ],
+          pagination: mockGetUsersResponse.data.pagination
+        }
+      };
+
+      service.getClients().subscribe(users => {
+        expect(users.length).toBe(1);
+        expect(users[0].role).toBe('Cliente');
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/auth/user?page=1&per_page=100&role=Cliente`
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(response);
+    });
+  });
+
+  describe('getSellers', () => {
+    it('should request sellers with role Ventas and return all users', () => {
+      const response: GetUsersResponse = {
+        message: 'Success',
+        data: {
+          users: [
+            { ...mockUsers[0], role: UserRole.VENTAS },
+            { ...mockUsers[1], role: UserRole.VENTAS }
+          ],
+          pagination: mockGetUsersResponse.data.pagination
+        }
+      };
+
+      service.getSellers().subscribe(users => {
+        expect(users.length).toBe(2);
+        expect(users.every(u => u.role === UserRole.VENTAS)).toBeTrue();
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/auth/user?page=1&per_page=100&role=Ventas`
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(response);
+    });
+  });
+
   describe('createUser', () => {
     it('should send POST request with user data', () => {
       const userData: CreateUserRequest = {
@@ -314,6 +366,67 @@ describe('UserService', () => {
 
       const req = httpMock.expectOne(`${environment.apiUrl}/auth/user/${userId}`);
       req.flush({ message: 'User not found' }, { status: 404, statusText: 'Not Found' });
+    });
+  });
+
+  describe('assignClientToSeller', () => {
+    it('should POST assignment payload to assigned-clients endpoint', () => {
+      const sellerId = 'seller-1';
+      const clientId = 'client-1';
+
+      service.assignClientToSeller(sellerId, clientId).subscribe(response => {
+        expect(response).toEqual({ success: true });
+      });
+
+      const req = httpMock.expectOne(`${environment.apiUrl}/auth/assigned-clients`);
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ seller_id: sellerId, client_id: clientId });
+      req.flush({ success: true });
+    });
+  });
+
+  describe('getAssignedClientsBySeller', () => {
+    it('should GET assigned clients and map inner data object', () => {
+      const sellerId = 'seller-123';
+      const apiResponse = {
+        message: 'Success',
+        data: {
+          seller_id: sellerId,
+          assigned_clients: [{ id: 'c1' }, { id: 'c2' }],
+          total: 2
+        }
+      };
+
+      service.getAssignedClientsBySeller(sellerId).subscribe(data => {
+        expect(data.seller_id).toBe(sellerId);
+        expect(data.assigned_clients.length).toBe(2);
+        expect(data.total).toBe(2);
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/auth/assigned-clients/${sellerId}`
+      );
+      expect(req.request.method).toBe('GET');
+      req.flush(apiResponse);
+    });
+  });
+
+  describe('rejectClient', () => {
+    it('should POST reject payload to correct URL', () => {
+      const userId = 'user-1';
+      const sellerId = 'seller-1';
+      const clientId = 'client-1';
+
+      service.rejectClient(userId, sellerId, clientId).subscribe(response => {
+        expect(response).toEqual({ rejected: true });
+      });
+
+      const req = httpMock.expectOne(
+        `${environment.apiUrl}/auth/user/reject/${userId}`
+      );
+      expect(req.request.method).toBe('POST');
+      expect(req.request.body).toEqual({ seller_id: sellerId, client_id: clientId });
+      req.flush({ rejected: true });
     });
   });
 });

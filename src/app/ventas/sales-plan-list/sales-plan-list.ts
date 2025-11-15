@@ -10,8 +10,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { SalesPlanService } from '../services/sales-plan.service';
 import { AuthService } from '../../auth/services/auth.service';
@@ -34,9 +32,6 @@ import { forkJoin } from 'rxjs';
     FormsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatDatepickerModule,
-    MatDatepickerToggle,
-    MatDatepicker,
   ],
   providers: [
     provideNativeDateAdapter(),

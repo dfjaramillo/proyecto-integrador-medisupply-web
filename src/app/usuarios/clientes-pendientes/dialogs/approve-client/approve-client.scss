@@ -1,0 +1,47 @@
+.approve-container {
+  padding: 24px 32px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 600;
+      color: #41444f;
+    }
+  }
+
+  .dialog-body {
+    flex: 1;
+
+    .full-width {
+      width: 100%;
+    }
+  }
+
+  .dialog-footer {
+    padding-bottom: 16px;
+
+    .save-button {
+      width: 100%;
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 500;
+      border-radius: 999px;
+    }
+  }
+
+  .loading-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+}

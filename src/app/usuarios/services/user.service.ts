@@ -11,6 +11,7 @@ export class UserService {
   private http = inject(HttpClient);
   private readonly usersListUrl = `${environment.apiUrl}/auth/user`;
   private readonly createUserUrl = `${environment.apiUrl}/auth/admin/users`;
+  private readonly assignedClientsUrl = `${environment.apiUrl}/auth/assigned-clients`;
 
   /**
    * Get paginated list of users
@@ -31,6 +32,65 @@ export class UserService {
         total: response.data.pagination.total
       }))
     );
+  }
+
+  /**
+   * Get all clients (role=Cliente) for local filtering/pagination
+   */
+  getClients(): Observable<User[]> {
+    const params = new HttpParams()
+      .set('page', '1')
+      .set('per_page', '100')
+      .set('role', 'Cliente');
+
+    return this.http.get<GetUsersResponse>(this.usersListUrl, { params }).pipe(
+      map(response => (response.data.users || []).filter(u => u.role === 'Cliente'))
+    );
+  }
+
+  /**
+   * Get account managers / sellers (role=Ventas)
+   */
+  getSellers(): Observable<User[]> {
+    const params = new HttpParams()
+      .set('page', '1')
+      .set('per_page', '100')
+      .set('role', 'Ventas');
+
+    return this.http.get<GetUsersResponse>(this.usersListUrl, { params }).pipe(
+      map(response => response.data.users || [])
+    );
+  }
+
+  /**
+   * Assign client to seller (approve client)
+   */
+  assignClientToSeller(sellerId: string, clientId: string): Observable<any> {
+    const body = {
+      seller_id: sellerId,
+      client_id: clientId
+    };
+    return this.http.post<any>(this.assignedClientsUrl, body);
+  }
+
+  /**
+   * Get assigned clients by seller
+   */
+  getAssignedClientsBySeller(sellerId: string): Observable<{ seller_id: string; assigned_clients: any[]; total: number }> {
+    return this.http.get<{ message: string; data: { seller_id: string; assigned_clients: any[]; total: number } }>(
+      `${this.assignedClientsUrl}/${sellerId}`
+    ).pipe(map(res => res.data));
+  }
+
+  /**
+   * Reject client request
+   */
+  rejectClient(userId: string, sellerId: string, clientId: string): Observable<any> {
+    const body = {
+      seller_id: sellerId,
+      client_id: clientId
+    };
+    return this.http.post<any>(`${this.usersListUrl}/reject/${userId}`, body);
   }
 
   /**

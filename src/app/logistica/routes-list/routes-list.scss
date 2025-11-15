@@ -1,4 +1,55 @@
 .routes-container {
+  .routes-table {
+    .filter-header {
+      margin-top: 8px;
+    }
+
+    .filter-input {
+      width: 100%;
+      color:#9ca3af;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .filter-input:focus {
+      border-color: #2563eb;
+    }
+
+    .filter-datepicker {
+      width: 100%;
+      .mat-mdc-form-field-wrapper {
+        padding: 0;
+      }
+
+      .mat-mdc-text-field-wrapper {
+        min-height: 32px;
+        padding: 0 10px;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        font-size: 12px;
+      }
+
+      .mat-mdc-form-field-flex {
+        height: 100%;
+        align-items: center;
+      }
+
+      .mat-mdc-input-element {
+        font-size: 12px;
+        padding: 0;
+      }
+
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+    }
+  }
+}
+
+.routes-container {
   padding: 0;
   margin: -32px -32px 0;
   height: calc(100vh - 64px);

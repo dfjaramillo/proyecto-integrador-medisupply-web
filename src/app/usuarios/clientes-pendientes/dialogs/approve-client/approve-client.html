@@ -1,0 +1,36 @@
+<div class="approve-container">
+  <div class="dialog-header">
+    <h2>Aprobar cliente</h2>
+    <button mat-icon-button (click)="close()">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+
+  <div class="dialog-body" *ngIf="!loadingSellers(); else loadingBlock">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Asignar Gerente de cuenta</mat-label>
+      <mat-select [value]="selectedSellerId()" (selectionChange)="onSellerChange($event.value)">
+        <mat-option *ngFor="let seller of sellers()" [value]="seller.id">
+          {{ seller.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <ng-template #loadingBlock>
+    <div class="loading-block">
+      <mat-spinner diameter="32"></mat-spinner>
+    </div>
+  </ng-template>
+
+  <div class="dialog-footer">
+    <button
+      mat-raised-button
+      color="primary"
+      class="save-button"
+      [disabled]="!canSave"
+      (click)="save()">
+      Guardar
+    </button>
+  </div>
+</div>

@@ -45,67 +45,55 @@
     </div>
     } @else {
 
-    <div class="filter-row">
-      <input
-        type="text"
-        class="filter-input"
-        placeholder="Buscar código"
-        [(ngModel)]="routeCodeFilter"
-        (input)="onFilterChange()"
-        aria-label="Filtrar por código de ruta"
-      />
-
-      <input
-        type="text"
-        class="filter-input"
-        placeholder="Buscar camión"
-        [(ngModel)]="truckFilter"
-        (input)="onFilterChange()"
-        aria-label="Filtrar por camión"
-      />
-
-      <mat-form-field appearance="outline" class="filter-datepicker">
-        <input
-          matInput
-          [matDatepicker]="datePicker"
-          [(ngModel)]="dateFilter"
-          (dateChange)="onDateChange($event.value)"
-          placeholder="Buscar fecha"
-          aria-label="Filtrar por fecha de entrega"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="datePicker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #datePicker></mat-datepicker>
-      </mat-form-field>
-
-      <input
-        type="text"
-        class="filter-input"
-        placeholder="Buscar estado"
-        [(ngModel)]="productTypeFilter"
-        (input)="onFilterChange()"
-        aria-label="Filtrar por tipo de producto"
-      />
-    </div>
-
     <table mat-table [dataSource]="routes()" class="routes-table">
       <!-- Código de ruta Column -->
       <ng-container matColumnDef="route_code">
-        <th mat-header-cell *matHeaderCellDef>CÓDIGO DE RUTA</th>
+        <th mat-header-cell *matHeaderCellDef>
+          CÓDIGO DE RUTA
+          <div class="filter-header">
+            <input
+              type="text"
+              class="filter-input"
+              placeholder="Buscar código"
+              [(ngModel)]="routeCodeFilter"
+              (input)="onFilterChange()"
+              aria-label="Filtrar por código de ruta" />
+          </div>
+        </th>
         <td mat-cell *matCellDef="let route">{{ route.route_code }}</td>
       </ng-container>
 
       <!-- Camión asignado Column -->
       <ng-container matColumnDef="assigned_truck">
-        <th mat-header-cell *matHeaderCellDef>CAMIÓN ASIGNADO</th>
+        <th mat-header-cell *matHeaderCellDef>
+          CAMIÓN ASIGNADO
+          <div class="filter-header">
+            <input
+              type="text"
+              class="filter-input"
+              placeholder="Buscar camión"
+              [(ngModel)]="truckFilter"
+              (input)="onFilterChange()"
+              aria-label="Filtrar por camión" />
+          </div>
+        </th>
         <td mat-cell *matCellDef="let route">{{ route.assigned_truck }}</td>
       </ng-container>
 
       <!-- Fecha de entrega Column -->
       <ng-container matColumnDef="delivery_date">
-        <th mat-header-cell *matHeaderCellDef>FECHA DE ENTREGA</th>
+        <th mat-header-cell *matHeaderCellDef>
+          FECHA DE ENTREGA
+          <div class="filter-header">
+              <input
+              type="date"
+              class="filter-input"
+              placeholder="Buscar fecha"
+              [ngModel]="dateFilter"
+              (ngModelChange)="onDateChange($event)"
+              aria-label="Filtrar por fecha de entrega" />
+          </div>
+        </th>
         <td mat-cell *matCellDef="let route">
           {{ formatDate(route.delivery_date) }}
         </td>
@@ -113,7 +101,18 @@
 
       <!-- Tipo de productos Column -->
       <ng-container matColumnDef="orders_count">
-        <th mat-header-cell *matHeaderCellDef>TIPO DE PRODUCTOS</th>
+        <th mat-header-cell *matHeaderCellDef>
+          TIPO DE PRODUCTOS
+          <div class="filter-header">
+            <input
+              type="text"
+              class="filter-input"
+              placeholder="Buscar estado"
+              [(ngModel)]="productTypeFilter"
+              (input)="onFilterChange()"
+              aria-label="Filtrar por tipo de producto" />
+          </div>
+        </th>
         <td mat-cell *matCellDef="let route">
           Cadena de frío
         </td>

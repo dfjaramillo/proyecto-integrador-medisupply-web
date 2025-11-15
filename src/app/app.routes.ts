@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './auth//login/login';
 import { MainLayoutComponent } from './layout/main-layout/main-layout';
 import { UsuariosListComponent } from './usuarios/usuarios-list/usuarios-list';
+import { ClientesPendientesComponent } from './usuarios/clientes-pendientes/clientes-pendientes';
 import { InventarioListComponent } from './inventario/inventario-list/inventario-list';
 import { ProveedoresListComponent } from './proveedores/proveedores-list/proveedores-list';
 import { SalesPlanListComponent } from './ventas/sales-plan-list/sales-plan-list';
@@ -29,6 +30,11 @@ export const routes: Routes = [
       { 
         path: 'usuarios', 
         component: UsuariosListComponent,
+        canActivate: [administradorGuard]
+      },
+      {
+        path: 'clientes',
+        component: ClientesPendientesComponent,
         canActivate: [administradorGuard]
       },
       // Compras y Logistica - Gestión de inventario (solo Compras puede crear productos)

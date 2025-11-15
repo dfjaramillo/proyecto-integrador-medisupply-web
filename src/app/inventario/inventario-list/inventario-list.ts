@@ -18,9 +18,7 @@ import { Pagination } from '../../shared/models/pagination.model';
 import { CreateProductoComponent } from '../components/create-producto/create-producto';
 import { CargueMasivoComponent } from '../components/cargue-masivo/cargue-masivo';
 import { HistorialCargueListComponent } from '../components/historial-cargue-list/historial-cargue-list';
-import { MatFormField, MatFormFieldModule } from "@angular/material/form-field";
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDatepickerToggle, MatDatepicker } from "@angular/material/datepicker";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
@@ -37,11 +35,7 @@ import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/cor
     MatSnackBarModule,
     MatDialogModule,
     FormsModule,
-    MatDatepickerModule,
     MatInputModule,
-    MatFormField,
-    MatDatepickerToggle,
-    MatDatepicker,
     HistorialCargueListComponent
 ],
  providers: [
@@ -270,6 +264,7 @@ export class InventarioListComponent implements OnInit, OnDestroy {
       this.fechaFilter$.next('');
     }
   }
+  
 
   formatDateToYYYYMMDD(date: Date): string {
     const year = date.getFullYear();

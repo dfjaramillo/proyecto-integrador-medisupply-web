@@ -31,6 +31,10 @@
             <mat-icon>person</mat-icon>
             <span>Usuarios</span>
           </a>
+          <a class="nav-item" routerLink="/clientes" routerLinkActive="active" (click)="closeSidebar()">
+            <mat-icon>local_hospital</mat-icon>
+            <span>Clientes</span>
+          </a>
           }
           @if(canSeeProveedores()){
           <a class="nav-item" routerLink="/proveedores" routerLinkActive="active" (click)="closeSidebar()">
