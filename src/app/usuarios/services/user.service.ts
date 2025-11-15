@@ -40,7 +40,7 @@ export class UserService {
   getClients(): Observable<User[]> {
     const params = new HttpParams()
       .set('page', '1')
-      .set('per_page', '100')
+      .set('per_page', '5')
       .set('role', 'Cliente');
 
     return this.http.get<GetUsersResponse>(this.usersListUrl, { params }).pipe(
@@ -54,7 +54,7 @@ export class UserService {
   getSellers(): Observable<User[]> {
     const params = new HttpParams()
       .set('page', '1')
-      .set('per_page', '100')
+      .set('per_page', '5')
       .set('role', 'Ventas');
 
     return this.http.get<GetUsersResponse>(this.usersListUrl, { params }).pipe(
