@@ -88,7 +88,46 @@ export class ClientesPendientesComponent implements OnInit {
   }
 
   get pageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    const totalPages = this.totalPages;
+    const current = this.currentPage() + 1; // convert 0-based signal to 1-based page
+    const delta = 2;
+    const pages: number[] = [];
+
+    if (totalPages <= 0) {
+      return [];
+    }
+
+    // Always show first page
+    pages.push(1);
+
+    let start = Math.max(2, current - delta);
+    let end = Math.min(totalPages - 1, current + delta);
+
+    if (current <= delta + 2) {
+      end = Math.min(totalPages - 1, delta * 2 + 2);
+    }
+
+    if (current >= totalPages - delta - 1) {
+      start = Math.max(2, totalPages - delta * 2 - 1);
+    }
+
+    if (start > 2) {
+      pages.push(-1); // ellipsis marker
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (end < totalPages - 1) {
+      pages.push(-2);
+    }
+
+    if (totalPages > 1) {
+      pages.push(totalPages);
+    }
+
+    return pages;
   }
 
   // Derived lists
