@@ -123,10 +123,10 @@
       </table>
 
       <!-- Custom Pagination -->
-      <div class="custom-pagination" *ngIf="totalClients > 0">
+      <div class="custom-pagination" *ngIf="totalClients() > 0">
         <span class="pagination-info">
           Mostrando {{ (currentPage() * pageSize()) + 1 }} al
-          {{ Math.min((currentPage() + 1) * pageSize(), totalClients) }} de {{ totalClients }} registros
+          {{ Math.min((currentPage() + 1) * pageSize(), totalClients()) }} de {{ totalClients() }} registros
         </span>
         <div class="pagination-buttons">
           <button

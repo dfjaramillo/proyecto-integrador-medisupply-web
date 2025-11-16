@@ -41,13 +41,16 @@ export class ClientesPendientesComponent implements OnInit {
   loading = signal(false);
   clients = signal<User[]>([]);
 
+  // Total clients from backend
+  totalClients = signal(0);
+
   // Filters per column
   codeFilter = signal('');
   nameFilter = signal('');
   typeFilter = signal('');
   dateFilter = signal('');
 
-  // Pagination
+  // Pagination (0-based index for currentPage)
   currentPage = signal(0);
   pageSize = signal(5);
 
@@ -61,15 +64,13 @@ export class ClientesPendientesComponent implements OnInit {
 
   private loadClients(): void {
     this.loading.set(true);
-    this.userService.getClients().subscribe({
-      next: (data) => {
-        // Order by created_at asc when available
-        const ordered = [...data].sort((a, b) => {
-          const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
-          const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
-          return dateA - dateB;
-        });
-        this.clients.set(ordered);
+    // Use backend pagination similar to UsuariosListComponent
+    this.userService.getUsers(this.currentPage() + 1, this.pageSize(), 'role', 'Cliente').subscribe({
+      next: (response) => {
+        // Ensure we only keep clients (role Cliente)
+        const clients = (response.users || []).filter(u => u.role === 'Cliente');
+        this.clients.set(clients);
+        this.totalClients.set(response.total);
         this.loading.set(false);
       },
       error: (err) => {
@@ -82,12 +83,8 @@ export class ClientesPendientesComponent implements OnInit {
     });
   }
 
-  get totalClients(): number {
-    return this.filteredClients().length;
-  }
-
   get totalPages(): number {
-    return Math.max(1, Math.ceil(this.totalClients / this.pageSize()));
+    return Math.max(1, Math.ceil(this.totalClients() / this.pageSize()));
   }
 
   get pageNumbers(): number[] {
@@ -114,10 +111,9 @@ export class ClientesPendientesComponent implements OnInit {
     });
   });
 
-  pagedClients = computed(() => {
-    const start = this.currentPage() * this.pageSize();
-    return this.filteredClients().slice(start, start + this.pageSize());
-  });
+  // With backend pagination, current page is loaded from API,
+  // so table uses full filtered list for current page.
+  pagedClients = computed(() => this.filteredClients());
 
   buildClientCode(client: User): string {
     // Simple derived code CL + last 4 of id
@@ -128,17 +124,20 @@ export class ClientesPendientesComponent implements OnInit {
   // Pagination actions
   goToPage(page: number): void {
     this.currentPage.set(page - 1);
+    this.loadClients();
   }
 
   previousPage(): void {
     if (this.currentPage() > 0) {
       this.currentPage.set(this.currentPage() - 1);
+      this.loadClients();
     }
   }
 
   nextPage(): void {
     if (this.currentPage() < this.totalPages - 1) {
       this.currentPage.set(this.currentPage() + 1);
+      this.loadClients();
     }
   }
 
