@@ -259,27 +259,36 @@ describe('CreateRouteComponent', () => {
 
   it('should format delivery_date to YYYY-MM-DD when submitting Date object', fakeAsync(() => {
     fixture.detectChanges();
-    const dateObj = new Date(2025, 10, 15); // Nov 15 2025
+    // Use a dynamic future date so the validator passes regardless of current date
+    const dateObj = new Date();
+    dateObj.setDate(dateObj.getDate() + 1);
+    const expectedDate = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
+
     mockRoutesService.createRoute.calls.reset();
     mockRoutesService.createRoute.and.returnValue(of({
       id: 99,
       route_code: 'ROU-0099',
       assigned_truck: 'TRK-010',
-      delivery_date: '2025-11-15',
+      delivery_date: expectedDate,
       orders_count: 0,
       created_at: '2025-11-08T10:00:00',
       updated_at: '2025-11-08T10:00:00'
     }));
+
     component.routeForm.patchValue({
       assigned_truck: 'TRK-010',
       product_type: 'General',
       delivery_date: dateObj
     });
+
     component.onSubmit();
     tick();
-    expect(mockRoutesService.createRoute.calls.mostRecent().args[0]).toEqual({
+
+    expect(mockRoutesService.createRoute).toHaveBeenCalled();
+    const payload = mockRoutesService.createRoute.calls.mostRecent()?.args?.[0];
+    expect(payload).toEqual({
       assigned_truck: 'TRK-010',
-      delivery_date: '2025-11-15'
+      delivery_date: expectedDate
     });
   }));
 
