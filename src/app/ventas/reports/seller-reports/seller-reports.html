@@ -1,0 +1,169 @@
+<div class="seller-reports-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Informe de vendedores</h1>
+    <div class="breadcrumb">
+      <span class="breadcrumb-link">Ventas</span>
+      <span class="breadcrumb-separator">-</span>
+      <span class="breadcrumb-current">Informe de vendedores</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Seller Selection -->
+    @if (currentUserRole() === 'Administrador') {
+      <div class="selector-container">
+        <mat-form-field appearance="outline" class="seller-selector">
+          <mat-label>Vendedor</mat-label>
+          <mat-select 
+            [(ngModel)]="selectedSellerId" 
+            (selectionChange)="onSellerChange()"
+            [disabled]="loadingSellers()">
+            <mat-option *ngFor="let seller of sellers()" [value]="seller.id">
+              {{ seller.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    }
+
+    <!-- Loading State -->
+    @if (loadingReports()) {
+      <div class="loading-container">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Cargando informes...</p>
+      </div>
+    }
+
+    <!-- Reports Section (only shown when seller is selected and not loading) -->
+    @if (selectedSellerId() && !loadingReports() && statusSummary()) {
+      <!-- Top Row: Donut Chart and Earnings Table -->
+      <div class="top-row">
+        <!-- Donut Chart -->
+        <div class="chart-card donut-chart-card">
+          <h3 class="card-title">Distribución pedidos hechos por los clientes asignados</h3>
+          
+          @if (donutChartConfig() && statusSummary()!.summary.total_orders > 0) {
+            <div class="donut-chart-container">
+              <div class="chart-center-label">
+                <div class="center-value">{{ statusSummary()!.summary.total_orders }}</div>
+                <div class="center-label">pedidos</div>
+              </div>
+              <canvas 
+                baseChart
+                [type]="donutChartConfig()!.type"
+                [data]="donutChartConfig()!.data"
+                [options]="donutChartConfig()!.options">
+              </canvas>
+            </div>
+          } @else {
+            <div class="no-data">
+              <p>No hay pedidos registrados para este vendedor</p>
+            </div>
+          }
+        </div>
+
+        <!-- Earnings Table -->
+        <div class="table-card earnings-table-card">
+          <h3 class="card-title">Ganancias por cliente asignado</h3>
+          
+          @if (clientsSummary() && clientsSummary()!.clients.length > 0) {            
+            <table mat-table [dataSource]="paginatedClients" class="clients-table">
+              <!-- Client Name Column -->
+              <ng-container matColumnDef="client_name">
+                <th mat-header-cell *matHeaderCellDef>CLIENTE</th>
+                <td mat-cell *matCellDef="let client">{{ client.client_name }}</td>
+              </ng-container>
+
+              <!-- Total Amount Column -->
+              <ng-container matColumnDef="total_amount">
+                <th mat-header-cell *matHeaderCellDef>GANANCIA (COP)</th>
+                <td mat-cell *matCellDef="let client">{{ formatCurrency(client.total_amount) }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+
+            <!-- Pagination -->
+            @if (clientsSummary()!.pagination.total_pages > 1) {
+              <div class="custom-pagination">
+                <div class="pagination-info">
+                  Mostrando {{ ((currentPage() - 1) * pageSize()) + 1 }} al
+                  {{ Math.min(currentPage() * pageSize(), clientsSummary()!.pagination.total) }}
+                  de {{ clientsSummary()!.pagination.total }} registros
+                </div>
+
+                <div class="pagination-buttons">
+                  <button
+                    class="pagination-btn"
+                    (click)="previousPage()"
+                    [disabled]="currentPage() === 1"
+                    aria-label="Página anterior">
+                    Anterior
+                  </button>
+
+                  @for (page of pageNumbers; track page) { @if (page > 0) {
+                    <button
+                      class="pagination-btn"
+                      [class.active]="page === currentPage()"
+                      (click)="goToPage(page)"
+                      [attr.aria-label]="'Ir a página ' + page"
+                      [attr.aria-current]="page === currentPage() ? 'page' : null">
+                      {{ page }}
+                    </button>
+                  } @else {
+                    <span class="pagination-ellipsis" aria-hidden="true">&hellip;</span>
+                  } }
+
+                  <button
+                    class="pagination-btn"
+                    (click)="nextPage()"
+                    [disabled]="currentPage() === totalPages"
+                    aria-label="Página siguiente">
+                    Siguiente
+                  </button>
+                </div>
+              </div>
+            }
+          } @else {
+            <div class="no-data">
+              <p>No hay clientes asignados a este vendedor</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Bottom Row: Line Chart (Full Width) -->
+      <div class="bottom-row">
+        <div class="chart-card line-chart-card">
+          <h3 class="card-title">Ventas totales del último año (COP)</h3>
+          
+          @if (lineChartConfig() && monthlySummary()!.summary.total_orders > 0) {
+            <div class="line-chart-container">
+              <canvas 
+                baseChart
+                [type]="lineChartConfig()!.type"
+                [data]="lineChartConfig()!.data"
+                [options]="lineChartConfig()!.options">
+              </canvas>
+            </div>
+          } @else {
+            <div class="no-data">
+              <p>No hay datos de ventas para mostrar</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- Empty State (when no seller selected) -->
+    @if (!selectedSellerId() && !loadingReports()) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">assessment</mat-icon>
+        <p>Seleccione un vendedor para ver su informe de desempeño</p>
+      </div>
+    }
+  </div>
+</div>

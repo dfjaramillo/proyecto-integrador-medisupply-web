@@ -60,6 +60,12 @@ export const routes: Routes = [
         loadComponent: () => import('./ventas/reports/operational-report/operational-report').then(m => m.OperationalReportComponent),
         canActivate: [ventasGuard]
       },
+      // Ventas - Informe de vendedores
+      {
+        path: 'ventas/informe-vendedores',
+        loadComponent: () => import('./ventas/reports/seller-reports/seller-reports').then(m => m.SellerReportsComponent),
+        canActivate: [ventasGuard]
+      },
       // Logística (Personal logístico) - Gestión de rutas de entrega
       { 
         path: 'logistica/rutas', 
