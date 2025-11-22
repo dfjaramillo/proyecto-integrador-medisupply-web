@@ -135,6 +135,66 @@
           <context context-type="linenumber">80,83</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="auth.loginSuccessSnack" datatype="html">
+        <source>Inicio de sesión exitoso</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login/login.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.ok" datatype="html">
+        <source>OK</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login/login.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="auth.loginErrorSnack" datatype="html">
+        <source>Usuario o contraseña incorrectos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login/login.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="common.close" datatype="html">
+        <source>Cerrar</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/auth/login/login.ts</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/clientes-pendientes.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/approve-client/approve-client.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/approve-client/approve-client.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/approve-client/approve-client.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/reject-client/reject-client.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/reject-client/reject-client.ts</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/components/create-user/create-user.ts</context>
+          <context context-type="linenumber">87</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/components/create-user/create-user.ts</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="inventory.bulkUploadDialog.title" datatype="html">
         <source>Cargue masivo</source>
         <context-group purpose="location">
@@ -1530,6 +1590,13 @@
           <context context-type="linenumber">164,165</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="clients.pendingList.loadClientsErrorSnack" datatype="html">
+        <source>No se pudieron cargar los clientes. Intenta nuevamente.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/clientes-pendientes.ts</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="clients.approveDialog.title" datatype="html">
         <source>Aprobar cliente</source>
         <context-group purpose="location">
@@ -1549,6 +1616,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/approve-client/approve-client.html</context>
           <context context-type="linenumber">33,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clients.approveDialog.loadSellersErrorSnack" datatype="html">
+        <source>No se pudieron cargar los gerentes de cuenta.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/approve-client/approve-client.ts</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clients.approveDialog.approvedSnack" datatype="html">
+        <source>Cliente aprobado y asignado correctamente.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/approve-client/approve-client.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clients.approveDialog.approveErrorSnack" datatype="html">
+        <source>No se pudo aprobar el cliente. Intenta nuevamente.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/approve-client/approve-client.ts</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="clients.rejectDialog.title" datatype="html">
@@ -1577,6 +1665,20 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/reject-client/reject-client.html</context>
           <context context-type="linenumber">29,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clients.rejectDialog.rejectedSnack" datatype="html">
+        <source>Usuario rechazado exitosamente.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/reject-client/reject-client.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="clients.rejectDialog.rejectErrorSnack" datatype="html">
+        <source>No se pudo rechazar el cliente. Intenta nuevamente.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/clientes-pendientes/dialogs/reject-client/reject-client.ts</context>
+          <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
       <trans-unit id="users.createUserDialog.title" datatype="html">
@@ -1731,6 +1833,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/usuarios/components/create-user/create-user.html</context>
           <context context-type="linenumber">129,132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="users.createUserDialog.userCreatedSnack" datatype="html">
+        <source>Usuario creado exitosamente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/usuarios/components/create-user/create-user.ts</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="users.title" datatype="html">

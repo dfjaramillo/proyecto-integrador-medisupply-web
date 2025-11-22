@@ -1,5 +1,11 @@
 <main class="container-fluid vh-100 d-flex" role="main">
 
+  <!-- Hidden localized snackbar messages -->
+  <span class="sr-only" i18n="@@auth.loginSuccessSnack" #loginSuccessMsg>Inicio de sesión exitoso</span>
+  <span class="sr-only" i18n="@@auth.loginErrorSnack" #loginErrorMsg>Usuario o contraseña incorrectos</span>
+  <span class="sr-only" i18n="@@common.ok" #okAction>OK</span>
+  <span class="sr-only" i18n="@@common.close" #closeAction>Cerrar</span>
+
     <div class="form-container">
         <form [formGroup]="form" (ngSubmit)="submit()" role="form" i18n-aria-label="@@auth.loginFormAria" aria-label="Formulario de inicio de sesión">
         <h2 id="login-heading" i18n="@@auth.loginTitle">Inicio de sesión</h2>

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -39,6 +39,8 @@ export class CreateUserComponent {
   private snackBar = inject(MatSnackBar);
 
   loading = signal(false);
+  @ViewChild('userCreatedSnack', { static: true }) userCreatedSnack!: ElementRef<HTMLElement>;
+  @ViewChild('closeAction', { static: true }) closeAction!: ElementRef<HTMLElement>;
   hidePassword = signal(true);
   hideConfirmPassword = signal(true);
 
@@ -84,7 +86,7 @@ export class CreateUserComponent {
     this.userService.createUser(userData).subscribe({
       next: (response) => {
         this.loading.set(false);
-        this.snackBar.open('Usuario creado exitosamente', 'Cerrar', {
+        this.snackBar.open(this.userCreatedSnack.nativeElement.textContent!.trim(), this.closeAction.nativeElement.textContent!.trim(), {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
@@ -103,7 +105,7 @@ export class CreateUserComponent {
           errorMessage = 'Por favor verifique los datos ingresados';
         }
         
-        this.snackBar.open(errorMessage, 'Cerrar', {
+        this.snackBar.open(errorMessage, this.closeAction.nativeElement.textContent!.trim(), {
           duration: 5000,
           panelClass: ['error-snackbar']
         });

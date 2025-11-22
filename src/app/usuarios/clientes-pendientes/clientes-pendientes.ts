@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject, signal, computed, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -41,6 +41,9 @@ export class ClientesPendientesComponent implements OnInit {
   loading = signal(false);
   clients = signal<User[]>([]);
 
+  @ViewChild('loadClientsErrorSnack', { static: true }) loadClientsErrorSnack!: ElementRef<HTMLElement>;
+  @ViewChild('closeAction', { static: true }) closeAction!: ElementRef<HTMLElement>;
+
   // Total clients from backend
   totalClients = signal(0);
 
@@ -76,7 +79,7 @@ export class ClientesPendientesComponent implements OnInit {
       error: (err) => {
         console.error('Error loading clients', err);
         this.loading.set(false);
-        this.snackBar.open('No se pudieron cargar los clientes. Intenta nuevamente.', 'Cerrar', {
+        this.snackBar.open(this.loadClientsErrorSnack.nativeElement.textContent!.trim(), this.closeAction.nativeElement.textContent!.trim(), {
           duration: 4000
         });
       }

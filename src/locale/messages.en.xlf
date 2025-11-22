@@ -1005,13 +1005,7 @@
       <trans-unit id="visits.videoDialog.statusLabel" datatype="html"><source>Estado:</source><target>Status:</target></trans-unit>
       <trans-unit id="visits.videoDialog.findingsLabel" datatype="html"><source>Hallazgos:</source><target>Findings:</target></trans-unit>
       <trans-unit id="visits.videoDialog.noSupport" datatype="html"><source>Tu navegador no soporta el elemento de video.</source><target>Your browser does not support the video element.</target></trans-unit>
-    </body>
-  </file>
-</xliff>
-<?xml version="1.0" encoding="UTF-8" ?>
-<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="es" target-language="en" datatype="plaintext" original="ng2.template">
-    <body>
+    <!-- Merged second XLIFF document into single body -->
       <trans-unit id="visits.title" datatype="html">
         <source>Visitas</source>
         <target>Visits</target>
@@ -1180,6 +1174,18 @@
           <context context-type="linenumber">159,160</context>
         </context-group>
       </trans-unit>
+      <!-- Snackbar messages appended -->
+      <trans-unit id="auth.loginSuccessSnack" datatype="html"><source>Inicio de sesión exitoso</source><target>Successful login</target></trans-unit>
+      <trans-unit id="auth.loginErrorSnack" datatype="html"><source>Usuario o contraseña incorrectos</source><target>Incorrect username or password</target></trans-unit>
+      <trans-unit id="common.ok" datatype="html"><source>OK</source><target>OK</target></trans-unit>
+      <trans-unit id="common.close" datatype="html"><source>Cerrar</source><target>Close</target></trans-unit>
+      <trans-unit id="users.createUserDialog.userCreatedSnack" datatype="html"><source>Usuario creado exitosamente</source><target>User successfully created</target></trans-unit>
+      <trans-unit id="clients.approveDialog.loadSellersErrorSnack" datatype="html"><source>No se pudieron cargar los gerentes de cuenta.</source><target>Failed to load account managers.</target></trans-unit>
+      <trans-unit id="clients.approveDialog.approvedSnack" datatype="html"><source>Cliente aprobado y asignado correctamente.</source><target>Client approved and assigned successfully.</target></trans-unit>
+      <trans-unit id="clients.approveDialog.approveErrorSnack" datatype="html"><source>No se pudo aprobar el cliente. Intenta nuevamente.</source><target>Could not approve client. Please try again.</target></trans-unit>
+      <trans-unit id="clients.rejectDialog.rejectedSnack" datatype="html"><source>Usuario rechazado exitosamente.</source><target>Client rejected successfully.</target></trans-unit>
+      <trans-unit id="clients.rejectDialog.rejectErrorSnack" datatype="html"><source>No se pudo rechazar el cliente. Intenta nuevamente.</source><target>Could not reject client. Please try again.</target></trans-unit>
+      <trans-unit id="clients.pendingList.loadClientsErrorSnack" datatype="html"><source>No se pudieron cargar los clientes. Intenta nuevamente.</source><target>Failed to load clients. Please try again.</target></trans-unit>
     </body>
   </file>
 </xliff>
