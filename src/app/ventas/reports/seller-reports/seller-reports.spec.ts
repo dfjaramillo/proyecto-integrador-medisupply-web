@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SellerReportsComponent } from './seller-reports';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { SellerReportsService } from '../../services/seller-reports.service';
 import { UserService } from '../../../usuarios/services/user.service';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -423,6 +423,158 @@ describe('SellerReportsComponent', () => {
       fixture.detectChanges();
 
       expect(component.sellers().length).toBe(2);
+    });
+  });
+
+  describe('error handling', () => {
+    it('should handle seller load error', () => {
+      // Force getUsers to error before calling ngOnInit logic for sellers
+      mockAuthService.getUserRole.and.returnValue('Administrador');
+      mockUserService.getUsers.and.returnValue(throwError(() => new Error('fail')));
+
+      fixture = TestBed.createComponent(SellerReportsComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(component.sellers().length).toBe(0);
+      // loadingSellers should be false after error
+      expect(component['loadingSellers']()).toBeFalse();
+    });
+
+    it('should handle reports load error', () => {
+      mockAuthService.getUserRole.and.returnValue('Ventas');
+      mockAuthService.getUserId.and.returnValue('error-user');
+
+      mockSellerReportsService.getStatusSummary.and.returnValue(throwError(() => new Error('status error')));
+      mockSellerReportsService.getClientsSummary.and.returnValue(of({
+        seller_id: 'error-user',
+        summary: { total_clients: 0, total_orders: 0, total_amount: 0 },
+        clients: [],
+        pagination: { page: 1, per_page: 10, total: 0, total_pages: 0, has_next: false, has_prev: false, next_page: null, prev_page: null }
+      }));
+      mockSellerReportsService.getMonthlySummary.and.returnValue(of({
+        seller_id: 'error-user',
+        period: { start_date: '2024-12-01', end_date: '2025-11-20', months: 12 },
+        summary: { total_orders: 0, total_amount: 0 },
+        monthly_data: []
+      }));
+
+      fixture = TestBed.createComponent(SellerReportsComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      // Reports should remain null due to error
+      expect(component.statusSummary()).toBeNull();
+      expect(component.clientsSummary()).toBeNull();
+      expect(component.monthlySummary()).toBeNull();
+      expect(component['loadingReports']()).toBeFalse();
+    });
+  });
+
+  describe('chart configs edge cases', () => {
+    it('donutChartConfig should return null when all counts are zero', () => {
+      component.statusSummary.set({
+        seller_id: '1',
+        summary: { total_orders: 0, total_amount: 0 },
+        status_summary: [
+          { status: 'Recibido', count: 0, percentage: 0, total_amount: 0 },
+          { status: 'Entregado', count: 0, percentage: 0, total_amount: 0 }
+        ]
+      } as any);
+      expect(component.donutChartConfig()).toBeNull();
+    });
+
+    it('lineChartConfig should return null when monthly_data empty', () => {
+      component.monthlySummary.set({
+        seller_id: '1',
+        period: { start_date: '2024-12-01', end_date: '2025-11-20', months: 12 },
+        summary: { total_orders: 0, total_amount: 0 },
+        monthly_data: []
+      } as any);
+      expect(component.lineChartConfig()).toBeNull();
+    });
+  });
+
+  describe('pagination helpers', () => {
+    it('pageNumbers should return empty array when totalPages is 0', () => {
+      component.clientsSummary.set({
+        seller_id: '1',
+        summary: { total_clients: 0, total_orders: 0, total_amount: 0 },
+        clients: [],
+        pagination: { page: 1, per_page: 10, total: 0, total_pages: 0, has_next: false, has_prev: false, next_page: null, prev_page: null }
+      } as any);
+      expect(component.pageNumbers).toEqual([]);
+    });
+
+    it('pageNumbers should handle near start range', () => {
+      component.clientsSummary.set({
+        seller_id: '1',
+        summary: { total_clients: 0, total_orders: 0, total_amount: 0 },
+        clients: [],
+        pagination: { page: 2, per_page: 10, total: 0, total_pages: 12, has_next: true, has_prev: true, next_page: 3, prev_page: 1 }
+      } as any);
+      component.currentPage.set(2);
+      expect(component.pageNumbers[0]).toBe(1);
+      expect(component.pageNumbers).toContain(2);
+      expect(component.pageNumbers).toContain(12);
+    });
+
+    it('goToPage should not change page when invalid', () => {
+      component.clientsSummary.set({
+        seller_id: '1',
+        summary: { total_clients: 0, total_orders: 0, total_amount: 0 },
+        clients: [],
+        pagination: { page: 1, per_page: 10, total: 0, total_pages: 5, has_next: true, has_prev: false, next_page: 2, prev_page: null }
+      } as any);
+      component.currentPage.set(1);
+      component.goToPage(0); // invalid
+      expect(component.currentPage()).toBe(1);
+    });
+
+    it('goToPage should call clients summary service when valid', () => {
+      mockSellerReportsService.getClientsSummary.and.returnValue(of({
+        seller_id: '1',
+        summary: { total_clients: 0, total_orders: 0, total_amount: 0 },
+        clients: [],
+        pagination: { page: 3, per_page: 10, total: 0, total_pages: 5, has_next: true, has_prev: true, next_page: 4, prev_page: 2 }
+      }));
+      component.selectedSellerId.set('1');
+      component.clientsSummary.set({
+        seller_id: '1',
+        summary: { total_clients: 0, total_orders: 0, total_amount: 0 },
+        clients: [],
+        pagination: { page: 1, per_page: 10, total: 0, total_pages: 5, has_next: true, has_prev: false, next_page: 2, prev_page: null }
+      } as any);
+      component.goToPage(3);
+      expect(mockSellerReportsService.getClientsSummary).toHaveBeenCalledWith('1', 3, 10);
+      expect(component.currentPage()).toBe(3);
+    });
+
+    it('previousPage should not go below 1', () => {
+      component.currentPage.set(1);
+      component.previousPage();
+      expect(component.currentPage()).toBe(1);
+    });
+
+    it('nextPage should not exceed totalPages', () => {
+      component.clientsSummary.set({
+        seller_id: '1',
+        summary: { total_clients: 0, total_orders: 0, total_amount: 0 },
+        clients: [],
+        pagination: { page: 5, per_page: 10, total: 0, total_pages: 5, has_next: false, has_prev: true, next_page: null, prev_page: 4 }
+      } as any);
+      component.currentPage.set(5);
+      component.nextPage();
+      expect(component.currentPage()).toBe(5);
+    });
+  });
+
+  describe('formatCurrency edge cases', () => {
+    it('should format zero correctly', () => {
+      expect(component.formatCurrency(0)).toBe('$0');
+    });
+    it('should format large number correctly', () => {
+      expect(component.formatCurrency(987654321)).toContain('987.654.321');
     });
   });
 });
