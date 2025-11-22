@@ -1,6 +1,6 @@
 <div class="reject-container">
   <div class="dialog-header">
-    <h2>Rechazar cliente</h2>
+    <h2 i18n="@@clients.rejectDialog.title">Rechazar cliente</h2>
     <button mat-icon-button (click)="close()">
       <span class="material-icons">close</span>
     </button>
@@ -8,11 +8,11 @@
 
   <div class="dialog-body">
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Justificación</mat-label>
+      <mat-label i18n="@@clients.rejectDialog.justificationLabel">Justificación</mat-label>
       <textarea
         matInput
         rows="6"
-        placeholder="Redacta el motivo de rechazo"
+        placeholder="Redacta el motivo de rechazo" i18n-placeholder="@@clients.rejectDialog.justificationPlaceholder"
         [value]="justification()"
         (input)="onJustificationChange($event)"></textarea>
       <mat-hint align="end">{{ justification().length }}/500</mat-hint>
@@ -26,7 +26,7 @@
       class="save-button"
       [disabled]="!canSave"
       (click)="save()">
-      Guardar
+      <span i18n="@@clients.rejectDialog.saveButton">Guardar</span>
     </button>
   </div>
 </div>

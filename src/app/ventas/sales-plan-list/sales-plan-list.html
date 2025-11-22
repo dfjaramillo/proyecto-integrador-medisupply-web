@@ -1,10 +1,10 @@
 <div class="sales-plan-container">
   <div class="header">
-    <h1>Planes de ventas</h1>
+    <h1 i18n="@@salesPlans.title">Planes de ventas</h1>
     <div class="breadcrumb">
-      <span class="breadcrumb-link">Ventas</span>
+      <span class="breadcrumb-link" i18n="@@salesPlans.breadcrumbSales">Ventas</span>
       <span class="breadcrumb-separator">-</span>
-      <span class="breadcrumb-current">Planes de ventas</span>
+      <span class="breadcrumb-current" i18n="@@salesPlans.breadcrumbSalesPlans">Planes de ventas</span>
     </div>
   </div>
 
@@ -13,17 +13,18 @@
       <button
         mat-raised-button
         class="create-btn"
+        i18n-aria-label="@@salesPlans.createPlan"
         aria-label="Crear plan de ventas"
         (click)="openCreate()"
       >
-        Crear plan de ventas
+        <span i18n="@@salesPlans.createPlan">Crear plan de ventas</span>
       </button>
     </div>
 
     @if (loading()) {
     <div class="loading-container">
       <mat-spinner diameter="50"></mat-spinner>
-      <p>Cargando planes de ventas...</p>
+      <p i18n="@@salesPlans.loading">Cargando planes de ventas...</p>
     </div>
     } @else {
 
@@ -31,14 +32,16 @@
       <!-- Nombre Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>
-          NOMBRE
+          <span i18n="@@salesPlans.name">NOMBRE</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@salesPlans.searchName"
               placeholder="Buscar nombre"
               [(ngModel)]="nameFilter"
               (input)="onFilterChange()"
+              i18n-aria-label="@@salesPlans.filterByName"
               aria-label="Filtrar por nombre" />
           </div>
         </th>
@@ -48,14 +51,16 @@
       <!-- Fecha de inicio Column -->
       <ng-container matColumnDef="start_date">
         <th mat-header-cell *matHeaderCellDef>
-          FECHA DE INICIO
+          <span i18n="@@salesPlans.startDate">FECHA DE INICIO</span>
           <div class="filter-header">
             <input
               type="date"
               class="filter-input"
+              i18n-placeholder="@@salesPlans.searchStartDate"
               placeholder="Buscar fecha inicio"
               [ngModel]="startDateFilter"
               (ngModelChange)="onStartDateChange($event)"
+              i18n-aria-label="@@salesPlans.filterByStartDate"
               aria-label="Filtrar por fecha de inicio" />
           </div>
         </th>
@@ -67,14 +72,16 @@
       <!-- Fecha de fin Column -->
       <ng-container matColumnDef="end_date">
         <th mat-header-cell *matHeaderCellDef>
-          FECHA DE FIN
+          <span i18n="@@salesPlans.endDate">FECHA DE FIN</span>
           <div class="filter-header">
             <input
               type="date"
               class="filter-input"
+              i18n-placeholder="@@salesPlans.searchEndDate"
               placeholder="Buscar fecha fin"
               [ngModel]="endDateFilter"
               (ngModelChange)="onEndDateChange($event)"
+              i18n-aria-label="@@salesPlans.filterByEndDate"
               aria-label="Filtrar por fecha de fin" />
           </div>
         </th>
@@ -86,14 +93,16 @@
       <!-- Cliente Column -->
       <ng-container matColumnDef="client_id">
         <th mat-header-cell *matHeaderCellDef>
-          CLIENTE
+          <span i18n="@@salesPlans.client">CLIENTE</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@salesPlans.searchClient"
               placeholder="Buscar cliente"
               [(ngModel)]="clientFilter"
               (input)="onFilterChange()"
+              i18n-aria-label="@@salesPlans.filterByClient"
               aria-label="Filtrar por cliente" />
           </div>
         </th>
@@ -102,12 +111,13 @@
 
       <!-- Acciones Column -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>ACCIONES</th>
+        <th mat-header-cell *matHeaderCellDef><span i18n="@@salesPlans.actions">ACCIONES</span></th>
         <td mat-cell *matCellDef="let plan">
           <button
             mat-icon-button
             (click)="openDetail(plan)"
             class="action-btn view-btn"
+            i18n-aria-label="@@salesPlans.viewDetail"
             aria-label="Ver detalle del plan"
           >
             <mat-icon>visibility</mat-icon>
@@ -121,7 +131,7 @@
       <!-- No data row -->
       <tr class="mat-row no-data-row" *matNoDataRow>
         <td class="mat-cell" [attr.colspan]="displayedColumns.length">
-          No se encontraron planes con los filtros aplicados.
+          <span i18n="@@salesPlans.noData">No se encontraron planes con los filtros aplicados.</span>
         </td>
       </tr>
     </table>
@@ -130,14 +140,7 @@
     @if (pagination() && pagination()!.total_pages > 1) {
     <div class="custom-pagination">
       <div class="pagination-info">
-        Mostrando {{ (currentPage - 1) * pageSize + 1 }} al
-        {{
-          Math.min(
-            currentPage * pageSize,
-            pagination()!.total
-          )
-        }}
-        de {{ pagination()!.total }} registros
+        <ng-container i18n="@@salesPlans.paginationInfo">Mostrando {{ (currentPage - 1) * pageSize + 1 }} al {{ Math.min(currentPage * pageSize, pagination()!.total) }} de {{ pagination()!.total }} registros</ng-container>
       </div>
 
       <div class="pagination-buttons">
@@ -145,9 +148,10 @@
           class="pagination-btn"
           (click)="goToPage(currentPage - 1)"
           [disabled]="currentPage === 1"
+          i18n-aria-label="@@salesPlans.previousPage"
           aria-label="Página anterior"
         >
-          Anterior
+          <span i18n="@@salesPlans.previous">Anterior</span>
         </button>
 
         @for (page of getPages(); track page) { @if (page > 0) {
@@ -168,9 +172,10 @@
           class="pagination-btn"
           (click)="goToPage(currentPage + 1)"
           [disabled]="currentPage === pagination()!.total_pages"
+          i18n-aria-label="@@salesPlans.nextPage"
           aria-label="Página siguiente"
         >
-          Siguiente
+          <span i18n="@@salesPlans.next">Siguiente</span>
         </button>
       </div>
     </div>

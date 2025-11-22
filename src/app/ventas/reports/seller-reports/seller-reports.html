@@ -1,11 +1,11 @@
 <div class="seller-reports-container">
   <!-- Header -->
   <div class="header">
-    <h1>Informe de vendedores</h1>
+    <h1 i18n="@@reports.seller.title">Informe de vendedores</h1>
     <div class="breadcrumb">
-      <span class="breadcrumb-link">Ventas</span>
+      <span class="breadcrumb-link" i18n="@@reports.seller.breadcrumbSales">Ventas</span>
       <span class="breadcrumb-separator">-</span>
-      <span class="breadcrumb-current">Informe de vendedores</span>
+      <span class="breadcrumb-current" i18n="@@reports.seller.breadcrumbCurrent">Informe de vendedores</span>
     </div>
   </div>
 
@@ -15,7 +15,7 @@
     @if (currentUserRole() === 'Administrador') {
       <div class="selector-container">
         <mat-form-field appearance="outline" class="seller-selector">
-          <mat-label>Vendedor</mat-label>
+          <mat-label i18n="@@reports.seller.sellerLabel">Vendedor</mat-label>
           <mat-select 
             [(ngModel)]="selectedSellerId" 
             (selectionChange)="onSellerChange()"
@@ -32,7 +32,7 @@
     @if (loadingReports()) {
       <div class="loading-container">
         <mat-spinner diameter="50"></mat-spinner>
-        <p>Cargando informes...</p>
+        <p i18n="@@reports.seller.loadingReports">Cargando informes...</p>
       </div>
     }
 
@@ -42,13 +42,13 @@
       <div class="top-row">
         <!-- Donut Chart -->
         <div class="chart-card donut-chart-card">
-          <h3 class="card-title">Distribución pedidos hechos por los clientes asignados</h3>
+          <h3 class="card-title" i18n="@@reports.seller.distributionTitle">Distribución pedidos hechos por los clientes asignados</h3>
           
           @if (donutChartConfig() && statusSummary()!.summary.total_orders > 0) {
             <div class="donut-chart-container">
               <div class="chart-center-label">
                 <div class="center-value">{{ statusSummary()!.summary.total_orders }}</div>
-                <div class="center-label">pedidos</div>
+                <div class="center-label" i18n="@@reports.seller.ordersLabel">pedidos</div>
               </div>
               <canvas 
                 baseChart
@@ -59,26 +59,26 @@
             </div>
           } @else {
             <div class="no-data">
-              <p>No hay pedidos registrados para este vendedor</p>
+              <p i18n="@@reports.seller.noOrders">No hay pedidos registrados para este vendedor</p>
             </div>
           }
         </div>
 
         <!-- Earnings Table -->
         <div class="table-card earnings-table-card">
-          <h3 class="card-title">Ganancias por cliente asignado</h3>
+          <h3 class="card-title" i18n="@@reports.seller.earningsTitle">Ganancias por cliente asignado</h3>
           
           @if (clientsSummary() && clientsSummary()!.clients.length > 0) {            
             <table mat-table [dataSource]="paginatedClients" class="clients-table">
               <!-- Client Name Column -->
               <ng-container matColumnDef="client_name">
-                <th mat-header-cell *matHeaderCellDef>CLIENTE</th>
+                <th mat-header-cell *matHeaderCellDef><span i18n="@@reports.seller.clientHeader">CLIENTE</span></th>
                 <td mat-cell *matCellDef="let client">{{ client.client_name }}</td>
               </ng-container>
 
               <!-- Total Amount Column -->
               <ng-container matColumnDef="total_amount">
-                <th mat-header-cell *matHeaderCellDef>GANANCIA (COP)</th>
+                <th mat-header-cell *matHeaderCellDef><span i18n="@@reports.seller.earningsHeader">GANANCIA (COP)</span></th>
                 <td mat-cell *matCellDef="let client">{{ formatCurrency(client.total_amount) }}</td>
               </ng-container>
 
@@ -90,9 +90,9 @@
             @if (clientsSummary()!.pagination.total_pages > 1) {
               <div class="custom-pagination">
                 <div class="pagination-info">
-                  Mostrando {{ ((currentPage() - 1) * pageSize()) + 1 }} al
+                  <ng-container i18n="@@reports.seller.paginationInfo">Mostrando {{ ((currentPage() - 1) * pageSize()) + 1 }} al
                   {{ Math.min(currentPage() * pageSize(), clientsSummary()!.pagination.total) }}
-                  de {{ clientsSummary()!.pagination.total }} registros
+                  de {{ clientsSummary()!.pagination.total }} registros</ng-container>
                 </div>
 
                 <div class="pagination-buttons">
@@ -100,8 +100,8 @@
                     class="pagination-btn"
                     (click)="previousPage()"
                     [disabled]="currentPage() === 1"
-                    aria-label="Página anterior">
-                    Anterior
+                    i18n-aria-label="@@reports.seller.prevPageAria" aria-label="Página anterior">
+                    <span i18n="@@reports.seller.previous">Anterior</span>
                   </button>
 
                   @for (page of pageNumbers; track page) { @if (page > 0) {
@@ -121,15 +121,15 @@
                     class="pagination-btn"
                     (click)="nextPage()"
                     [disabled]="currentPage() === totalPages"
-                    aria-label="Página siguiente">
-                    Siguiente
+                    i18n-aria-label="@@reports.seller.nextPageAria" aria-label="Página siguiente">
+                    <span i18n="@@reports.seller.next">Siguiente</span>
                   </button>
                 </div>
               </div>
             }
           } @else {
             <div class="no-data">
-              <p>No hay clientes asignados a este vendedor</p>
+              <p i18n="@@reports.seller.noClients">No hay clientes asignados a este vendedor</p>
             </div>
           }
         </div>
@@ -138,7 +138,7 @@
       <!-- Bottom Row: Line Chart (Full Width) -->
       <div class="bottom-row">
         <div class="chart-card line-chart-card">
-          <h3 class="card-title">Ventas totales del último año (COP)</h3>
+          <h3 class="card-title" i18n="@@reports.seller.totalSalesTitle">Ventas totales del último año (COP)</h3>
           
           @if (lineChartConfig() && monthlySummary()!.summary.total_orders > 0) {
             <div class="line-chart-container">
@@ -151,7 +151,7 @@
             </div>
           } @else {
             <div class="no-data">
-              <p>No hay datos de ventas para mostrar</p>
+              <p i18n="@@reports.seller.noSalesData">No hay datos de ventas para mostrar</p>
             </div>
           }
         </div>
@@ -162,7 +162,7 @@
     @if (!selectedSellerId() && !loadingReports()) {
       <div class="empty-state">
         <mat-icon class="empty-icon">assessment</mat-icon>
-        <p>Seleccione un vendedor para ver su informe de desempeño</p>
+        <p i18n="@@reports.seller.selectSeller">Seleccione un vendedor para ver su informe de desempeño</p>
       </div>
     }
   </div>

@@ -1,0 +1,43 @@
+{
+  "app": {
+    "title": "MediSupply"
+  },
+  "nav": {
+    "visits": "Visits",
+    "salesPlans": "Sales Plans",
+    "logout": "Log out"
+  },
+  "visits": {
+    "title": "Visits",
+    "breadcrumbVentas": "Sales",
+    "breadcrumbVisitas": "Visits",
+    "id": "VISIT ID",
+    "client": "CLIENT",
+    "status": "STATUS",
+    "findings": "FINDINGS",
+    "evidence": "EVIDENCE",
+    "searchId": "Search ID",
+    "searchClient": "Search client",
+    "searchStatus": "Search status",
+    "searchFindings": "Search findings",
+    "uploaded": "Uploaded",
+    "processed": "Processed",
+    "inProgress": "Processing",
+    "videoNotAvailable": "Video not available",
+    "videoSee": "See video",
+    "noData": "No visits found",
+    "showing": "Showing",
+    "of": "of",
+    "records": "records",
+    "previous": "Previous",
+    "next": "Next",
+    "all": "All",
+    "loading": "Loading visits...",
+    "to": "to"
+  },
+  "common": {
+    "language": "Language",
+    "spanish": "Spanish",
+    "english": "English"
+  }
+}

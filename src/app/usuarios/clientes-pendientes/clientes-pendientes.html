@@ -1,10 +1,10 @@
 <div class="clientes-container">
   <div class="header">
-    <h1>Clientes</h1>
+    <h1 i18n="@@clients.title">Clientes</h1>
     <div class="breadcrumb">
-      <span class="breadcrumb-link">Administración</span>
+      <span class="breadcrumb-link" i18n="@@clients.breadcrumbAdmin">Administración</span>
       <span class="breadcrumb-separator">-</span>
-      <span class="breadcrumb-current">Clientes</span>
+      <span class="breadcrumb-current" i18n="@@clients.breadcrumbClients">Clientes</span>
     </div>
   </div>
 
@@ -12,18 +12,19 @@
     @if (loading()) {
       <div class="loading-container">
         <mat-spinner diameter="40"></mat-spinner>
-        <p>Cargando clientes pendientes...</p>
+        <p i18n="@@clients.loading">Cargando clientes pendientes...</p>
       </div>
     } @else {
       <table mat-table [dataSource]="pagedClients()" class="clients-table">
         <!-- Code Column -->
         <ng-container matColumnDef="code">
           <th mat-header-cell *matHeaderCellDef>
-            CÓDIGO
+            <span i18n="@@clients.code">CÓDIGO</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
+                i18n-placeholder="@@clients.searchCode"
                 placeholder="Buscar código"
                 [value]="codeFilter()"
                 (input)="onCodeFilterChange($event)" />
@@ -35,11 +36,12 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>
-            NOMBRE
+            <span i18n="@@clients.name">NOMBRE</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
+                i18n-placeholder="@@clients.searchClient"
                 placeholder="Buscar cliente"
                 [value]="nameFilter()"
                 (input)="onNameFilterChange($event)" />
@@ -51,11 +53,12 @@
         <!-- Institution Type Column -->
         <ng-container matColumnDef="institution_type">
           <th mat-header-cell *matHeaderCellDef>
-            TIPO DE INSTITUCIÓN
+            <span i18n="@@clients.institutionType">TIPO DE INSTITUCIÓN</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
+                i18n-placeholder="@@clients.searchType"
                 placeholder="Buscar tipo"
                 [value]="typeFilter()"
                 (input)="onTypeFilterChange($event)" />
@@ -67,11 +70,12 @@
         <!-- Created At Column -->
         <ng-container matColumnDef="created_at">
           <th mat-header-cell *matHeaderCellDef>
-            FECHA DE REGISTRO
+            <span i18n="@@clients.registrationDate">FECHA DE REGISTRO</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
+                i18n-placeholder="@@clients.searchDate"
                 placeholder="Buscar fecha"
                 [value]="dateFilter()"
                 (input)="onDateFilterChange($event)" />
@@ -84,7 +88,7 @@
 
         <!-- Status Column -->
         <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef>ESTADO</th>
+          <th mat-header-cell *matHeaderCellDef><span i18n="@@clients.status">ESTADO</span></th>
           <td mat-cell *matCellDef="let client">
             {{ client.status ? client.status : 'PENDIENTE' }}
           </td>
@@ -92,7 +96,7 @@
 
         <!-- Actions Column -->
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>ACCIONES</th>
+          <th mat-header-cell *matHeaderCellDef><span i18n="@@clients.actions">ACCIONES</span></th>
           <td mat-cell *matCellDef="let client">
             <!-- Solo mostrar acciones cuando el cliente está pendiente -->
             <ng-container *ngIf="isClientPending(client)">
@@ -117,7 +121,7 @@
 
         <tr class="mat-row no-data-row" *matNoDataRow>
           <td class="mat-cell" [attr.colspan]="displayedColumns.length">
-            No se encontraron clientes
+            <span i18n="@@clients.noData">No se encontraron clientes</span>
           </td>
         </tr>
       </table>
@@ -125,8 +129,7 @@
       <!-- Custom Pagination (consistent with inventario-list styles & ARIA) -->
       <div class="custom-pagination" *ngIf="totalClients() > 0">
         <div class="pagination-info">
-          Mostrando {{ (currentPage() * pageSize()) + 1 }} al
-          {{ Math.min((currentPage() + 1) * pageSize(), totalClients()) }} de {{ totalClients() }} registros
+          <ng-container i18n="@@clients.paginationInfo">Mostrando {{ (currentPage() * pageSize()) + 1 }} al {{ Math.min((currentPage() + 1) * pageSize(), totalClients()) }} de {{ totalClients() }} registros</ng-container>
         </div>
 
         <div class="pagination-buttons">
@@ -134,8 +137,9 @@
             class="pagination-btn"
             (click)="previousPage()"
             [disabled]="currentPage() === 0"
+            i18n-aria-label="@@clients.previousPage"
             aria-label="Página anterior">
-            Anterior
+            <span i18n="@@clients.previous">Anterior</span>
           </button>
 
           @for (page of pageNumbers; track page) { @if (page > 0) {
@@ -155,8 +159,9 @@
             class="pagination-btn"
             (click)="nextPage()"
             [disabled]="currentPage() === totalPages - 1"
+            i18n-aria-label="@@clients.nextPage"
             aria-label="Página siguiente">
-            Siguiente
+            <span i18n="@@clients.next">Siguiente</span>
           </button>
         </div>
       </div>

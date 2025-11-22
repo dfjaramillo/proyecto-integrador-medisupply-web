@@ -62,6 +62,21 @@ export class VisitsListComponent implements OnInit, OnDestroy {
   // Math utility for template
   Math = Math;
 
+  // i18n text methods
+  getInProgressText(): string {
+    return 'En curso';
+  }
+
+  getFindingsText(): string {
+    return 'HALLAZGOS';
+  }
+
+  getTooltipText(video: Video): string {
+    return this.isVideoAvailable(video) 
+      ? 'Ver video'
+      : 'Video no disponible';
+  }
+
   ngOnInit(): void {
     // Subscribe to debounced inputs
     this.subscriptions.push(

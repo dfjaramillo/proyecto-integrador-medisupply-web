@@ -1,6 +1,6 @@
 <div class="approve-container">
   <div class="dialog-header">
-    <h2>Aprobar cliente</h2>
+    <h2 i18n="@@clients.approveDialog.title">Aprobar cliente</h2>
     <button mat-icon-button (click)="close()">
       <span class="material-icons">close</span>
     </button>
@@ -8,7 +8,7 @@
 
   <div class="dialog-body" *ngIf="!loadingSellers(); else loadingBlock">
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Asignar Gerente de cuenta</mat-label>
+      <mat-label i18n="@@clients.approveDialog.accountManagerLabel">Asignar Gerente de cuenta</mat-label>
       <mat-select [value]="selectedSellerId()" (selectionChange)="onSellerChange($event.value)">
         <mat-option *ngFor="let seller of sellers()" [value]="seller.id">
           {{ seller.name }}
@@ -30,7 +30,7 @@
       class="save-button"
       [disabled]="!canSave"
       (click)="save()">
-      Guardar
+      <span i18n="@@clients.approveDialog.saveButton">Guardar</span>
     </button>
   </div>
 </div>

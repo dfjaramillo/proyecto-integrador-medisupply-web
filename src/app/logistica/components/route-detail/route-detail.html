@@ -5,7 +5,7 @@
         mat-icon-button
         class="back-btn"
         (click)="onClose()"
-        aria-label="Volver al listado"
+        i18n-aria-label="@@routes.routeDetailDialog.backAria" aria-label="Volver al listado"
       >
         <mat-icon>arrow_back</mat-icon>
       </button>
@@ -18,20 +18,20 @@
     <div class="route-info">
       <div class="info-grid">
         <div class="info-item">
-          <span class="label">Código de Ruta:</span>
+          <span class="label" i18n="@@routes.routeDetailDialog.routeCodeLabel">Código de Ruta:</span>
           <span class="value">{{ route.route_code }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Camión Asignado:</span>
+          <span class="label" i18n="@@routes.routeDetailDialog.truckLabel">Camión Asignado:</span>
           <span class="value">{{ route.assigned_truck }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Fecha de Entrega:</span>
+          <span class="label" i18n="@@routes.routeDetailDialog.deliveryDateLabel">Fecha de Entrega:</span>
           <span class="value">{{ formatDate(route.delivery_date) }}</span>
         </div>
         <div class="info-item">
-          <span class="label">Tipo de Productos:</span>
-          <span class="value">Cadena de frío</span>
+          <span class="label" i18n="@@routes.routeDetailDialog.productTypeLabel">Tipo de Productos:</span>
+          <span class="value" i18n="@@routes.routeDetailDialog.coldChainValue">Cadena de frío</span>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
       @if (loading()) {
       <div class="loading-overlay">
         <mat-spinner diameter="50"></mat-spinner>
-        <p>Cargando mapa...</p>
+        <p i18n="@@routes.routeDetailDialog.loadingMap">Cargando mapa...</p>
       </div>
       }
       
@@ -54,15 +54,15 @@
       <div class="map-legend">
         <div class="legend-item">
           <span class="legend-marker start"></span>
-          <span class="legend-text">Punto de inicio</span>
+          <span class="legend-text" i18n="@@routes.routeDetailDialog.legendStart">Punto de inicio</span>
         </div>
         <div class="legend-item">
           <span class="legend-marker waypoint"></span>
-          <span class="legend-text">Punto de entrega</span>
+          <span class="legend-text" i18n="@@routes.routeDetailDialog.legendWaypoint">Punto de entrega</span>
         </div>
         <div class="legend-item">
           <span class="legend-marker end"></span>
-          <span class="legend-text">Punto final</span>
+          <span class="legend-text" i18n="@@routes.routeDetailDialog.legendEnd">Punto final</span>
         </div>
       </div>
       }

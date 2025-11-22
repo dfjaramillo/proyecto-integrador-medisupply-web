@@ -1,12 +1,12 @@
 <div class="create-sales-plan-dialog">
   <div class="dialog-header">
-    <h2>Crear Plan de Ventas</h2>
+    <h2 i18n="@@sales.createSalesPlanDialog.title">Crear Plan de Ventas</h2>
     <button
       mat-icon-button
       class="close-btn"
       (click)="onCancel()"
       [disabled]="loading()"
-      aria-label="Cerrar formulario de crear plan de ventas"
+      i18n-aria-label="@@sales.createSalesPlanDialog.closeAria" aria-label="Cerrar formulario de crear plan de ventas"
     >
       <mat-icon>close</mat-icon>
     </button>
@@ -16,11 +16,11 @@
     <form [formGroup]="salesPlanForm" (ngSubmit)="onSubmit()">
       <!-- Nombre del Plan -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nombre del Plan</mat-label>
+        <mat-label i18n="@@sales.createSalesPlanDialog.nameLabel">Nombre del Plan</mat-label>
         <input
           matInput
           formControlName="name"
-          placeholder="Ej: Plan Trimestre Q1 2025"
+          placeholder="Ej: Plan Trimestre Q1 2025" i18n-placeholder="@@sales.createSalesPlanDialog.namePlaceholder"
           [disabled]="loading()"
           aria-required="true"
         />
@@ -39,10 +39,10 @@
 
       <!-- Cliente -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Cliente</mat-label>
+        <mat-label i18n="@@sales.createSalesPlanDialog.clientLabel">Cliente</mat-label>
         <mat-select
           formControlName="client_id"
-          placeholder="Seleccione un cliente"
+          placeholder="Seleccione un cliente" i18n-placeholder="@@sales.createSalesPlanDialog.clientPlaceholder"
           [disabled]="loading() || loadingClients()"
           aria-required="true"
         >
@@ -63,12 +63,12 @@
       <!-- Rango de Fechas -->
       <div class="date-range">
         <mat-form-field appearance="outline" class="date-field">
-          <mat-label>Fecha de Inicio</mat-label>
+          <mat-label i18n="@@sales.createSalesPlanDialog.startDateLabel">Fecha de Inicio</mat-label>
           <input
             matInput
             [matDatepicker]="startPicker"
             formControlName="start_date"
-            placeholder="DD/MM/AAAA"
+            placeholder="DD/MM/AAAA" i18n-placeholder="@@sales.createSalesPlanDialog.startDatePlaceholder"
             [disabled]="loading()"
             aria-required="true"
           />
@@ -82,12 +82,12 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="date-field">
-          <mat-label>Fecha de Fin</mat-label>
+          <mat-label i18n="@@sales.createSalesPlanDialog.endDateLabel">Fecha de Fin</mat-label>
           <input
             matInput
             [matDatepicker]="endPicker"
             formControlName="end_date"
-            placeholder="DD/MM/AAAA"
+            placeholder="DD/MM/AAAA" i18n-placeholder="@@sales.createSalesPlanDialog.endDatePlaceholder"
             [disabled]="loading()"
             aria-required="true"
           />
@@ -111,18 +111,18 @@
 
       <!-- Ganancias Proyectadas -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Ganancias Proyectadas (COP)</mat-label>
+        <mat-label i18n="@@sales.createSalesPlanDialog.revenueLabel">Ganancias Proyectadas (COP)</mat-label>
         <input
           matInput
           type="number"
           formControlName="target_revenue"
-          placeholder="Ej: 25000000.50"
+          placeholder="Ej: 25000000.50" i18n-placeholder="@@sales.createSalesPlanDialog.revenuePlaceholder"
           step="0.01"
           [disabled]="loading()"
           aria-required="true"
           aria-describedby="revenue-hint"
         />
-        <mat-hint id="revenue-hint">Máximo 2 decimales</mat-hint>
+        <mat-hint id="revenue-hint" i18n="@@sales.createSalesPlanDialog.revenueHint">Máximo 2 decimales</mat-hint>
         @if (hasError('target_revenue', 'required')) {
         <mat-error role="alert">{{ getErrorMessage('target_revenue') }}</mat-error>
         } @if (hasError('target_revenue', 'min')) {
@@ -136,11 +136,11 @@
 
       <!-- Objetivos (Opcional) -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Objetivos (Opcional)</mat-label>
+        <mat-label i18n="@@sales.createSalesPlanDialog.objectivesLabel">Objetivos (Opcional)</mat-label>
         <textarea
           matInput
           formControlName="objectives"
-          placeholder="Describa los objetivos del plan de ventas..."
+          placeholder="Describa los objetivos del plan de ventas..." i18n-placeholder="@@sales.createSalesPlanDialog.objectivesPlaceholder"
           rows="4"
           [disabled]="loading()"
         ></textarea>
@@ -162,9 +162,9 @@
       (click)="onSubmit()"
       [attr.aria-busy]="loading()"
     >
-      @if (!loading()) { Guardar } @else {
+      @if (!loading()) { <span i18n="@@sales.createSalesPlanDialog.saveButton">Guardar</span> } @else {
       <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
-      <span class="sr-only">Guardando plan de ventas...</span>
+      <span class="sr-only" i18n="@@sales.createSalesPlanDialog.savingSr">Guardando plan de ventas...</span>
       }
     </button>
   </mat-dialog-actions>
