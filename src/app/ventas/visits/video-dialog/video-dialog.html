@@ -1,0 +1,39 @@
+<div class="video-dialog">
+  <div class="dialog-header">
+    <h2 mat-dialog-title>{{ video.name }}</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <div class="video-info">
+      <div class="info-row">
+        <span class="label">ID Visita:</span>
+        <span class="value">{{ video.id }}</span>
+      </div>
+      @if (video.file_status) {
+        <div class="info-row">
+          <span class="label">Estado:</span>
+          <span class="value status-badge">{{ video.file_status }}</span>
+        </div>
+      }
+      @if (video.find) {
+        <div class="info-row">
+          <span class="label">Hallazgos:</span>
+          <span class="value">{{ video.find }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="video-container">
+      <video 
+        [src]="video.filename_url_processed || video.filename_url" 
+        controls 
+        autoplay
+        class="video-player">
+        Tu navegador no soporta el elemento de video.
+      </video>
+    </div>
+  </mat-dialog-content>
+</div>

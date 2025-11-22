@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "message": "ok",
+  "data": {
+    "videos": [
+      { "id": 6, "name": "Cliente 6", "file_status": "Procesado", "find": "Hallazgo 6", "filename_url": "https://example.com/v6.mp4", "filename_url_processed": "https://example.com/v6p.mp4" },
+      { "id": 7, "name": "Cliente 7", "file_status": "Procesado", "find": "Hallazgo 7", "filename_url": "https://example.com/v7.mp4", "filename_url_processed": "https://example.com/v7p.mp4" },
+      { "id": 8, "name": "Cliente 8", "file_status": "En curso", "find": "Hallazgo 8" }
+    ],
+    "pagination": { "page": 2, "per_page": 5, "total": 8, "total_pages": 2 }
+  }
+}

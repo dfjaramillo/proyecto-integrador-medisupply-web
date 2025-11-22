@@ -1,5 +1,5 @@
 describe('Seller Reports - Informe de Vendedores', () => {
-  const baseUrl = 'http://localhost:4200';
+  const baseUrl = 'http://localhost:3000';
   const apiUrl = 'https://medisupply-gateway-gw-d7fde8rj.uc.gateway.dev';
 
   const setupCommonInterceptors = () => {
