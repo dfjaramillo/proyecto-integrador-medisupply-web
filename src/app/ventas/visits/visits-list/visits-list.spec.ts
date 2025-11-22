@@ -111,6 +111,8 @@ describe('VisitsListComponent', () => {
   });
 
   it('goToPage dentro de rango carga videos', () => {
+    // Inicializar paginación en página 1
+    component.pagination.set({ page: 1, per_page: 5, total: 10, total_pages: 2 });
     visitsService.getVideos.and.returnValue(of({ videos: [], pagination: { page: 2, per_page: 5, total: 10, total_pages: 2 } }));
     component.goToPage(2);
     expect(visitsService.getVideos).toHaveBeenCalledWith(2, 5);
