@@ -1,11 +1,11 @@
 <div class="sales-plan-detail-dialog">
   <div class="dialog-header">
-    <h2>Detalle de plan de ventas</h2>
+    <h2 i18n="@@sales.salesPlanDetailDialog.title">Detalle de plan de ventas</h2>
     <button
       mat-icon-button
       (click)="onClose()"
       class="close-btn"
-      aria-label="Cerrar diálogo de detalle de plan de ventas"
+      i18n-aria-label="@@sales.salesPlanDetailDialog.closeAria" aria-label="Cerrar diálogo de detalle de plan de ventas"
     >
       <mat-icon>close</mat-icon>
     </button>
@@ -13,37 +13,37 @@
 
   <mat-dialog-content>
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nombre del plan</mat-label>
+      <mat-label i18n="@@sales.salesPlanDetailDialog.nameLabel">Nombre del plan</mat-label>
       <input matInput [value]="plan.name" readonly aria-describedby="plan-name-desc" />
     </mat-form-field>
 
     <div class="date-row">
       <mat-form-field appearance="outline" class="half-width">
-        <mat-label>Fecha de inicio</mat-label>
+        <mat-label i18n="@@sales.salesPlanDetailDialog.startDateLabel">Fecha de inicio</mat-label>
         <input matInput [value]="formatDate(plan.start_date)" readonly aria-describedby="start-date-desc" />
         <mat-icon matSuffix>calendar_today</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="half-width">
-        <mat-label>Fecha de fin</mat-label>
+        <mat-label i18n="@@sales.salesPlanDetailDialog.endDateLabel">Fecha de fin</mat-label>
         <input matInput [value]="formatDate(plan.end_date)" readonly aria-describedby="end-date-desc" />
         <mat-icon matSuffix>calendar_today</mat-icon>
       </mat-form-field>
     </div>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Cliente</mat-label>
+      <mat-label i18n="@@sales.salesPlanDetailDialog.clientLabel">Cliente</mat-label>
       <input matInput [value]="plan.client_name" readonly aria-describedby="client-desc" />
       <mat-icon matSuffix>arrow_drop_down</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Ganancias proyectadas</mat-label>
+      <mat-label i18n="@@sales.salesPlanDetailDialog.revenueLabel">Ganancias proyectadas</mat-label>
       <input matInput [value]="formatCurrency(plan.target_revenue)" readonly aria-describedby="revenue-desc" />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Objetivos</mat-label>
+      <mat-label i18n="@@sales.salesPlanDetailDialog.objectivesLabel">Objetivos</mat-label>
       <textarea
         matInput
         [value]="plan.objectives"
@@ -57,7 +57,7 @@
 
   <mat-dialog-actions>
     <button mat-raised-button class="close-button" (click)="onClose()">
-      Cerrar
+      <span i18n="@@sales.salesPlanDetailDialog.closeBtn">Cerrar</span>
     </button>
   </mat-dialog-actions>
 </div>

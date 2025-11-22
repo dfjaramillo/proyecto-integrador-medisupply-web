@@ -7,11 +7,12 @@
           mat-icon-button
           class="back-btn"
           (click)="closeMap()"
+          i18n-aria-label="@@routes.backToList"
           aria-label="Volver al listado"
         >
           <mat-icon>arrow_back</mat-icon>
         </button>
-        <span class="map-title">Volver</span>
+        <span class="map-title" i18n="@@routes.back">Volver</span>
       </div>
       <div class="map-content">
         <app-route-map [routeId]="selectedRouteId()!"></app-route-map>
@@ -20,9 +21,9 @@
   } @else {
   <!-- Vista de tabla (listado de rutas) -->
   <div class="header">
-    <h1>Logística</h1>
+    <h1 i18n="@@routes.title">Logística</h1>
     <div class="breadcrumb">
-      <span class="breadcrumb-link">Logística</span>
+      <span class="breadcrumb-link" i18n="@@routes.breadcrumb">Logística</span>
     </div>
   </div>
 
@@ -31,17 +32,18 @@
       <button
         mat-raised-button
         class="create-btn"
+        i18n-aria-label="@@routes.createRoute"
         aria-label="Crear ruta de entrega"
         (click)="openCreate()"
       >
-        Crear ruta de entrega
+        <span i18n="@@routes.createRoute">Crear ruta de entrega</span>
       </button>
     </div>
 
     @if (loading()) {
     <div class="loading-container">
       <mat-spinner diameter="50"></mat-spinner>
-      <p>Cargando rutas...</p>
+      <p i18n="@@routes.loading">Cargando rutas...</p>
     </div>
     } @else {
 
@@ -49,14 +51,16 @@
       <!-- Código de ruta Column -->
       <ng-container matColumnDef="route_code">
         <th mat-header-cell *matHeaderCellDef>
-          CÓDIGO DE RUTA
+          <span i18n="@@routes.routeCode">CÓDIGO DE RUTA</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@routes.searchCode"
               placeholder="Buscar código"
               [(ngModel)]="routeCodeFilter"
               (input)="onFilterChange()"
+              i18n-aria-label="@@routes.filterByCode"
               aria-label="Filtrar por código de ruta" />
           </div>
         </th>
@@ -66,14 +70,16 @@
       <!-- Camión asignado Column -->
       <ng-container matColumnDef="assigned_truck">
         <th mat-header-cell *matHeaderCellDef>
-          CAMIÓN ASIGNADO
+          <span i18n="@@routes.assignedTruck">CAMIÓN ASIGNADO</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@routes.searchTruck"
               placeholder="Buscar camión"
               [(ngModel)]="truckFilter"
               (input)="onFilterChange()"
+              i18n-aria-label="@@routes.filterByTruck"
               aria-label="Filtrar por camión" />
           </div>
         </th>
@@ -83,14 +89,16 @@
       <!-- Fecha de entrega Column -->
       <ng-container matColumnDef="delivery_date">
         <th mat-header-cell *matHeaderCellDef>
-          FECHA DE ENTREGA
+          <span i18n="@@routes.deliveryDate">FECHA DE ENTREGA</span>
           <div class="filter-header">
               <input
               type="date"
               class="filter-input"
+              i18n-placeholder="@@routes.searchDate"
               placeholder="Buscar fecha"
               [ngModel]="dateFilter"
               (ngModelChange)="onDateChange($event)"
+              i18n-aria-label="@@routes.filterByDeliveryDate"
               aria-label="Filtrar por fecha de entrega" />
           </div>
         </th>
@@ -102,31 +110,35 @@
       <!-- Tipo de productos Column -->
       <ng-container matColumnDef="orders_count">
         <th mat-header-cell *matHeaderCellDef>
-          TIPO DE PRODUCTOS
+          <span i18n="@@routes.productType">TIPO DE PRODUCTOS</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@routes.searchStatus"
               placeholder="Buscar estado"
               [(ngModel)]="productTypeFilter"
               (input)="onFilterChange()"
+              i18n-aria-label="@@routes.filterByProductType"
               aria-label="Filtrar por tipo de producto" />
           </div>
         </th>
         <td mat-cell *matCellDef="let route">
-          Cadena de frío
+          <span i18n="@@routes.coldChain">Cadena de frío</span>
         </td>
       </ng-container>
 
       <!-- Acciones Column -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>ACCIONES</th>
+        <th mat-header-cell *matHeaderCellDef><span i18n="@@routes.actions">ACCIONES</span></th>
         <td mat-cell *matCellDef="let route">
           <button
             mat-icon-button
             (click)="openDetail(route)"
             class="action-btn view-btn"
+            i18n-aria-label="@@routes.viewOnMapAriaLabel"
             aria-label="Ver ruta en mapa"
+            i18n-title="@@routes.viewOnMapTitle"
             title="Ver en mapa"
           >
             <mat-icon>map</mat-icon>
@@ -140,7 +152,7 @@
       <!-- No data row -->
       <tr class="mat-row no-data-row" *matNoDataRow>
         <td class="mat-cell" [attr.colspan]="displayedColumns.length">
-          No se encontraron rutas con los filtros aplicados.
+          <span i18n="@@routes.noData">No se encontraron rutas con los filtros aplicados.</span>
         </td>
       </tr>
     </table>
@@ -149,14 +161,7 @@
     @if (pagination() && pagination()!.total_pages > 1) {
     <div class="custom-pagination">
       <div class="pagination-info">
-        Mostrando {{ (currentPage - 1) * pageSize + 1 }} al
-        {{
-          Math.min(
-            currentPage * pageSize,
-            pagination()!.total
-          )
-        }}
-        de {{ pagination()!.total }} registros
+        <ng-container i18n="@@routes.paginationInfo">Mostrando {{ (currentPage - 1) * pageSize + 1 }} al {{ Math.min(currentPage * pageSize, pagination()!.total) }} de {{ pagination()!.total }} registros</ng-container>
       </div>
 
       <div class="pagination-buttons">
@@ -164,9 +169,10 @@
           class="pagination-btn"
           (click)="goToPage(currentPage - 1)"
           [disabled]="currentPage === 1"
+          i18n-aria-label="@@routes.previousPage"
           aria-label="Página anterior"
         >
-          Anterior
+          <span i18n="@@routes.previous">Anterior</span>
         </button>
 
         @for (page of getPages(); track page) { @if (page > 0) {
@@ -187,9 +193,10 @@
           class="pagination-btn"
           (click)="goToPage(currentPage + 1)"
           [disabled]="currentPage === pagination()!.total_pages"
+          i18n-aria-label="@@routes.nextPage"
           aria-label="Página siguiente"
         >
-          Siguiente
+          <span i18n="@@routes.next">Siguiente</span>
         </button>
       </div>
     </div>

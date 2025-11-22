@@ -1,8 +1,8 @@
 <div class="inventario-container">
   <div class="header">
-    <h1>Inventario</h1>
+    <h1 i18n="@@inventory.title">Inventario</h1>
     <div class="breadcrumb">
-      <span class="breadcrumb-link">Inventario</span>
+      <span class="breadcrumb-link" i18n="@@inventory.breadcrumb">Inventario</span>
     </div>
   </div>
 
@@ -13,17 +13,19 @@
         mat-raised-button
         class="create-btn"
         (click)="openCreateProductoDialog()"
+        i18n-aria-label="@@inventory.createProductAriaLabel"
         aria-label="Crear nuevo producto"
       >
-        Crear producto
+        <span i18n="@@inventory.createProduct">Crear producto</span>
       </button>
       <button
         mat-raised-button
         class="upload-btn"
         (click)="openCargueMasivoDialog()"
+        i18n-aria-label="@@inventory.bulkUploadAriaLabel"
         aria-label="Cargue masivo de productos"
       >
-        Cargue masivo
+        <span i18n="@@inventory.bulkUpload">Cargue masivo</span>
       </button>
       }
     </div>
@@ -31,7 +33,7 @@
     @if (loading()) {
     <div class="loading-container">
       <mat-spinner diameter="50"></mat-spinner>
-      <p>Cargando productos...</p>
+      <p i18n="@@inventory.loading">Cargando productos...</p>
     </div>
     } @else {
 
@@ -39,14 +41,16 @@
       <!-- SKU Column -->
       <ng-container matColumnDef="sku">
         <th mat-header-cell *matHeaderCellDef>
-          SKU
+          <span i18n="@@inventory.sku">SKU</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@inventory.searchSku"
               placeholder="Buscar SKU"
               [ngModel]="skuFilter()"
               (input)="onSkuFilterChange($event)"
+              i18n-aria-label="@@inventory.filterBySku"
               aria-label="Filtrar por SKU"
               minlength="3" />
           </div>
@@ -57,14 +61,16 @@
       <!-- Nombre Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>
-          NOMBRE
+          <span i18n="@@inventory.name">NOMBRE</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@inventory.searchName"
               placeholder="Buscar Nombre"
               [ngModel]="nombreFilter()"
               (input)="onNombreFilterChange($event)"
+              i18n-aria-label="@@inventory.filterByName"
               aria-label="Filtrar por nombre"
               minlength="3" />
           </div>
@@ -75,14 +81,16 @@
       <!-- Fecha de Vencimiento Column -->
       <ng-container matColumnDef="expiration_date">
           <th mat-header-cell *matHeaderCellDef>
-            FECHA DE VENCIMIENTO
+            <span i18n="@@inventory.expirationDate">FECHA DE VENCIMIENTO</span>
             <div class="filter-header">
               <input
                 type="date"
                 class="filter-input"
+                i18n-placeholder="@@inventory.searchDate"
                 placeholder="Buscar Fecha"
                 [ngModel]="selectedDate"
                 (ngModelChange)="onDateChange($event)"
+                i18n-aria-label="@@inventory.filterByExpirationDate"
                 aria-label="Filtrar por fecha de vencimiento" />
             </div>
         </th>
@@ -94,34 +102,38 @@
       <!-- Cantidad Disponible Column -->
       <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef>
-          CANTIDAD DISPONIBLE
+          <span i18n="@@inventory.availableQuantity">CANTIDAD DISPONIBLE</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@inventory.searchQuantity"
               placeholder="Buscar Cantidad"
               [ngModel]="cantidadFilter()"
               (input)="onCantidadFilterChange($event)"
+              i18n-aria-label="@@inventory.filterByQuantity"
               aria-label="Filtrar por cantidad"
               minlength="3" />
           </div>
         </th>
         <td mat-cell *matCellDef="let producto">
-          {{ producto.quantity }} unidades
+          <ng-container i18n="@@inventory.units">{{ producto.quantity }} unidades</ng-container>
         </td>
       </ng-container>
 
       <!-- Precio C/U Column -->
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef>
-          PRECIO C/U
+          <span i18n="@@inventory.pricePerUnit">PRECIO C/U</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@inventory.searchPrice"
               placeholder="Buscar Precio"
               [ngModel]="precioFilter()"
               (input)="onPrecioFilterChange($event)"
+              i18n-aria-label="@@inventory.filterByPrice"
               aria-label="Filtrar por precio"
               minlength="3" />
           </div>
@@ -134,14 +146,16 @@
       <!-- Ubicación Column -->
       <ng-container matColumnDef="location">
         <th mat-header-cell *matHeaderCellDef>
-          UBICACIÓN
+          <span i18n="@@inventory.location">UBICACIÓN</span>
           <div class="filter-header">
             <input
               type="text"
               class="filter-input"
+              i18n-placeholder="@@inventory.searchLocation"
               placeholder="Buscar Ubicación"
               [ngModel]="ubicacionFilter()"
               (input)="onUbicacionFilterChange($event)"
+              i18n-aria-label="@@inventory.filterByLocation"
               aria-label="Filtrar por ubicación"
               minlength="3" />
           </div>
@@ -155,8 +169,7 @@
       <!-- No data row -->
       <tr class="mat-row no-data-row" *matNoDataRow>
         <td class="mat-cell" [attr.colspan]="displayedColumns.length">
-          No se encontraron productos que coincidan con los criterios de
-          búsqueda
+          <span i18n="@@inventory.noData">No se encontraron productos que coincidan con los criterios de búsqueda</span>
         </td>
       </tr>
     </table>
@@ -165,14 +178,7 @@
     @if (pagination() && pagination()!.total_pages > 1) {
     <div class="custom-pagination">
       <div class="pagination-info">
-        Mostrando {{ (pagination()!.page - 1) * pagination()!.per_page + 1 }} al
-        {{
-          Math.min(
-            pagination()!.page * pagination()!.per_page,
-            pagination()!.total
-          )
-        }}
-        de {{ pagination()!.total }} registros
+        <ng-container i18n="@@inventory.paginationInfo">Mostrando {{ (pagination()!.page - 1) * pagination()!.per_page + 1 }} al {{ Math.min(pagination()!.page * pagination()!.per_page, pagination()!.total) }} de {{ pagination()!.total }} registros</ng-container>
       </div>
 
       <div class="pagination-buttons">
@@ -180,9 +186,10 @@
           class="pagination-btn"
           (click)="goToPage(currentPage - 1)"
           [disabled]="!pagination()?.has_prev"
+          i18n-aria-label="@@inventory.previousPage"
           aria-label="Página anterior"
         >
-          Anterior
+          <span i18n="@@inventory.previous">Anterior</span>
         </button>
 
         @for (page of pageNumbers; track page) { @if (page > 0) {
@@ -203,9 +210,10 @@
           class="pagination-btn"
           (click)="goToPage(currentPage + 1)"
           [disabled]="!pagination()?.has_next"
+          i18n-aria-label="@@inventory.nextPage"
           aria-label="Página siguiente"
         >
-          Siguiente
+          <span i18n="@@inventory.next">Siguiente</span>
         </button>
       </div>
     </div>

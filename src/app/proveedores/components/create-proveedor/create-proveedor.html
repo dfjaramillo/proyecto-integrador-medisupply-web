@@ -1,11 +1,11 @@
 <div class="create-proveedor-dialog">
   <div class="dialog-header">
-    <h2>Crear proveedor</h2>
+    <h2 i18n="@@suppliers.createSupplierDialog.title">Crear proveedor</h2>
     <button
       mat-icon-button
       class="close-btn"
       (click)="onCancel()"
-      aria-label="Cerrar formulario de crear proveedor"
+      i18n-aria-label="@@suppliers.createSupplierDialog.closeAria" aria-label="Cerrar formulario de crear proveedor"
     >
       <mat-icon>close</mat-icon>
     </button>
@@ -15,11 +15,11 @@
     <form [formGroup]="proveedorForm" (ngSubmit)="onSubmit()">
       <!-- Nombre -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nombre</mat-label>
+        <mat-label i18n="@@suppliers.createSupplierDialog.nameLabel">Nombre</mat-label>
         <input
           matInput
           formControlName="name"
-          placeholder="Nombre del proveedor"
+          placeholder="Nombre del proveedor" i18n-placeholder="@@suppliers.createSupplierDialog.namePlaceholder"
           aria-required="true"
         />
         @if (hasError('name', 'required')) {
@@ -31,12 +31,12 @@
 
       <!-- Correo electrónico -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Correo electrónico</mat-label>
+        <mat-label i18n="@@suppliers.createSupplierDialog.emailLabel">Correo electrónico</mat-label>
         <input
           matInput
           type="email"
           formControlName="email"
-          placeholder="correo@proveedor.com"
+          placeholder="correo@proveedor.com" i18n-placeholder="@@suppliers.createSupplierDialog.emailPlaceholder"
           aria-required="true"
         />
         @if (hasError('email', 'required')) {
@@ -48,11 +48,11 @@
 
       <!-- Teléfono -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Teléfono</mat-label>
+        <mat-label i18n="@@suppliers.createSupplierDialog.phoneLabel">Teléfono</mat-label>
         <input
           matInput
           formControlName="phone"
-          placeholder="6603214878"
+          placeholder="6603214878" i18n-placeholder="@@suppliers.createSupplierDialog.phonePlaceholder"
           aria-required="true"
         />
         @if (hasError('phone', 'required')) {
@@ -64,7 +64,7 @@
 
       <!-- Logo -->
       <div class="logo-upload-section">
-        <label class="logo-label">Logo</label>
+        <label class="logo-label" i18n="@@suppliers.createSupplierDialog.logoLabel">Logo</label>
 
         @if (!selectedFile && !previewUrl) {
         <div class="upload-area">
@@ -76,23 +76,23 @@
             class="upload-btn"
           >
             <mat-icon>upload</mat-icon>
-            Subir archivo
+            <span i18n="@@suppliers.createSupplierDialog.uploadFileBtn">Subir archivo</span>
           </button>
-          <p class="upload-hint">JPG, PNG o GIF (máx. 2MB)</p>
+          <p class="upload-hint" i18n="@@suppliers.createSupplierDialog.uploadHint">JPG, PNG o GIF (máx. 2MB)</p>
           <input
             #fileInput
             type="file"
             accept="image/jpeg,image/png,image/gif"
             (change)="onFileSelected($event)"
             style="display: none"
-            aria-label="Seleccionar archivo de imagen"
+            i18n-aria-label="@@suppliers.createSupplierDialog.selectImageAria" aria-label="Seleccionar archivo de imagen"
           />
         </div>
         } @if (selectedFile && previewUrl) {
         <div class="file-preview">
           <img
             [src]="previewUrl"
-            alt="Vista previa del logo"
+            alt="Vista previa del logo" i18n-alt="@@suppliers.createSupplierDialog.previewAlt"
             class="preview-image"
           />
           <div class="file-info">
@@ -106,7 +106,7 @@
             mat-icon-button
             color="warn"
             (click)="removeFile()"
-            aria-label="Eliminar imagen"
+            i18n-aria-label="@@suppliers.createSupplierDialog.removeImageAria" aria-label="Eliminar imagen"
           >
             <mat-icon>delete</mat-icon>
           </button>
@@ -133,9 +133,9 @@
       (click)="onSubmit()"
       [attr.aria-busy]="loading()"
     >
-      @if (!loading()) { Guardar } @else {
+      @if (!loading()) { <span i18n="@@suppliers.createSupplierDialog.saveButton">Guardar</span> } @else {
       <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
-      <span class="sr-only">Guardando proveedor...</span>
+      <span class="sr-only" i18n="@@suppliers.createSupplierDialog.savingSr">Guardando proveedor...</span>
       }
     </button>
   </mat-dialog-actions>

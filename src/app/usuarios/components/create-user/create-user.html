@@ -1,12 +1,12 @@
 <div class="create-user-dialog">
   <div class="dialog-header">
-    <h2>Crear usuario</h2>
+    <h2 i18n="@@users.createUserDialog.title">Crear usuario</h2>
     <button
       mat-icon-button
       class="close-btn"
       (click)="onCancel()"
       type="button"
-      aria-label="Cerrar formulario de crear usuario"
+      i18n-aria-label="@@users.createUserDialog.closeAria" aria-label="Cerrar formulario de crear usuario"
     >
       <mat-icon>close</mat-icon>
     </button>
@@ -16,51 +16,51 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Nombre completo -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Nombre completo</mat-label>
+        <mat-label i18n="@@users.createUserDialog.nameLabel">Nombre completo</mat-label>
         <input
           matInput
           formControlName="name"
-          placeholder="Ingrese el nombre completo"
+          placeholder="Ingrese el nombre completo" i18n-placeholder="@@users.createUserDialog.namePlaceholder"
           autocomplete="name">
         @if (hasError('name', 'required')) {
-          <mat-error>El nombre completo es obligatorio</mat-error>
+          <mat-error i18n="@@users.createUserDialog.nameRequired">El nombre completo es obligatorio</mat-error>
         }
         @if (hasError('name', 'minlength')) {
-          <mat-error>El nombre debe tener al menos 3 caracteres</mat-error>
+          <mat-error i18n="@@users.createUserDialog.nameMinLength">El nombre debe tener al menos 3 caracteres</mat-error>
         }
         @if (hasError('name', 'invalidName')) {
-          <mat-error>El nombre solo puede contener letras y espacios</mat-error>
+          <mat-error i18n="@@users.createUserDialog.nameInvalid">El nombre solo puede contener letras y espacios</mat-error>
         }
       </mat-form-field>
 
       <!-- Correo electrónico -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Correo electrónico</mat-label>
+        <mat-label i18n="@@users.createUserDialog.emailLabel">Correo electrónico</mat-label>
         <input
           matInput
           type="email"
           formControlName="email"
-          placeholder="usuario@medisupply.com"
+          placeholder="usuario@medisupply.com" i18n-placeholder="@@users.createUserDialog.emailPlaceholder"
           autocomplete="email">
         @if (hasError('email', 'required')) {
-          <mat-error>El correo electrónico es obligatorio</mat-error>
+          <mat-error i18n="@@users.createUserDialog.emailRequired">El correo electrónico es obligatorio</mat-error>
         }
         @if (hasError('email', 'email')) {
-          <mat-error>Formato de correo inválido</mat-error>
+          <mat-error i18n="@@users.createUserDialog.emailInvalid">Formato de correo inválido</mat-error>
         }
         @if (hasError('email', 'duplicate')) {
-          <mat-error>Este correo ya está registrado</mat-error>
+          <mat-error i18n="@@users.createUserDialog.emailDuplicate">Este correo ya está registrado</mat-error>
         }
       </mat-form-field>
 
       <!-- Contraseña -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Contraseña</mat-label>
+        <mat-label i18n="@@users.createUserDialog.passwordLabel">Contraseña</mat-label>
         <input
           matInput
           [type]="hidePassword() ? 'password' : 'text'"
           formControlName="password"
-          placeholder="Ingrese la contraseña"
+          placeholder="Ingrese la contraseña" i18n-placeholder="@@users.createUserDialog.passwordPlaceholder"
           autocomplete="new-password">
         <button
           mat-icon-button
@@ -77,12 +77,12 @@
 
       <!-- Confirmar contraseña -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Confirmar contraseña</mat-label>
+        <mat-label i18n="@@users.createUserDialog.confirmPasswordLabel">Confirmar contraseña</mat-label>
         <input
           matInput
           [type]="hideConfirmPassword() ? 'password' : 'text'"
           formControlName="confirmPassword"
-          placeholder="Confirme la contraseña"
+          placeholder="Confirme la contraseña" i18n-placeholder="@@users.createUserDialog.confirmPasswordPlaceholder"
           autocomplete="new-password">
         <button
           mat-icon-button
@@ -93,23 +93,23 @@
           <mat-icon>{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
         @if (hasError('confirmPassword', 'required')) {
-          <mat-error>Debe confirmar la contraseña</mat-error>
+          <mat-error i18n="@@users.createUserDialog.confirmPasswordRequired">Debe confirmar la contraseña</mat-error>
         }
         @if (hasError('confirmPassword', 'fieldsMismatch')) {
-          <mat-error>Las contraseñas no coinciden</mat-error>
+          <mat-error i18n="@@users.createUserDialog.passwordMismatch">Las contraseñas no coinciden</mat-error>
         }
       </mat-form-field>
 
       <!-- Rol -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Rol</mat-label>
+        <mat-label i18n="@@users.createUserDialog.roleLabel">Rol</mat-label>
         <mat-select formControlName="role">
           @for (role of roles; track role) {
             <mat-option [value]="role">{{ role }}</mat-option>
           }
         </mat-select>
         @if (hasError('role', 'required')) {
-          <mat-error>El rol es obligatorio</mat-error>
+          <mat-error i18n="@@users.createUserDialog.roleRequired">El rol es obligatorio</mat-error>
         }
       </mat-form-field>
     </form>
@@ -124,9 +124,9 @@
       (click)="onSubmit()"
       [attr.aria-busy]="loading()"
     >
-      @if (!loading()) { Guardar } @else {
+      @if (!loading()) { <span i18n="@@users.createUserDialog.saveButton">Guardar</span> } @else {
       <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
-      <span class="sr-only">Guardando usuario...</span>
+      <span class="sr-only" i18n="@@users.createUserDialog.savingSr">Guardando usuario...</span>
       }
     </button>
   </mat-dialog-actions>

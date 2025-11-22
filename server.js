@@ -19,6 +19,12 @@ app.get('/config.js', (req, res) => {
 function findDistFolder() {
   const baseDist = path.join(__dirname, 'dist');
   const expected = path.join(baseDist, 'medisupply-frontend');
+  const expectedBrowser = path.join(expected, 'browser');
+  // If localized build structure, use browser as base
+  if (fs.existsSync(path.join(expectedBrowser, 'en')) || fs.existsSync(path.join(expectedBrowser, 'es'))) {
+    console.log('Found localized browser folder:', expectedBrowser);
+    return expectedBrowser;
+  }
   if (fs.existsSync(expected) && fs.existsSync(path.join(expected, 'index.html'))) {
     console.log('Found expected dist folder:', expected);
     return expected;
@@ -75,19 +81,84 @@ if (!distFolder) {
   console.error('No built Angular files found in dist/. Did the build run?');
 }
 
-if (distFolder) {
-  app.use(express.static(distFolder));
+// Attempt to detect localized build structure (Angular i18n output)
+function findLocaleDirs(base) {
+  const candidates = [];
+  const directEs = path.join(base, 'es');
+  const directEn = path.join(base, 'en');
+  const browser = path.join(base, 'browser');
+  const browserEs = path.join(browser, 'es');
+  const browserEn = path.join(browser, 'en');
 
-  // SPA fallback: serve index.html for any unknown path
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(distFolder, 'index.html'));
+  [directEs, directEn, browserEs, browserEn].forEach(dir => {
+    if (fs.existsSync(path.join(dir, 'index.html'))) {
+      candidates.push(dir);
+    }
   });
-} else {
-  // Minimal route to show helpful message
-  app.get('*', (req, res) => {
-    res.status(500).send('Application not built. Run the build step to generate dist/.');
-  });
+  return candidates;
 }
+
+let localeDirs = [];
+if (distFolder) {
+  localeDirs = findLocaleDirs(distFolder);
+}
+const hasLocales = localeDirs.length > 0;
+let esDir = localeDirs.find(d => /[\\/]es$/.test(d)) || null;
+let enDir = localeDirs.find(d => /[\\/]en$/.test(d)) || null;
+
+if (hasLocales) {
+  console.log('Localized build detected. Directories:', localeDirs);
+  // Mount each locale directory under its locale prefix so relative asset URLs (base href /en/ or /es/) resolve.
+  if (enDir) {
+    app.use('/en', express.static(enDir));
+  }
+  if (esDir) {
+    app.use('/es', express.static(esDir));
+  }
+} else if (distFolder) {
+  // Fallback single build
+  app.use(express.static(distFolder));
+}
+
+// Helper: pick locale from Accept-Language header; only es / en supported, default en
+function negotiateLocale(req) {
+  if (!hasLocales) return 'single';
+  const accepted = req.acceptsLanguages ? req.acceptsLanguages('es', 'en') : null;
+  const raw = (accepted || req.headers['accept-language'] || '').toLowerCase();
+  if (raw.includes('es')) return 'es';
+  return 'en';
+}
+
+// SPA fallback: serve proper index.html
+// Locale specific SPA fallbacks: ensure deep routes under /en/* or /es/* return their own index
+if (hasLocales) {
+  if (enDir) {
+    app.get('/en/*', (req, res) => res.sendFile(path.join(enDir, 'index.html')));
+  }
+  if (esDir) {
+    app.get('/es/*', (req, res) => res.sendFile(path.join(esDir, 'index.html')));
+  }
+}
+
+// Root fallback: negotiate Accept-Language only when not explicitly requesting a locale prefix
+app.get('*', (req, res) => {
+  if (!distFolder) {
+    return res.status(500).send('Application not built. Run the build step to generate dist/.');
+  }
+  if (!hasLocales) {
+    return res.sendFile(path.join(distFolder, 'index.html'));
+  }
+  // If path already starts with /en or /es, do nothing (handled above). This guards against overlap.
+  if (/^\/(en|es)(\/|$)/.test(req.path)) {
+    return res.status(404).send('Not found'); // Should have been handled; avoid serving wrong locale.
+  }
+  const locale = negotiateLocale(req);
+  const dir = locale === 'es' ? esDir || enDir : enDir || esDir;
+  if (!dir) {
+    return res.status(500).send('Localized directories not found.');
+  }
+  return res.sendFile(path.join(dir, 'index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

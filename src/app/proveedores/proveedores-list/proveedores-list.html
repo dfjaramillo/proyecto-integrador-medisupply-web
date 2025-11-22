@@ -1,10 +1,10 @@
 <div class="proveedores-container">
   <div class="header">    
-    <h1>Proveedores</h1>
+    <h1 i18n="@@suppliers.title">Proveedores</h1>
     <div class="breadcrumb">
-      <span class="breadcrumb-link">Administración</span>
+      <span class="breadcrumb-link" i18n="@@suppliers.breadcrumbAdmin">Administración</span>
       <span class="breadcrumb-separator">-</span>
-      <span class="breadcrumb-current">Proveedores</span>
+      <span class="breadcrumb-current" i18n="@@suppliers.breadcrumbSuppliers">Proveedores</span>
     </div>
   </div>
 
@@ -15,27 +15,29 @@
         color="primary"
         (click)="openCreateDialog()"
         class="create-btn">        
-        Crear proveedor
+        <span i18n="@@suppliers.createSupplier">Crear proveedor</span>
       </button>
     </div>
 
     @if (loading()) {
       <div class="loading-container">
         <mat-spinner diameter="40"></mat-spinner>
-        <p>Cargando proveedores...</p>
+        <p i18n="@@suppliers.loading">Cargando proveedores...</p>
       </div>
     } @else {
       <table mat-table [dataSource]="proveedores()" class="proveedores-table">
         <!-- Columna Nombre -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>
-            NOMBRE
+            <span i18n="@@suppliers.name">NOMBRE</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
+                i18n-placeholder="@@suppliers.searchName"
                 placeholder="Buscar nombre"
                 (input)="onNameFilterChange($event)"
+                i18n-aria-label="@@suppliers.filterByName"
                 aria-label="Filtrar por nombre" />
             </div>
           </th>
@@ -45,13 +47,15 @@
         <!-- Columna Correo electrónico -->
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef>
-            CORREO DE CONTACTO
+            <span i18n="@@suppliers.contactEmail">CORREO DE CONTACTO</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
+                i18n-placeholder="@@suppliers.searchEmail"
                 placeholder="Buscar correo"
                 (input)="onEmailFilterChange($event)"
+                i18n-aria-label="@@suppliers.filterByEmail"
                 aria-label="Filtrar por correo" />
             </div>
           </th>
@@ -61,13 +65,15 @@
         <!-- Columna Teléfono -->
         <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef>
-            TELÉFONO
+            <span i18n="@@suppliers.phone">TELÉFONO</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
+                i18n-placeholder="@@suppliers.searchPhone"
                 placeholder="Buscar teléfono"
                 (input)="onPhoneFilterChange($event)"
+                i18n-aria-label="@@suppliers.filterByPhone"
                 aria-label="Filtrar por teléfono" />
             </div>
           </th>
@@ -81,7 +87,7 @@
         @if (proveedores().length === 0) {
           <tr class="mat-row">
             <td class="no-data-row" [attr.colspan]="displayedColumns.length">
-              No se encontraron proveedores
+              <span i18n="@@suppliers.noData">No se encontraron proveedores</span>
             </td>
           </tr>
         }
@@ -91,7 +97,7 @@
       @if (totalPages() > 1) {
         <div class="custom-pagination">
           <div class="pagination-info">
-            Mostrando {{ ((currentPage() * pageSize()) + 1) }} al {{ Math.min((currentPage() + 1) * pageSize(), totalProveedores()) }} de {{ totalProveedores() }} registros
+            <ng-container i18n="@@suppliers.paginationInfo">Mostrando {{ ((currentPage() * pageSize()) + 1) }} al {{ Math.min((currentPage() + 1) * pageSize(), totalProveedores()) }} de {{ totalProveedores() }} registros</ng-container>
           </div>
           
           <div class="pagination-buttons">
@@ -99,8 +105,9 @@
               class="pagination-btn"
               (click)="previousPage()"
               [disabled]="currentPage() === 0"
+              i18n-aria-label="@@suppliers.previousPage"
               aria-label="Página anterior">
-              Anterior
+              <span i18n="@@suppliers.previous">Anterior</span>
             </button>
 
             @for (page of pageNumbers; track page) {
@@ -118,8 +125,9 @@
               class="pagination-btn"
               (click)="nextPage()"
               [disabled]="currentPage() === totalPages() - 1"
+              i18n-aria-label="@@suppliers.nextPage"
               aria-label="Página siguiente">
-              Siguiente
+              <span i18n="@@suppliers.next">Siguiente</span>
             </button>
           </div>
         </div>

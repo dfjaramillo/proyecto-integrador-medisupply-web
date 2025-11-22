@@ -5,7 +5,7 @@
 </div>
 
 <!-- Mobile toggle button -->
-<button class="sidebar-toggle" (click)="toggleSidebar()" type="button" aria-label="Toggle sidebar">
+<button class="sidebar-toggle" (click)="toggleSidebar()" type="button" i18n-aria-label="@@sidebar.toggleSidebar" aria-label="Toggle sidebar">
   <mat-icon>{{ sidebarCollapsed() ? 'menu' : 'close' }}</mat-icon>
 </button>
 
@@ -19,7 +19,7 @@
       <div class="nav-section">
         <button class="section-header" (click)="toggleAdministracion()" type="button">
           <mat-icon>admin_panel_settings</mat-icon>
-          <h3 class="section-title">ADMINISTRACIÓN</h3>
+          <h3 class="section-title" i18n="@@sidebar.administration">ADMINISTRACIÓN</h3>
           <mat-icon class="expand-icon" [class.expanded]="administracionExpanded()">
             expand_more
           </mat-icon>
@@ -29,17 +29,17 @@
           @if(isAdministrador()){
           <a class="nav-item" routerLink="/usuarios" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>person</mat-icon>
-            <span>Usuarios</span>
+            <span i18n="@@sidebar.users">Usuarios</span>
           </a>
           <a class="nav-item" routerLink="/clientes" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>local_hospital</mat-icon>
-            <span>Clientes</span>
+            <span i18n="@@sidebar.clients">Clientes</span>
           </a>
           }
           @if(canSeeProveedores()){
           <a class="nav-item" routerLink="/proveedores" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>business</mat-icon>
-            <span>Proveedores</span>
+            <span i18n="@@sidebar.suppliers">Proveedores</span>
           </a>
           }          
         </div>
@@ -50,7 +50,7 @@
       <div class="nav-section">      
         <a class="nav-item" routerLink="/inventario" routerLinkActive="active" (click)="closeSidebar()">
           <mat-icon>inventory_2</mat-icon>
-          <span>INVENTARIO</span>
+          <span i18n="@@sidebar.inventory">INVENTARIO</span>
         </a>
       </div>
     }
@@ -60,7 +60,7 @@
       <div class="nav-section">      
         <a class="nav-item" routerLink="/logistica/rutas" routerLinkActive="active" (click)="closeSidebar()">
           <mat-icon>route</mat-icon>
-          <span>LOGÍSTICA</span>
+          <span i18n="@@sidebar.logistics">LOGÍSTICA</span>
         </a>
       </div>
     }
@@ -70,7 +70,7 @@
       <div class="nav-section">
         <button class="section-header" (click)="toggleVentas()" type="button">
           <mat-icon>attach_money</mat-icon>
-          <h3 class="section-title">VENTAS</h3>
+          <h3 class="section-title" i18n="@@sidebar.sales">VENTAS</h3>
           <mat-icon class="expand-icon" [class.expanded]="ventasExpanded()">
             expand_more
           </mat-icon>
@@ -79,19 +79,19 @@
         <div class="nav-items pl-20" [class.collapsed]="!ventasExpanded()">
           <a class="nav-item" routerLink="/planes-ventas" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>assignment</mat-icon>
-            <span>Planes de ventas</span>
+            <span i18n="@@sidebar.salesPlans">Planes de ventas</span>
           </a>
           <a class="nav-item" routerLink="/ventas/visitas" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>videocam</mat-icon>
-            <span>Visitas</span>
+            <span i18n="@@sidebar.visits">Visitas</span>
           </a>
           <a class="nav-item" routerLink="/ventas/reporte-operativo" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>bar_chart</mat-icon>
-            <span>Reporte operativo</span>
+            <span i18n="@@sidebar.operationalReport">Reporte operativo</span>
           </a>
           <a class="nav-item" routerLink="/ventas/informe-vendedores" routerLinkActive="active" (click)="closeSidebar()">
             <mat-icon>assessment</mat-icon>
-            <span>Informe de vendedores</span>
+            <span i18n="@@sidebar.sellersReport">Informe de vendedores</span>
           </a>
         </div>
       </div>
@@ -101,7 +101,7 @@
   <div class="sidebar-footer">
     <button class="logout-btn" (click)="onLogout()" type="button">
       <mat-icon>logout</mat-icon>
-      <span>CERRAR SESIÓN</span>
+      <span i18n="@@sidebar.logout">CERRAR SESIÓN</span>
     </button>
   </div>
 </aside>

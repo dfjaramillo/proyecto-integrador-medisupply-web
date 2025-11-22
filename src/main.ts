@@ -1,3 +1,5 @@
+/// <reference types="@angular/localize" />
+
 // main.ts (Angular 17+)
 import 'zone.js';
 import { bootstrapApplication } from '@angular/platform-browser';

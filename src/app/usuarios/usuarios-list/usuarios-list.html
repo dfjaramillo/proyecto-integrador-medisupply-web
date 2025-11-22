@@ -1,11 +1,11 @@
 <div class="usuarios-container">
   <!-- Header -->
   <div class="header">    
-    <h1>Usuarios</h1>
+    <h1 i18n="@@users.title">Usuarios</h1>
     <div class="breadcrumb">
-      <span class="breadcrumb-link">Administración</span>
-      <span class="breadcrumb-separator">-</span>
-      <span class="breadcrumb-current">Usuarios</span>
+      <span class="breadcrumb-link" i18n="@@users.breadcrumbAdmin">Administración</span>
+      <span class="breadcrumb-separator" aria-hidden="true">-</span>
+      <span class="breadcrumb-current" i18n="@@users.breadcrumbUsers">Usuarios</span>
     </div>
   </div>
 
@@ -18,7 +18,8 @@
         mat-raised-button
         color="primary"
         (click)="openCreateUserDialog()"
-        class="create-btn">        
+        class="create-btn"
+        i18n="@@users.createUserButton">        
         Crear usuario
       </button>
     </div>
@@ -26,8 +27,8 @@
 
     @if (loading()) {
       <div class="loading-container">
-        <mat-spinner diameter="40"></mat-spinner>
-        <p>Cargando usuarios...</p>
+        <mat-spinner diameter="40" aria-hidden="true"></mat-spinner>
+        <p i18n="@@users.loadingUsers">Cargando usuarios...</p>
       </div>
     } @else {
       
@@ -35,12 +36,12 @@
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>
-            NOMBRE
+            <span i18n="@@users.table.nameHeader">NOMBRE</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
-                placeholder="Buscar nombre"
+                i18n-placeholder="@@users.filterNamePlaceholder" placeholder="Buscar nombre"
                 [value]="nameFilter()"
                 (input)="onNameFilterChange($event)" />
             </div>
@@ -51,12 +52,12 @@
         <!-- Email Column -->
         <ng-container matColumnDef="email">
           <th mat-header-cell *matHeaderCellDef>
-            CORREO ELECTRÓNICO
+            <span i18n="@@users.table.emailHeader">CORREO ELECTRÓNICO</span>
             <div class="filter-header">
               <input
                 type="text"
                 class="filter-input"
-                placeholder="Buscar correo"
+                i18n-placeholder="@@users.filterEmailPlaceholder" placeholder="Buscar correo"
                 [value]="emailFilter()"
                 (input)="onEmailFilterChange($event)" />
             </div>
@@ -67,18 +68,18 @@
         <!-- Role Column -->
         <ng-container matColumnDef="role">
           <th mat-header-cell *matHeaderCellDef>
-            ROL
+            <span i18n="@@users.table.roleHeader">ROL</span>
             <div class="filter-header">
               <select
                 class="filter-input filter-select"
                 [(ngModel)]="selectedRole"
                 (ngModelChange)="onRoleFilterChange($event)">
-                <option value="">Todos</option>
-                <option value="Administrador">Administrador</option>
-                <option value="Cliente">Cliente</option>
-                <option value="Ventas">Ventas</option>
-                <option value="Logistica">Logistica</option>
-                <option value="Compras">Compras</option>
+                <option value="" i18n="@@users.filterRoleAll">Todos</option>
+                <option value="Administrador" i18n="@@users.filterRoleAdmin">Administrador</option>
+                <option value="Cliente" i18n="@@users.filterRoleClient">Cliente</option>
+                <option value="Ventas" i18n="@@users.filterRoleSales">Ventas</option>
+                <option value="Logistica" i18n="@@users.filterRoleLogistics">Logistica</option>
+                <option value="Compras" i18n="@@users.filterRolePurchasing">Compras</option>
               </select>
             </div>
           </th>
@@ -90,7 +91,7 @@
 
         <!-- No data row -->
         <tr class="mat-row no-data-row" *matNoDataRow>
-          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length" i18n="@@users.noData">
             No se encontraron usuarios
           </td>
         </tr>
@@ -99,7 +100,7 @@
 
       <!-- Custom Pagination (consistent with inventario-list styles & ARIA) -->
       <div class="custom-pagination">
-        <div class="pagination-info">
+        <div class="pagination-info" i18n="@@users.paginationInfo">
           Mostrando {{ (currentPage() * pageSize()) + 1 }} al {{ Math.min((currentPage() + 1) * pageSize(), totalUsers()) }} de {{ totalUsers() }} registros
         </div>
 
@@ -108,16 +109,15 @@
             class="pagination-btn"
             (click)="previousPage()"
             [disabled]="currentPage() === 0"
-            aria-label="Página anterior">
-            Anterior
-          </button>
+            i18n-aria-label="@@users.prevPageAria" aria-label="Página anterior"
+            i18n="@@users.prevPageLabel">Anterior</button>
 
           @for (page of pageNumbers; track page) { @if (page > 0) {
             <button 
               class="pagination-btn"
               [class.active]="currentPage() === page - 1"
               (click)="goToPage(page)"
-              [attr.aria-label]="'Ir a página ' + page"
+              [attr.aria-label]="('Ir a página ' + page)"
               [attr.aria-current]="currentPage() === page - 1 ? 'page' : null">
               {{ page }}
             </button>
@@ -129,9 +129,8 @@
             class="pagination-btn"
             (click)="nextPage()"
             [disabled]="currentPage() === totalPages() - 1"
-            aria-label="Página siguiente">
-            Siguiente
-          </button>
+            i18n-aria-label="@@users.nextPageAria" aria-label="Página siguiente"
+            i18n="@@users.nextPageLabel">Siguiente</button>
         </div>
       </div>
     }

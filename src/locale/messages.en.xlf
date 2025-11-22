@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es" target-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="inventory.title" datatype="html">
+        <source>Inventario</source>
+        <target>Inventory</target>
+      </trans-unit>
+      <trans-unit id="inventory.breadcrumb" datatype="html">
+        <source>Inventario</source>
+        <target>Inventory</target>
+      </trans-unit>
+      <trans-unit id="inventory.createProductAriaLabel" datatype="html">
+        <source>Crear nuevo producto</source>
+        <target>Create new product</target>
+      </trans-unit>
+      <trans-unit id="inventory.createProduct" datatype="html">
+        <source>Crear producto</source>
+        <target>Create product</target>
+      </trans-unit>
+      <trans-unit id="inventory.bulkUploadAriaLabel" datatype="html">
+        <source>Cargue masivo de productos</source>
+        <target>Bulk product upload</target>
+      </trans-unit>
+      <trans-unit id="inventory.bulkUpload" datatype="html">
+        <source>Cargue masivo</source>
+        <target>Bulk upload</target>
+      </trans-unit>
+      <trans-unit id="inventory.loading" datatype="html">
+        <source>Cargando productos...</source>
+        <target>Loading products...</target>
+      </trans-unit>
+      <trans-unit id="inventory.sku" datatype="html">
+        <source>SKU</source>
+        <target>SKU</target>
+      </trans-unit>
+      <trans-unit id="inventory.searchSku" datatype="html">
+        <source>Buscar SKU</source>
+        <target>Search SKU</target>
+      </trans-unit>
+      <trans-unit id="inventory.filterBySku" datatype="html">
+        <source>Filtrar por SKU</source>
+        <target>Filter by SKU</target>
+      </trans-unit>
+      <trans-unit id="inventory.name" datatype="html">
+        <source>NOMBRE</source>
+        <target>NAME</target>
+      </trans-unit>
+      <trans-unit id="inventory.searchName" datatype="html">
+        <source>Buscar Nombre</source>
+        <target>Search Name</target>
+      </trans-unit>
+      <trans-unit id="inventory.filterByName" datatype="html">
+        <source>Filtrar por nombre</source>
+        <target>Filter by name</target>
+      </trans-unit>
+      <trans-unit id="inventory.expirationDate" datatype="html">
+        <source>FECHA DE VENCIMIENTO</source>
+        <target>EXPIRATION DATE</target>
+      </trans-unit>
+      <trans-unit id="inventory.searchDate" datatype="html">
+        <source>Buscar Fecha</source>
+        <target>Search Date</target>
+      </trans-unit>
+      <trans-unit id="inventory.filterByExpirationDate" datatype="html">
+        <source>Filtrar por fecha de vencimiento</source>
+        <target>Filter by expiration date</target>
+      </trans-unit>
+      <trans-unit id="inventory.availableQuantity" datatype="html">
+        <source>CANTIDAD DISPONIBLE</source>
+        <target>AVAILABLE QUANTITY</target>
+      </trans-unit>
+      <trans-unit id="inventory.searchQuantity" datatype="html">
+        <source>Buscar Cantidad</source>
+        <target>Search Quantity</target>
+      </trans-unit>
+      <trans-unit id="inventory.filterByQuantity" datatype="html">
+        <source>Filtrar por cantidad</source>
+        <target>Filter by quantity</target>
+      </trans-unit>
+      <trans-unit id="inventory.units" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ producto.quantity }}"/> unidades</source>
+        <target><x id="INTERPOLATION" equiv-text="{{ producto.quantity }}"/> units</target>
+      </trans-unit>
+      <trans-unit id="inventory.pricePerUnit" datatype="html">
+        <source>PRECIO C/U</source>
+        <target>PRICE EACH</target>
+      </trans-unit>
+      <trans-unit id="inventory.searchPrice" datatype="html">
+        <source>Buscar Precio</source>
+        <target>Search Price</target>
+      </trans-unit>
+      <trans-unit id="inventory.filterByPrice" datatype="html">
+        <source>Filtrar por precio</source>
+        <target>Filter by price</target>
+      </trans-unit>
+      <trans-unit id="inventory.location" datatype="html">
+        <source>UBICACIÓN</source>
+        <target>LOCATION</target>
+      </trans-unit>
+      <trans-unit id="inventory.searchLocation" datatype="html">
+        <source>Buscar Ubicación</source>
+        <target>Search Location</target>
+      </trans-unit>
+      <trans-unit id="inventory.filterByLocation" datatype="html">
+        <source>Filtrar por ubicación</source>
+        <target>Filter by location</target>
+      </trans-unit>
+      <trans-unit id="inventory.noData" datatype="html">
+        <source>No se encontraron productos que coincidan con los criterios de búsqueda</source>
+        <target>No products match the search criteria</target>
+      </trans-unit>
+      <trans-unit id="inventory.paginationInfo" datatype="html">
+        <source>Mostrando <x id="INTERPOLATION" equiv-text="{{ (pagination()!.page - 1) * pagination()!.per_page + 1 }}"/> al <x id="INTERPOLATION_1" equiv-text="{{ Math.min(pagination()!.page * pagination()!.per_page, pagination()!.total) }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ pagination()!.total }}"/> registros</source>
+        <target>Showing <x id="INTERPOLATION" equiv-text="{{ (pagination()!.page - 1) * pagination()!.per_page + 1 }}"/> to <x id="INTERPOLATION_1" equiv-text="{{ Math.min(pagination()!.page * pagination()!.per_page, pagination()!.total) }}"/> of <x id="INTERPOLATION_2" equiv-text="{{ pagination()!.total }}"/> records</target>
+      </trans-unit>
+      <trans-unit id="inventory.previousPage" datatype="html">
+        <source>Página anterior</source>
+        <target>Previous page</target>
+      </trans-unit>
+      <trans-unit id="inventory.previous" datatype="html">
+        <source>Anterior</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="inventory.nextPage" datatype="html">
+        <source>Página siguiente</source>
+        <target>Next page</target>
+      </trans-unit>
+      <trans-unit id="inventory.next" datatype="html">
+        <source>Siguiente</source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="sidebar.toggleSidebar" datatype="html">
+        <source>Toggle sidebar</source>
+        <target>Toggle sidebar</target>
+      </trans-unit>
+      <trans-unit id="sidebar.administration" datatype="html">
+        <source>ADMINISTRACIÓN</source>
+        <target>ADMINISTRATION</target>
+      </trans-unit>
+      <trans-unit id="sidebar.users" datatype="html">
+        <source>Usuarios</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="sidebar.clients" datatype="html">
+        <source>Clientes</source>
+        <target>Clients</target>
+      </trans-unit>
+      <trans-unit id="sidebar.suppliers" datatype="html">
+        <source>Proveedores</source>
+        <target>Suppliers</target>
+      </trans-unit>
+      <trans-unit id="sidebar.inventory" datatype="html">
+        <source>INVENTARIO</source>
+        <target>INVENTORY</target>
+      </trans-unit>
+      <trans-unit id="sidebar.logistics" datatype="html">
+        <source>LOGÍSTICA</source>
+        <target>LOGISTICS</target>
+      </trans-unit>
+      <trans-unit id="sidebar.sales" datatype="html">
+        <source>VENTAS</source>
+        <target>SALES</target>
+      </trans-unit>
+      <trans-unit id="sidebar.salesPlans" datatype="html">
+        <source>Planes de ventas</source>
+        <target>Sales plans</target>
+      </trans-unit>
+      <trans-unit id="sidebar.visits" datatype="html">
+        <source>Visitas</source>
+        <target>Visits</target>
+      </trans-unit>
+      <trans-unit id="sidebar.operationalReport" datatype="html">
+        <source>Reporte operativo</source>
+        <target>Operational report</target>
+      </trans-unit>
+      <trans-unit id="sidebar.sellersReport" datatype="html">
+        <source>Informe de vendedores</source>
+        <target>Sellers report</target>
+      </trans-unit>
+      <trans-unit id="sidebar.logout" datatype="html">
+        <source>CERRAR SESIÓN</source>
+        <target>LOG OUT</target>
+      </trans-unit>
+      <trans-unit id="routes.backToList" datatype="html">
+        <source>Volver al listado</source>
+        <target>Back to list</target>
+      </trans-unit>
+      <trans-unit id="routes.back" datatype="html">
+        <source>Volver</source>
+        <target>Back</target>
+      </trans-unit>
+      <trans-unit id="routes.title" datatype="html">
+        <source>Logística</source>
+        <target>Logistics</target>
+      </trans-unit>
+      <trans-unit id="routes.breadcrumb" datatype="html">
+        <source>Logística</source>
+        <target>Logistics</target>
+      </trans-unit>
+      <trans-unit id="routes.createRoute" datatype="html">
+        <source>Crear ruta de entrega</source>
+        <target>Create delivery route</target>
+      </trans-unit>
+      <trans-unit id="routes.loading" datatype="html">
+        <source>Cargando rutas...</source>
+        <target>Loading routes...</target>
+      </trans-unit>
+      <trans-unit id="routes.routeCode" datatype="html">
+        <source>CÓDIGO DE RUTA</source>
+        <target>ROUTE CODE</target>
+      </trans-unit>
+      <trans-unit id="routes.searchCode" datatype="html">
+        <source>Buscar código</source>
+        <target>Search code</target>
+      </trans-unit>
+      <trans-unit id="routes.filterByCode" datatype="html">
+        <source>Filtrar por código de ruta</source>
+        <target>Filter by route code</target>
+      </trans-unit>
+      <trans-unit id="routes.assignedTruck" datatype="html">
+        <source>CAMIÓN ASIGNADO</source>
+        <target>ASSIGNED TRUCK</target>
+      </trans-unit>
+      <trans-unit id="routes.searchTruck" datatype="html">
+        <source>Buscar camión</source>
+        <target>Search truck</target>
+      </trans-unit>
+      <trans-unit id="routes.filterByTruck" datatype="html">
+        <source>Filtrar por camión</source>
+        <target>Filter by truck</target>
+      </trans-unit>
+      <trans-unit id="routes.deliveryDate" datatype="html">
+        <source>FECHA DE ENTREGA</source>
+        <target>DELIVERY DATE</target>
+      </trans-unit>
+      <trans-unit id="routes.searchDate" datatype="html">
+        <source>Buscar fecha</source>
+        <target>Search date</target>
+      </trans-unit>
+      <trans-unit id="routes.filterByDeliveryDate" datatype="html">
+        <source>Filtrar por fecha de entrega</source>
+        <target>Filter by delivery date</target>
+      </trans-unit>
+      <trans-unit id="routes.productType" datatype="html">
+        <source>TIPO DE PRODUCTOS</source>
+        <target>PRODUCT TYPE</target>
+      </trans-unit>
+      <trans-unit id="routes.searchStatus" datatype="html">
+        <source>Buscar estado</source>
+        <target>Search status</target>
+      </trans-unit>
+      <trans-unit id="routes.filterByProductType" datatype="html">
+        <source>Filtrar por tipo de producto</source>
+        <target>Filter by product type</target>
+      </trans-unit>
+      <trans-unit id="routes.coldChain" datatype="html">
+        <source>Cadena de frío</source>
+        <target>Cold chain</target>
+      </trans-unit>
+      <trans-unit id="routes.actions" datatype="html">
+        <source>ACCIONES</source>
+        <target>ACTIONS</target>
+      </trans-unit>
+      <trans-unit id="routes.viewOnMapAriaLabel" datatype="html">
+        <source>Ver ruta en mapa</source>
+        <target>View route on map</target>
+      </trans-unit>
+      <trans-unit id="routes.viewOnMapTitle" datatype="html">
+        <source>Ver en mapa</source>
+        <target>View on map</target>
+      </trans-unit>
+      <trans-unit id="routes.noData" datatype="html">
+        <source>No se encontraron rutas con los filtros aplicados.</source>
+        <target>No routes found for applied filters.</target>
+      </trans-unit>
+      <trans-unit id="routes.paginationInfo" datatype="html">
+        <source>Mostrando <x id="INTERPOLATION" equiv-text="{{ (currentPage - 1) * pageSize + 1 }}"/> al <x id="INTERPOLATION_1" equiv-text="{{ Math.min(currentPage * pageSize, pagination()!.total) }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ pagination()!.total }}"/> registros</source>
+        <target>Showing <x id="INTERPOLATION" equiv-text="{{ (currentPage - 1) * pageSize + 1 }}"/> to <x id="INTERPOLATION_1" equiv-text="{{ Math.min(currentPage * pageSize, pagination()!.total) }}"/> of <x id="INTERPOLATION_2" equiv-text="{{ pagination()!.total }}"/> records</target>
+      </trans-unit>
+      <trans-unit id="routes.previousPage" datatype="html">
+        <source>Página anterior</source>
+        <target>Previous page</target>
+      </trans-unit>
+      <trans-unit id="routes.previous" datatype="html">
+        <source>Anterior</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="routes.nextPage" datatype="html">
+        <source>Página siguiente</source>
+        <target>Next page</target>
+      </trans-unit>
+      <trans-unit id="routes.next" datatype="html">
+        <source>Siguiente</source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="suppliers.title" datatype="html">
+        <source>Proveedores</source>
+        <target>Suppliers</target>
+      </trans-unit>
+      <trans-unit id="suppliers.breadcrumbAdmin" datatype="html">
+        <source>Administración</source>
+        <target>Administration</target>
+      </trans-unit>
+      <trans-unit id="suppliers.breadcrumbSuppliers" datatype="html">
+        <source>Proveedores</source>
+        <target>Suppliers</target>
+      </trans-unit>
+      <trans-unit id="suppliers.createSupplier" datatype="html">
+        <source>Crear proveedor</source>
+        <target>Create supplier</target>
+      </trans-unit>
+      <trans-unit id="suppliers.loading" datatype="html">
+        <source>Cargando proveedores...</source>
+        <target>Loading suppliers...</target>
+      </trans-unit>
+      <trans-unit id="suppliers.name" datatype="html">
+        <source>NOMBRE</source>
+        <target>NAME</target>
+      </trans-unit>
+      <trans-unit id="suppliers.searchName" datatype="html">
+        <source>Buscar nombre</source>
+        <target>Search name</target>
+      </trans-unit>
+      <trans-unit id="suppliers.filterByName" datatype="html">
+        <source>Filtrar por nombre</source>
+        <target>Filter by name</target>
+      </trans-unit>
+      <trans-unit id="suppliers.contactEmail" datatype="html">
+        <source>CORREO DE CONTACTO</source>
+        <target>CONTACT EMAIL</target>
+      </trans-unit>
+      <trans-unit id="suppliers.searchEmail" datatype="html">
+        <source>Buscar correo</source>
+        <target>Search email</target>
+      </trans-unit>
+      <trans-unit id="suppliers.filterByEmail" datatype="html">
+        <source>Filtrar por correo</source>
+        <target>Filter by email</target>
+      </trans-unit>
+      <trans-unit id="suppliers.phone" datatype="html">
+        <source>TELÉFONO</source>
+        <target>PHONE</target>
+      </trans-unit>
+      <trans-unit id="suppliers.searchPhone" datatype="html">
+        <source>Buscar teléfono</source>
+        <target>Search phone</target>
+      </trans-unit>
+      <trans-unit id="suppliers.filterByPhone" datatype="html">
+        <source>Filtrar por teléfono</source>
+        <target>Filter by phone</target>
+      </trans-unit>
+      <trans-unit id="suppliers.noData" datatype="html">
+        <source>No se encontraron proveedores</source>
+        <target>No suppliers found</target>
+      </trans-unit>
+      <trans-unit id="suppliers.paginationInfo" datatype="html">
+        <source>Mostrando <x id="INTERPOLATION" equiv-text="{{ ((currentPage() * pageSize()) + 1) }}"/> al <x id="INTERPOLATION_1" equiv-text="{{ Math.min((currentPage() + 1) * pageSize(), totalProveedores()) }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ totalProveedores() }}"/> registros</source>
+        <target>Showing <x id="INTERPOLATION" equiv-text="{{ ((currentPage() * pageSize()) + 1) }}"/> to <x id="INTERPOLATION_1" equiv-text="{{ Math.min((currentPage() + 1) * pageSize(), totalProveedores()) }}"/> of <x id="INTERPOLATION_2" equiv-text="{{ totalProveedores() }}"/> records</target>
+      </trans-unit>
+      <trans-unit id="suppliers.previousPage" datatype="html">
+        <source>Página anterior</source>
+        <target>Previous page</target>
+      </trans-unit>
+      <trans-unit id="suppliers.previous" datatype="html">
+        <source>Anterior</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="suppliers.nextPage" datatype="html">
+        <source>Página siguiente</source>
+        <target>Next page</target>
+      </trans-unit>
+      <trans-unit id="suppliers.next" datatype="html">
+        <source>Siguiente</source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="clients.title" datatype="html">
+        <source>Clientes</source>
+        <target>Clients</target>
+      </trans-unit>
+      <trans-unit id="clients.breadcrumbAdmin" datatype="html">
+        <source>Administración</source>
+        <target>Administration</target>
+      </trans-unit>
+      <trans-unit id="clients.breadcrumbClients" datatype="html">
+        <source>Clientes</source>
+        <target>Clients</target>
+      </trans-unit>
+      <trans-unit id="clients.loading" datatype="html">
+        <source>Cargando clientes pendientes...</source>
+        <target>Loading pending clients...</target>
+      </trans-unit>
+      <trans-unit id="clients.code" datatype="html">
+        <source>CÓDIGO</source>
+        <target>CODE</target>
+      </trans-unit>
+      <trans-unit id="clients.searchCode" datatype="html">
+        <source>Buscar código</source>
+        <target>Search code</target>
+      </trans-unit>
+      <trans-unit id="clients.name" datatype="html">
+        <source>NOMBRE</source>
+        <target>NAME</target>
+      </trans-unit>
+      <trans-unit id="clients.searchClient" datatype="html">
+        <source>Buscar cliente</source>
+        <target>Search client</target>
+      </trans-unit>
+      <trans-unit id="clients.institutionType" datatype="html">
+        <source>TIPO DE INSTITUCIÓN</source>
+        <target>INSTITUTION TYPE</target>
+      </trans-unit>
+      <trans-unit id="clients.searchType" datatype="html">
+        <source>Buscar tipo</source>
+        <target>Search type</target>
+      </trans-unit>
+      <trans-unit id="clients.registrationDate" datatype="html">
+        <source>FECHA DE REGISTRO</source>
+        <target>REGISTRATION DATE</target>
+      </trans-unit>
+      <trans-unit id="clients.searchDate" datatype="html">
+        <source>Buscar fecha</source>
+        <target>Search date</target>
+      </trans-unit>
+      <trans-unit id="clients.status" datatype="html">
+        <source>ESTADO</source>
+        <target>STATUS</target>
+      </trans-unit>
+      <trans-unit id="clients.actions" datatype="html">
+        <source>ACCIONES</source>
+        <target>ACTIONS</target>
+      </trans-unit>
+      <trans-unit id="clients.noData" datatype="html">
+        <source>No se encontraron clientes</source>
+        <target>No clients found</target>
+      </trans-unit>
+      <trans-unit id="clients.paginationInfo" datatype="html">
+        <source>Mostrando <x id="INTERPOLATION" equiv-text="{{ (currentPage() * pageSize()) + 1 }}"/> al <x id="INTERPOLATION_1" equiv-text="{{ Math.min((currentPage() + 1) * pageSize(), totalClients()) }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ totalClients() }}"/> registros</source>
+        <target>Showing <x id="INTERPOLATION" equiv-text="{{ (currentPage() * pageSize()) + 1 }}"/> to <x id="INTERPOLATION_1" equiv-text="{{ Math.min((currentPage() + 1) * pageSize(), totalClients()) }}"/> of <x id="INTERPOLATION_2" equiv-text="{{ totalClients() }}"/> records</target>
+      </trans-unit>
+      <trans-unit id="clients.previousPage" datatype="html">
+        <source>Página anterior</source>
+        <target>Previous page</target>
+      </trans-unit>
+      <trans-unit id="clients.previous" datatype="html">
+        <source>Anterior</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="clients.nextPage" datatype="html">
+        <source>Página siguiente</source>
+        <target>Next page</target>
+      </trans-unit>
+      <trans-unit id="clients.next" datatype="html">
+        <source>Siguiente</source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.title" datatype="html">
+        <source>Planes de ventas</source>
+        <target>Sales plans</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.breadcrumbSales" datatype="html">
+        <source>Ventas</source>
+        <target>Sales</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.breadcrumbSalesPlans" datatype="html">
+        <source>Planes de ventas</source>
+        <target>Sales plans</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.createPlan" datatype="html">
+        <source>Crear plan de ventas</source>
+        <target>Create sales plan</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.loading" datatype="html">
+        <source>Cargando planes de ventas...</source>
+        <target>Loading sales plans...</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.name" datatype="html">
+        <source>NOMBRE</source>
+        <target>NAME</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.searchName" datatype="html">
+        <source>Buscar nombre</source>
+        <target>Search name</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.filterByName" datatype="html">
+        <source>Filtrar por nombre</source>
+        <target>Filter by name</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.startDate" datatype="html">
+        <source>FECHA DE INICIO</source>
+        <target>START DATE</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.searchStartDate" datatype="html">
+        <source>Buscar fecha inicio</source>
+        <target>Search start date</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.filterByStartDate" datatype="html">
+        <source>Filtrar por fecha de inicio</source>
+        <target>Filter by start date</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.endDate" datatype="html">
+        <source>FECHA DE FIN</source>
+        <target>END DATE</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.searchEndDate" datatype="html">
+        <source>Buscar fecha fin</source>
+        <target>Search end date</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.filterByEndDate" datatype="html">
+        <source>Filtrar por fecha de fin</source>
+        <target>Filter by end date</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.client" datatype="html">
+        <source>CLIENTE</source>
+        <target>CLIENT</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.searchClient" datatype="html">
+        <source>Buscar cliente</source>
+        <target>Search client</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.filterByClient" datatype="html">
+        <source>Filtrar por cliente</source>
+        <target>Filter by client</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.actions" datatype="html">
+        <source>ACCIONES</source>
+        <target>ACTIONS</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.viewDetail" datatype="html">
+        <source>Ver detalle del plan</source>
+        <target>View plan details</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.noData" datatype="html">
+        <source>No se encontraron planes con los filtros aplicados.</source>
+        <target>No plans found for applied filters.</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.paginationInfo" datatype="html">
+        <source>Mostrando <x id="INTERPOLATION" equiv-text="{{ (currentPage - 1) * pageSize + 1 }}"/> al <x id="INTERPOLATION_1" equiv-text="{{ Math.min(currentPage * pageSize, pagination()!.total) }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ pagination()!.total }}"/> registros</source>
+        <target>Showing <x id="INTERPOLATION" equiv-text="{{ (currentPage - 1) * pageSize + 1 }}"/> to <x id="INTERPOLATION_1" equiv-text="{{ Math.min(currentPage * pageSize, pagination()!.total) }}"/> of <x id="INTERPOLATION_2" equiv-text="{{ pagination()!.total }}"/> records</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.previousPage" datatype="html">
+        <source>Página anterior</source>
+        <target>Previous page</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.previous" datatype="html">
+        <source>Anterior</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.nextPage" datatype="html">
+        <source>Página siguiente</source>
+        <target>Next page</target>
+      </trans-unit>
+      <trans-unit id="salesPlans.next" datatype="html">
+        <source>Siguiente</source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="visits.title" datatype="html">
+        <source>Visitas</source>
+        <target>Visits</target>
+      </trans-unit>
+      <trans-unit id="visits.breadcrumbVentas" datatype="html">
+        <source>Ventas</source>
+        <target>Sales</target>
+      </trans-unit>
+      <trans-unit id="visits.breadcrumbVisitas" datatype="html">
+        <source>Visitas</source>
+        <target>Visits</target>
+      </trans-unit>
+      <trans-unit id="visits.loading" datatype="html">
+        <source>Cargando visitas...</source>
+        <target>Loading visits...</target>
+      </trans-unit>
+      <trans-unit id="visits.id" datatype="html">
+        <source>ID VISITA</source>
+        <target>VISIT ID</target>
+      </trans-unit>
+      <trans-unit id="visits.searchId" datatype="html">
+        <source>Buscar ID</source>
+        <target>Search ID</target>
+      </trans-unit>
+      <trans-unit id="visits.client" datatype="html">
+        <source>CLIENTE</source>
+        <target>CLIENT</target>
+      </trans-unit>
+      <trans-unit id="visits.searchClient" datatype="html">
+        <source>Buscar cliente</source>
+        <target>Search client</target>
+      </trans-unit>
+      <trans-unit id="visits.status" datatype="html">
+        <source>ESTADO</source>
+        <target>STATUS</target>
+      </trans-unit>
+      <trans-unit id="visits.all" datatype="html">
+        <source>Todos</source>
+        <target>All</target>
+      </trans-unit>
+      <trans-unit id="visits.uploaded" datatype="html">
+        <source>Cargado</source>
+        <target>Uploaded</target>
+      </trans-unit>
+      <trans-unit id="visits.processed" datatype="html">
+        <source>Procesado</source>
+        <target>Processed</target>
+      </trans-unit>
+      <trans-unit id="visits.findings" datatype="html">
+        <source>HALLAZGOS</source>
+        <target>FINDINGS</target>
+      </trans-unit>
+      <trans-unit id="visits.searchFindings" datatype="html">
+        <source>Buscar hallazgos</source>
+        <target>Search findings</target>
+      </trans-unit>
+      <trans-unit id="visits.evidence" datatype="html">
+        <source>EVIDENCIA</source>
+        <target>EVIDENCE</target>
+      </trans-unit>
+      <trans-unit id="visits.noData" datatype="html">
+        <source>No se encontraron visitas</source>
+        <target>No visits found</target>
+      </trans-unit>
+      <trans-unit id="visits.paginationInfo" datatype="html">
+        <source>Mostrando <x id="INTERPOLATION" equiv-text="{{ (pagination().page - 1) * pagination().per_page + 1 }}"/> a <x id="INTERPOLATION_1" equiv-text="{{ Math.min(pagination().page * pagination().per_page, pagination().total) }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ pagination().total }}"/> registros</source>
+        <target>Showing <x id="INTERPOLATION" equiv-text="{{ (pagination().page - 1) * pagination().per_page + 1 }}"/> to <x id="INTERPOLATION_1" equiv-text="{{ Math.min(pagination().page * pagination().per_page, pagination().total) }}"/> of <x id="INTERPOLATION_2" equiv-text="{{ pagination().total }}"/> records</target>
+      </trans-unit>
+      <trans-unit id="visits.previousPage" datatype="html">
+        <source>Página anterior</source>
+        <target>Previous page</target>
+      </trans-unit>
+      <trans-unit id="visits.previous" datatype="html">
+        <source>Anterior</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="visits.nextPage" datatype="html">
+        <source>Página siguiente</source>
+        <target>Next page</target>
+      </trans-unit>
+      <trans-unit id="visits.next" datatype="html">
+        <source>Siguiente</source>
+        <target>Next</target>
+      </trans-unit>
+      <!-- Newly added authentication translations -->
+      <trans-unit id="auth.loginFormAria" datatype="html">
+        <source>Formulario de inicio de sesión</source>
+        <target>Login form</target>
+      </trans-unit>
+      <trans-unit id="auth.loginTitle" datatype="html">
+        <source>Inicio de sesión</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="auth.emailLabel" datatype="html">
+        <source>Correo electrónico</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="auth.emailPlaceholder" datatype="html">
+        <source>Ingrese su correo</source>
+        <target>Enter your email</target>
+      </trans-unit>
+      <trans-unit id="auth.emailRequiredError" datatype="html">
+        <source>El correo es obligatorio</source>
+        <target>Email is required</target>
+      </trans-unit>
+      <trans-unit id="auth.emailFormatError" datatype="html">
+        <source>Formato de correo inválido</source>
+        <target>Invalid email format</target>
+      </trans-unit>
+      <trans-unit id="auth.passwordLabel" datatype="html">
+        <source>Contraseña</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="auth.passwordPlaceholder" datatype="html">
+        <source>Ingrese su contraseña</source>
+        <target>Enter your password</target>
+      </trans-unit>
+      <trans-unit id="auth.showPasswordAria" datatype="html">
+        <source>Mostrar contraseña</source>
+        <target>Show password</target>
+      </trans-unit>
+      <trans-unit id="auth.hidePasswordAria" datatype="html">
+        <source>Ocultar contraseña</source>
+        <target>Hide password</target>
+      </trans-unit>
+      <trans-unit id="auth.passwordRequiredError" datatype="html">
+        <source>La contraseña es obligatoria</source>
+        <target>Password is required</target>
+      </trans-unit>
+      <trans-unit id="auth.passwordMinLengthError" datatype="html">
+        <source>Mínimo 8 caracteres</source>
+        <target>Minimum 8 characters</target>
+      </trans-unit>
+      <trans-unit id="auth.loginButton" datatype="html">
+        <source>Iniciar sesión</source>
+        <target>Log in</target>
+      </trans-unit>
+      <trans-unit id="auth.loggingInSr" datatype="html">
+        <source>Iniciando sesión...</source>
+        <target>Logging in...</target>
+      </trans-unit>
+      <trans-unit id="auth.loggingInAriaLive" datatype="html">
+        <source> Iniciando sesión, por favor espere... </source>
+        <target> Logging in, please wait... </target>
+      </trans-unit>
+      <trans-unit id="auth.welcomeImageAria" datatype="html">
+        <source>Imagen de bienvenida</source>
+        <target>Welcome image</target>
+      </trans-unit>
+      <trans-unit id="auth.logoAlt" datatype="html">
+        <source>Logo MediSupply</source>
+        <target>MediSupply logo</target>
+      </trans-unit>
+      <trans-unit id="auth.welcomeHeading" datatype="html">
+        <source>Bienvenido</source>
+        <target>Welcome</target>
+      </trans-unit>
+      <trans-unit id="auth.welcomeSubtitle" datatype="html">
+        <source>Inicia sesión para continuar</source>
+        <target>Log in to continue</target>
+      </trans-unit>
+      <!-- Newly added users list translations -->
+      <trans-unit id="users.title" datatype="html">
+        <source>Usuarios</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="users.breadcrumbAdmin" datatype="html">
+        <source>Administración</source>
+        <target>Administration</target>
+      </trans-unit>
+      <trans-unit id="users.breadcrumbUsers" datatype="html">
+        <source>Usuarios</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="users.createUserButton" datatype="html">
+        <source> Crear usuario </source>
+        <target> Create user </target>
+      </trans-unit>
+      <trans-unit id="users.loadingUsers" datatype="html">
+        <source>Cargando usuarios...</source>
+        <target>Loading users...</target>
+      </trans-unit>
+      <trans-unit id="users.table.nameHeader" datatype="html">
+        <source>NOMBRE</source>
+        <target>NAME</target>
+      </trans-unit>
+      <trans-unit id="users.filterNamePlaceholder" datatype="html">
+        <source>Buscar nombre</source>
+        <target>Search name</target>
+      </trans-unit>
+      <trans-unit id="users.table.emailHeader" datatype="html">
+        <source>CORREO ELECTRÓNICO</source>
+        <target>EMAIL</target>
+      </trans-unit>
+      <trans-unit id="users.filterEmailPlaceholder" datatype="html">
+        <source>Buscar correo</source>
+        <target>Search email</target>
+      </trans-unit>
+      <trans-unit id="users.table.roleHeader" datatype="html">
+        <source>ROL</source>
+        <target>ROLE</target>
+      </trans-unit>
+      <trans-unit id="users.filterRoleAll" datatype="html">
+        <source>Todos</source>
+        <target>All</target>
+      </trans-unit>
+      <trans-unit id="users.filterRoleAdmin" datatype="html">
+        <source>Administrador</source>
+        <target>Administrator</target>
+      </trans-unit>
+      <trans-unit id="users.filterRoleClient" datatype="html">
+        <source>Cliente</source>
+        <target>Client</target>
+      </trans-unit>
+      <trans-unit id="users.filterRoleSales" datatype="html">
+        <source>Ventas</source>
+        <target>Sales</target>
+      </trans-unit>
+      <trans-unit id="users.filterRoleLogistics" datatype="html">
+        <source>Logistica</source>
+        <target>Logistics</target>
+      </trans-unit>
+      <trans-unit id="users.filterRolePurchasing" datatype="html">
+        <source>Compras</source>
+        <target>Purchasing</target>
+      </trans-unit>
+      <trans-unit id="users.noData" datatype="html">
+        <source> No se encontraron usuarios </source>
+        <target> No users found </target>
+      </trans-unit>
+      <trans-unit id="users.paginationInfo" datatype="html">
+        <source> Mostrando <x id="INTERPOLATION" equiv-text="{{ (currentPage() * pageSize()) + 1 }}"/> al <x id="INTERPOLATION_1" equiv-text="{{ Math.min((currentPage() + 1) * pageSize(), totalUsers()) }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ totalUsers() }}"/> registros </source>
+        <target> Showing <x id="INTERPOLATION" equiv-text="{{ (currentPage() * pageSize()) + 1 }}"/> to <x id="INTERPOLATION_1" equiv-text="{{ Math.min((currentPage() + 1) * pageSize(), totalUsers()) }}"/> of <x id="INTERPOLATION_2" equiv-text="{{ totalUsers() }}"/> records </target>
+      </trans-unit>
+      <trans-unit id="users.prevPageAria" datatype="html">
+        <source>Página anterior</source>
+        <target>Previous page</target>
+      </trans-unit>
+      <trans-unit id="users.prevPageLabel" datatype="html">
+        <source>Anterior</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="users.nextPageAria" datatype="html">
+        <source>Página siguiente</source>
+        <target>Next page</target>
+      </trans-unit>
+      <trans-unit id="users.nextPageLabel" datatype="html">
+        <source>Siguiente</source>
+        <target>Next</target>
+      </trans-unit>
+      <!-- Newly added dialog/report translations -->
+      <!-- Create User Dialog -->
+      <trans-unit id="users.createUserDialog.title" datatype="html"><source>Crear usuario</source><target>Create user</target></trans-unit>
+      <trans-unit id="users.createUserDialog.closeAria" datatype="html"><source>Cerrar formulario de crear usuario</source><target>Close create user form</target></trans-unit>
+      <trans-unit id="users.createUserDialog.nameLabel" datatype="html"><source>Nombre completo</source><target>Full name</target></trans-unit>
+      <trans-unit id="users.createUserDialog.namePlaceholder" datatype="html"><source>Ingrese el nombre completo</source><target>Enter full name</target></trans-unit>
+      <trans-unit id="users.createUserDialog.nameRequired" datatype="html"><source>El nombre completo es obligatorio</source><target>Full name is required</target></trans-unit>
+      <trans-unit id="users.createUserDialog.nameMinLength" datatype="html"><source>El nombre debe tener al menos 3 caracteres</source><target>Name must be at least 3 characters</target></trans-unit>
+      <trans-unit id="users.createUserDialog.nameInvalid" datatype="html"><source>El nombre solo puede contener letras y espacios</source><target>Name can only contain letters and spaces</target></trans-unit>
+      <trans-unit id="users.createUserDialog.emailLabel" datatype="html"><source>Correo electrónico</source><target>Email</target></trans-unit>
+      <trans-unit id="users.createUserDialog.emailPlaceholder" datatype="html"><source>usuario@medisupply.com</source><target>user@medisupply.com</target></trans-unit>
+      <trans-unit id="users.createUserDialog.emailRequired" datatype="html"><source>El correo electrónico es obligatorio</source><target>Email is required</target></trans-unit>
+      <trans-unit id="users.createUserDialog.emailInvalid" datatype="html"><source>Formato de correo inválido</source><target>Invalid email format</target></trans-unit>
+      <trans-unit id="users.createUserDialog.emailDuplicate" datatype="html"><source>Este correo ya está registrado</source><target>This email is already registered</target></trans-unit>
+      <trans-unit id="users.createUserDialog.passwordLabel" datatype="html"><source>Contraseña</source><target>Password</target></trans-unit>
+      <trans-unit id="users.createUserDialog.passwordPlaceholder" datatype="html"><source>Ingrese la contraseña</source><target>Enter password</target></trans-unit>
+      <trans-unit id="users.createUserDialog.confirmPasswordLabel" datatype="html"><source>Confirmar contraseña</source><target>Confirm password</target></trans-unit>
+      <trans-unit id="users.createUserDialog.confirmPasswordPlaceholder" datatype="html"><source>Confirme la contraseña</source><target>Confirm the password</target></trans-unit>
+      <trans-unit id="users.createUserDialog.confirmPasswordRequired" datatype="html"><source>Debe confirmar la contraseña</source><target>Password confirmation is required</target></trans-unit>
+      <trans-unit id="users.createUserDialog.passwordMismatch" datatype="html"><source>Las contraseñas no coinciden</source><target>Passwords do not match</target></trans-unit>
+      <trans-unit id="users.createUserDialog.roleLabel" datatype="html"><source>Rol</source><target>Role</target></trans-unit>
+      <trans-unit id="users.createUserDialog.roleRequired" datatype="html"><source>El rol es obligatorio</source><target>Role is required</target></trans-unit>
+      <trans-unit id="users.createUserDialog.saveButton" datatype="html"><source>Guardar</source><target>Save</target></trans-unit>
+      <trans-unit id="users.createUserDialog.savingSr" datatype="html"><source>Guardando usuario...</source><target>Saving user...</target></trans-unit>
+      <!-- Approve Client Dialog -->
+      <trans-unit id="clients.approveDialog.title" datatype="html"><source>Aprobar cliente</source><target>Approve client</target></trans-unit>
+      <trans-unit id="clients.approveDialog.accountManagerLabel" datatype="html"><source>Asignar Gerente de cuenta</source><target>Assign account manager</target></trans-unit>
+      <trans-unit id="clients.approveDialog.saveButton" datatype="html"><source>Guardar</source><target>Save</target></trans-unit>
+      <!-- Reject Client Dialog -->
+      <trans-unit id="clients.rejectDialog.title" datatype="html"><source>Rechazar cliente</source><target>Reject client</target></trans-unit>
+      <trans-unit id="clients.rejectDialog.justificationLabel" datatype="html"><source>Justificación</source><target>Justification</target></trans-unit>
+      <trans-unit id="clients.rejectDialog.justificationPlaceholder" datatype="html"><source>Redacta el motivo de rechazo</source><target>Write the reason for rejection</target></trans-unit>
+      <trans-unit id="clients.rejectDialog.saveButton" datatype="html"><source>Guardar</source><target>Save</target></trans-unit>
+      <!-- Bulk Upload Dialog -->
+      <trans-unit id="inventory.bulkUploadDialog.title" datatype="html"><source>Cargue masivo</source><target>Bulk upload</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.closeAria" datatype="html"><source>Cerrar formulario de cargue masivo</source><target>Close bulk upload form</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.step1" datatype="html"><source>1. Obtén la plantilla que debes diligenciar</source><target>1. Get the template you need to fill in</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.downloadTemplateBtn" datatype="html"><source>Descargar plantilla</source><target>Download template</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.step2" datatype="html"><source>2. Sube el archivo a la plataforma</source><target>2. Upload the file to the platform</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.uploadTemplateBtn" datatype="html"><source>Cargar plantilla</source><target>Upload template</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.selectFileAria" datatype="html"><source>Seleccionar archivo</source><target>Select file</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.removeFileAria" datatype="html"><source>Eliminar archivo seleccionado</source><target>Remove selected file</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.removeFileTitle" datatype="html"><source>Eliminar archivo</source><target>Remove file</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.saveButton" datatype="html"><source>Guardar</source><target>Save</target></trans-unit>
+      <trans-unit id="inventory.bulkUploadDialog.savingSr" datatype="html"><source>Cargando archivo...</source><target>Uploading file...</target></trans-unit>
+      <!-- Upload History Component -->
+      <trans-unit id="inventory.uploadHistory.title" datatype="html"><source>Historial de Cargues Masivos</source><target>Bulk Upload History</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.recordsSuffix" datatype="html"><source>registro(s)</source><target>record(s)</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.loading" datatype="html"><source>Cargando historial...</source><target>Loading history...</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.fileNameHeader" datatype="html"><source>NOMBRE DEL ARCHIVO</source><target>FILE NAME</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.dateHeader" datatype="html"><source>FECHA</source><target>DATE</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.statusHeader" datatype="html"><source>ESTADO</source><target>STATUS</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.resultHeader" datatype="html"><source>RESULTADO</source><target>RESULT</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.userHeader" datatype="html"><source>USUARIO</source><target>USER</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.noData" datatype="html"><source>No hay historial de cargues masivos</source><target>No bulk upload history</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.prevPageAria" datatype="html"><source>Página anterior</source><target>Previous page</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.nextPageAria" datatype="html"><source>Página siguiente</source><target>Next page</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.previous" datatype="html"><source>Anterior</source><target>Previous</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.next" datatype="html"><source>Siguiente</source><target>Next</target></trans-unit>
+      <trans-unit id="inventory.uploadHistory.paginationInfo" datatype="html"><source>Mostrando <x id="INTERPOLATION"/> al <x id="INTERPOLATION_1"/> de <x id="INTERPOLATION_2"/> registros</source><target>Showing <x id="INTERPOLATION"/> to <x id="INTERPOLATION_1"/> of <x id="INTERPOLATION_2"/> records</target></trans-unit>
+      <!-- Create Product Dialog -->
+      <trans-unit id="inventory.createProductDialog.title" datatype="html"><source>Crear producto</source><target>Create product</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.closeAria" datatype="html"><source>Cerrar formulario de crear producto</source><target>Close create product form</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.skuLabel" datatype="html"><source>SKU</source><target>SKU</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.skuPlaceholder" datatype="html"><source>MED-0001</source><target>MED-0001</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.skuHint" datatype="html"><source>Formato: MED-XXXX (4 dígitos)</source><target>Format: MED-XXXX (4 digits)</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.nameLabel" datatype="html"><source>Nombre</source><target>Name</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.namePlaceholder" datatype="html"><source>Ej: Acetaminofén</source><target>Ex: Acetaminophen</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.expirationDateLabel" datatype="html"><source>Fecha de vencimiento</source><target>Expiration date</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.expirationDatePlaceholder" datatype="html"><source>Seleccione una fecha</source><target>Select a date</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.quantityLabel" datatype="html"><source>Cantidad a registrar</source><target>Quantity to register</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.quantityPlaceholder" datatype="html"><source>1500</source><target>1500</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.quantityHint" datatype="html"><source>Rango: 1-9999 unidades</source><target>Range: 1-9999 units</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.priceLabel" datatype="html"><source>Precio c/u (COP)</source><target>Price each (COP)</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.pricePlaceholder" datatype="html"><source>8500</source><target>8500</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.locationLabel" datatype="html"><source>Ubicación (Pasillo - Estante - Nivel)</source><target>Location (Aisle - Shelf - Level)</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.locationPlaceholder" datatype="html"><source>A-03-01</source><target>A-03-01</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.locationHint" datatype="html"><source>Formato: P-EE-NN (ej: A-03-02)</source><target>Format: A-SS-LL (e.g. A-03-02)</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.descriptionLabel" datatype="html"><source>Descripción</source><target>Description</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.descriptionPlaceholder" datatype="html"><source>Amoxicilina es un antibiótico de la familia de las penicilinas...</source><target>Amoxicillin is an antibiotic in the penicillin family...</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.productTypeLabel" datatype="html"><source>Tipo de producto</source><target>Product type</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.providerLabel" datatype="html"><source>Proveedor</source><target>Supplier</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.providerPlaceholder" datatype="html"><source>Buscar proveedor...</source><target>Search supplier...</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.photoLabel" datatype="html"><source>Foto</source><target>Photo</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.selectImageAria" datatype="html"><source>Seleccionar archivo de imagen</source><target>Select image file</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.uploadFileBtn" datatype="html"><source>Subir archivo</source><target>Upload file</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.uploadHint" datatype="html"><source>JPG, PNG o GIF (máx. 2MB)</source><target>JPG, PNG or GIF (max 2MB)</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.previewAlt" datatype="html"><source>Vista previa del producto</source><target>Product preview</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.removeImageAria" datatype="html"><source>Eliminar imagen</source><target>Remove image</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.saveButton" datatype="html"><source>Guardar</source><target>Save</target></trans-unit>
+      <trans-unit id="inventory.createProductDialog.savingSr" datatype="html"><source>Guardando producto...</source><target>Saving product...</target></trans-unit>
+      <!-- Create Route Dialog -->
+      <trans-unit id="routes.createRouteDialog.title" datatype="html"><source>Crear ruta</source><target>Create route</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.closeAria" datatype="html"><source>Cerrar formulario de crear ruta</source><target>Close create route form</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.truckLabel" datatype="html"><source>Camión</source><target>Truck</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.truckPlaceholder" datatype="html"><source>Seleccione un camión</source><target>Select a truck</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.productTypeLabel" datatype="html"><source>Tipo de productos</source><target>Product types</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.productTypePlaceholder" datatype="html"><source>Seleccione el tipo de productos</source><target>Select product types</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.deliveryDateLabel" datatype="html"><source>Fecha de entrega</source><target>Delivery date</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.deliveryDatePlaceholder" datatype="html"><source>DD/MM/AAAA</source><target>DD/MM/YYYY</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.cancelAria" datatype="html"><source>Cancelar creación de ruta</source><target>Cancel route creation</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.cancelBtn" datatype="html"><source>Cancelar</source><target>Cancel</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.generateAria" datatype="html"><source>Generar ruta</source><target>Generate route</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.generating" datatype="html"><source>Generando...</source><target>Generating...</target></trans-unit>
+      <trans-unit id="routes.createRouteDialog.generateBtn" datatype="html"><source>Generar ruta</source><target>Generate route</target></trans-unit>
+      <!-- Route Detail Dialog -->
+      <trans-unit id="routes.routeDetailDialog.backAria" datatype="html"><source>Volver al listado</source><target>Back to list</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.routeCodeLabel" datatype="html"><source>Código de Ruta:</source><target>Route Code:</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.truckLabel" datatype="html"><source>Camión Asignado:</source><target>Assigned Truck:</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.deliveryDateLabel" datatype="html"><source>Fecha de Entrega:</source><target>Delivery Date:</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.productTypeLabel" datatype="html"><source>Tipo de Productos:</source><target>Product Type:</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.coldChainValue" datatype="html"><source>Cadena de frío</source><target>Cold chain</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.loadingMap" datatype="html"><source>Cargando mapa...</source><target>Loading map...</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.legendStart" datatype="html"><source>Punto de inicio</source><target>Start point</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.legendWaypoint" datatype="html"><source>Punto de entrega</source><target>Delivery point</target></trans-unit>
+      <trans-unit id="routes.routeDetailDialog.legendEnd" datatype="html"><source>Punto final</source><target>End point</target></trans-unit>
+      <!-- Route Map Component -->
+      <trans-unit id="routes.routeMap.loading" datatype="html"><source>Cargando mapa...</source><target>Loading map...</target></trans-unit>
+      <!-- Create Supplier Dialog -->
+      <trans-unit id="suppliers.createSupplierDialog.title" datatype="html"><source>Crear proveedor</source><target>Create supplier</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.closeAria" datatype="html"><source>Cerrar formulario de crear proveedor</source><target>Close create supplier form</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.nameLabel" datatype="html"><source>Nombre</source><target>Name</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.namePlaceholder" datatype="html"><source>Nombre del proveedor</source><target>Supplier name</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.emailLabel" datatype="html"><source>Correo electrónico</source><target>Email</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.emailPlaceholder" datatype="html"><source>correo@proveedor.com</source><target>supplier@email.com</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.phoneLabel" datatype="html"><source>Teléfono</source><target>Phone</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.phonePlaceholder" datatype="html"><source>6603214878</source><target>6603214878</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.logoLabel" datatype="html"><source>Logo</source><target>Logo</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.selectImageAria" datatype="html"><source>Seleccionar archivo de imagen</source><target>Select image file</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.uploadFileBtn" datatype="html"><source>Subir archivo</source><target>Upload file</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.uploadHint" datatype="html"><source>JPG, PNG o GIF (máx. 2MB)</source><target>JPG, PNG or GIF (max 2MB)</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.previewAlt" datatype="html"><source>Vista previa del logo</source><target>Logo preview</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.removeImageAria" datatype="html"><source>Eliminar imagen</source><target>Remove image</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.saveButton" datatype="html"><source>Guardar</source><target>Save</target></trans-unit>
+      <trans-unit id="suppliers.createSupplierDialog.savingSr" datatype="html"><source>Guardando proveedor...</source><target>Saving supplier...</target></trans-unit>
+      <!-- Sales Plan Detail Dialog -->
+      <trans-unit id="sales.salesPlanDetailDialog.title" datatype="html"><source>Detalle de plan de ventas</source><target>Sales plan detail</target></trans-unit>
+      <trans-unit id="sales.salesPlanDetailDialog.closeAria" datatype="html"><source>Cerrar diálogo de detalle de plan de ventas</source><target>Close sales plan detail dialog</target></trans-unit>
+      <trans-unit id="sales.salesPlanDetailDialog.nameLabel" datatype="html"><source>Nombre del plan</source><target>Plan name</target></trans-unit>
+      <trans-unit id="sales.salesPlanDetailDialog.startDateLabel" datatype="html"><source>Fecha de inicio</source><target>Start date</target></trans-unit>
+      <trans-unit id="sales.salesPlanDetailDialog.endDateLabel" datatype="html"><source>Fecha de fin</source><target>End date</target></trans-unit>
+      <trans-unit id="sales.salesPlanDetailDialog.clientLabel" datatype="html"><source>Cliente</source><target>Client</target></trans-unit>
+      <trans-unit id="sales.salesPlanDetailDialog.revenueLabel" datatype="html"><source>Ganancias proyectadas</source><target>Projected revenue</target></trans-unit>
+      <trans-unit id="sales.salesPlanDetailDialog.objectivesLabel" datatype="html"><source>Objetivos</source><target>Objectives</target></trans-unit>
+      <trans-unit id="sales.salesPlanDetailDialog.closeBtn" datatype="html"><source>Cerrar</source><target>Close</target></trans-unit>
+      <!-- Create Sales Plan Dialog -->
+      <trans-unit id="sales.createSalesPlanDialog.title" datatype="html"><source>Crear Plan de Ventas</source><target>Create Sales Plan</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.closeAria" datatype="html"><source>Cerrar formulario de crear plan de ventas</source><target>Close create sales plan form</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.nameLabel" datatype="html"><source>Nombre del Plan</source><target>Plan name</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.namePlaceholder" datatype="html"><source>Ej: Plan Trimestre Q1 2025</source><target>Ex: Quarter Q1 2025 Plan</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.clientLabel" datatype="html"><source>Cliente</source><target>Client</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.clientPlaceholder" datatype="html"><source>Seleccione un cliente</source><target>Select a client</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.startDateLabel" datatype="html"><source>Fecha de Inicio</source><target>Start Date</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.startDatePlaceholder" datatype="html"><source>DD/MM/AAAA</source><target>DD/MM/YYYY</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.endDateLabel" datatype="html"><source>Fecha de Fin</source><target>End Date</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.endDatePlaceholder" datatype="html"><source>DD/MM/AAAA</source><target>DD/MM/YYYY</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.revenueLabel" datatype="html"><source>Ganancias Proyectadas (COP)</source><target>Projected Revenue (COP)</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.revenuePlaceholder" datatype="html"><source>Ej: 25000000.50</source><target>Ex: 25000000.50</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.revenueHint" datatype="html"><source>Máximo 2 decimales</source><target>Maximum 2 decimals</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.objectivesLabel" datatype="html"><source>Objetivos (Opcional)</source><target>Objectives (Optional)</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.objectivesPlaceholder" datatype="html"><source>Describa los objetivos del plan de ventas...</source><target>Describe the sales plan objectives...</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.saveButton" datatype="html"><source>Guardar</source><target>Save</target></trans-unit>
+      <trans-unit id="sales.createSalesPlanDialog.savingSr" datatype="html"><source>Guardando plan de ventas...</source><target>Saving sales plan...</target></trans-unit>
+      <!-- Operational Report -->
+      <trans-unit id="reports.operational.title" datatype="html"><source>Reporte operativo</source><target>Operational report</target></trans-unit>
+      <trans-unit id="reports.operational.breadcrumb" datatype="html"><source>Ventas – Reporte operativo</source><target>Sales – Operational report</target></trans-unit>
+      <trans-unit id="reports.operational.loading" datatype="html"><source>Cargando reporte...</source><target>Loading report...</target></trans-unit>
+      <trans-unit id="reports.operational.empty" datatype="html"><source>No hay datos para el período seleccionado.</source><target>No data for selected period.</target></trans-unit>
+      <trans-unit id="reports.operational.monthlyOrdersTitle" datatype="html"><source>Distribución mensual de pedidos durante el último año</source><target>Monthly order distribution over the last year</target></trans-unit>
+      <trans-unit id="reports.operational.topClientsTitle" datatype="html"><source>TOP 5 Clientes con más pedidos en el último semestre</source><target>Top 5 clients with most orders in last semester</target></trans-unit>
+      <trans-unit id="reports.operational.monthlySalesGrowthTitle" datatype="html"><source>Crecimiento mensual de ventas (COP)</source><target>Monthly sales growth (COP)</target></trans-unit>
+      <trans-unit id="reports.operational.topProductsTitle" datatype="html"><source>TOP 10 Productos más vendidos</source><target>Top 10 best-selling products</target></trans-unit>
+      <trans-unit id="reports.operational.clientHeader" datatype="html"><source>CLIENTE</source><target>CLIENT</target></trans-unit>
+      <trans-unit id="reports.operational.ordersHeader" datatype="html"><source>CANTIDAD DE PEDIDOS</source><target>NUMBER OF ORDERS</target></trans-unit>
+      <trans-unit id="reports.operational.emptyMini" datatype="html"><source>No hay datos para el período seleccionado.</source><target>No data for selected period.</target></trans-unit>
+      <!-- Seller Reports -->
+      <trans-unit id="reports.seller.title" datatype="html"><source>Informe de vendedores</source><target>Sellers report</target></trans-unit>
+      <trans-unit id="reports.seller.breadcrumbSales" datatype="html"><source>Ventas</source><target>Sales</target></trans-unit>
+      <trans-unit id="reports.seller.breadcrumbCurrent" datatype="html"><source>Informe de vendedores</source><target>Sellers report</target></trans-unit>
+      <trans-unit id="reports.seller.sellerLabel" datatype="html"><source>Vendedor</source><target>Seller</target></trans-unit>
+      <trans-unit id="reports.seller.loadingReports" datatype="html"><source>Cargando informes...</source><target>Loading reports...</target></trans-unit>
+      <trans-unit id="reports.seller.distributionTitle" datatype="html"><source>Distribución pedidos hechos por los clientes asignados</source><target>Order distribution by assigned clients</target></trans-unit>
+      <trans-unit id="reports.seller.earningsTitle" datatype="html"><source>Ganancias por cliente asignado</source><target>Earnings by assigned client</target></trans-unit>
+      <trans-unit id="reports.seller.totalSalesTitle" datatype="html"><source>Ventas totales del último año (COP)</source><target>Total sales last year (COP)</target></trans-unit>
+      <trans-unit id="reports.seller.ordersLabel" datatype="html"><source>pedidos</source><target>orders</target></trans-unit>
+      <trans-unit id="reports.seller.noOrders" datatype="html"><source>No hay pedidos registrados para este vendedor</source><target>No orders recorded for this seller</target></trans-unit>
+      <trans-unit id="reports.seller.clientHeader" datatype="html"><source>CLIENTE</source><target>CLIENT</target></trans-unit>
+      <trans-unit id="reports.seller.earningsHeader" datatype="html"><source>GANANCIA (COP)</source><target>EARNINGS (COP)</target></trans-unit>
+      <trans-unit id="reports.seller.prevPageAria" datatype="html"><source>Página anterior</source><target>Previous page</target></trans-unit>
+      <trans-unit id="reports.seller.nextPageAria" datatype="html"><source>Página siguiente</source><target>Next page</target></trans-unit>
+      <trans-unit id="reports.seller.paginationInfo" datatype="html"><source>Mostrando <x id="INTERPOLATION"/> al <x id="INTERPOLATION_1"/> de <x id="INTERPOLATION_2"/> registros</source><target>Showing <x id="INTERPOLATION"/> to <x id="INTERPOLATION_1"/> of <x id="INTERPOLATION_2"/> records</target></trans-unit>
+      <trans-unit id="reports.seller.previous" datatype="html"><source>Anterior</source><target>Previous</target></trans-unit>
+      <trans-unit id="reports.seller.next" datatype="html"><source>Siguiente</source><target>Next</target></trans-unit>
+      <trans-unit id="reports.seller.noClients" datatype="html"><source>No hay clientes asignados a este vendedor</source><target>No clients assigned to this seller</target></trans-unit>
+      <trans-unit id="reports.seller.noSalesData" datatype="html"><source>No hay datos de ventas para mostrar</source><target>No sales data to show</target></trans-unit>
+      <trans-unit id="reports.seller.selectSeller" datatype="html"><source>Seleccione un vendedor para ver su informe de desempeño</source><target>Select a seller to view performance report</target></trans-unit>
+      <!-- Video Dialog -->
+      <trans-unit id="visits.videoDialog.idLabel" datatype="html"><source>ID Visita:</source><target>Visit ID:</target></trans-unit>
+      <trans-unit id="visits.videoDialog.statusLabel" datatype="html"><source>Estado:</source><target>Status:</target></trans-unit>
+      <trans-unit id="visits.videoDialog.findingsLabel" datatype="html"><source>Hallazgos:</source><target>Findings:</target></trans-unit>
+      <trans-unit id="visits.videoDialog.noSupport" datatype="html"><source>Tu navegador no soporta el elemento de video.</source><target>Your browser does not support the video element.</target></trans-unit>
+    </body>
+  </file>
+</xliff>
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="es" target-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="visits.title" datatype="html">
+        <source>Visitas</source>
+        <target>Visits</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.breadcrumbVentas" datatype="html">
+        <source>Ventas</source>
+        <target>Sales</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.breadcrumbVisitas" datatype="html">
+        <source>Visitas</source>
+        <target>Visits</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">7,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.loading" datatype="html">
+        <source>Cargando visitas...</source>
+        <target>Loading visits...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.id" datatype="html">
+        <source>ID VISITA</source>
+        <target>VISIT ID</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.searchId" datatype="html">
+        <source>Buscar ID</source>
+        <target>Search ID</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.client" datatype="html">
+        <source>CLIENTE</source>
+        <target>CLIENT</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.searchClient" datatype="html">
+        <source>Buscar cliente</source>
+        <target>Search client</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.status" datatype="html">
+        <source>ESTADO</source>
+        <target>STATUS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.all" datatype="html">
+        <source>Todos</source>
+        <target>All</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.uploaded" datatype="html">
+        <source>Cargado</source>
+        <target>Uploaded</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">66,67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.processed" datatype="html">
+        <source>Procesado</source>
+        <target>Processed</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">67,68</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.findings" datatype="html">
+        <source>HALLAZGOS</source>
+        <target>FINDINGS</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.searchFindings" datatype="html">
+        <source>Buscar hallazgos</source>
+        <target>Search findings</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">85,86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.evidence" datatype="html">
+        <source>EVIDENCIA</source>
+        <target>EVIDENCE</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">96,97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.noData" datatype="html">
+        <source>No se encontraron visitas</source>
+        <target>No visits found</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">114,116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.paginationInfo" datatype="html">
+        <source>Mostrando <x id="INTERPOLATION" equiv-text="{{ (pagination().page - 1) * pagination().per_page + 1 }}"/> a <x id="INTERPOLATION_1" equiv-text="{{ Math.min(pagination().page * pagination().per_page, pagination().total) }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ pagination().total }}"/> registros</source>
+        <target>Showing <x id="INTERPOLATION" equiv-text="{{ (pagination().page - 1) * pagination().per_page + 1 }}"/> to <x id="INTERPOLATION_1" equiv-text="{{ Math.min(pagination().page * pagination().per_page, pagination().total) }}"/> of <x id="INTERPOLATION_2" equiv-text="{{ pagination().total }}"/> records</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">122,123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.previousPage" datatype="html">
+        <source>Página anterior</source>
+        <target>Previous page</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">132,133</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.previous" datatype="html">
+        <source>Anterior</source>
+        <target>Previous</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">133,135</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.nextPage" datatype="html">
+        <source>Página siguiente</source>
+        <target>Next page</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">158,159</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="visits.next" datatype="html">
+        <source>Siguiente</source>
+        <target>Next</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/ventas/visits/visits-list/visits-list.html</context>
+          <context context-type="linenumber">159,160</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

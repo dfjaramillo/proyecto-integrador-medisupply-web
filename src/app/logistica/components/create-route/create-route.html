@@ -1,12 +1,12 @@
 <div class="create-route-dialog">
   <div class="dialog-header">
-    <h2>Crear ruta</h2>
+    <h2 i18n="@@routes.createRouteDialog.title">Crear ruta</h2>
     <button
       mat-icon-button
       class="close-btn"
       (click)="onCancel()"
       [disabled]="loading()"
-      aria-label="Cerrar formulario de crear ruta"
+      i18n-aria-label="@@routes.createRouteDialog.closeAria" aria-label="Cerrar formulario de crear ruta"
     >
       <mat-icon>close</mat-icon>
     </button>
@@ -16,10 +16,10 @@
     <form [formGroup]="routeForm" (ngSubmit)="onSubmit()">
       <!-- Camión -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Camión</mat-label>
+        <mat-label i18n="@@routes.createRouteDialog.truckLabel">Camión</mat-label>
         <mat-select
           formControlName="assigned_truck"
-          placeholder="Seleccione un camión"
+          placeholder="Seleccione un camión" i18n-placeholder="@@routes.createRouteDialog.truckPlaceholder"
           [disabled]="loading() || loadingTrucks()"
           (selectionChange)="validateTruckAvailability()"
           aria-required="true"
@@ -41,10 +41,10 @@
 
       <!-- Tipo de productos -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Tipo de productos</mat-label>
+        <mat-label i18n="@@routes.createRouteDialog.productTypeLabel">Tipo de productos</mat-label>
         <mat-select
           formControlName="product_type"
-          placeholder="Seleccione el tipo de productos"
+          placeholder="Seleccione el tipo de productos" i18n-placeholder="@@routes.createRouteDialog.productTypePlaceholder"
           [disabled]="loading()"
           aria-required="true"
         >
@@ -59,12 +59,12 @@
 
       <!-- Fecha de entrega -->
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Fecha de entrega</mat-label>
+        <mat-label i18n="@@routes.createRouteDialog.deliveryDateLabel">Fecha de entrega</mat-label>
         <input
           matInput
           [matDatepicker]="datePicker"
           formControlName="delivery_date"
-          placeholder="DD/MM/AAAA"
+          placeholder="DD/MM/AAAA" i18n-placeholder="@@routes.createRouteDialog.deliveryDatePlaceholder"
           [min]="minDate"
           [disabled]="loading()"
           (dateChange)="validateTruckAvailability()"
@@ -91,9 +91,9 @@
         class="cancel-btn"
         (click)="onCancel()"
         [disabled]="loading()"
-        aria-label="Cancelar creación de ruta"
+        i18n-aria-label="@@routes.createRouteDialog.cancelAria" aria-label="Cancelar creación de ruta"
       >
-        Cancelar
+        <span i18n="@@routes.createRouteDialog.cancelBtn">Cancelar</span>
       </button>
 
       <button
@@ -102,13 +102,13 @@
         class="submit-btn"
         (click)="onSubmit()"
         [disabled]="loading() || routeForm.invalid"
-        aria-label="Generar ruta"
+        i18n-aria-label="@@routes.createRouteDialog.generateAria" aria-label="Generar ruta"
       >
         @if (loading()) {
         <mat-spinner diameter="20"></mat-spinner>
-        <span>Generando...</span>
+        <span i18n="@@routes.createRouteDialog.generating">Generando...</span>
         } @else {
-        <span>Generar ruta</span>
+        <span i18n="@@routes.createRouteDialog.generateBtn">Generar ruta</span>
         }
       </button>
     </div>

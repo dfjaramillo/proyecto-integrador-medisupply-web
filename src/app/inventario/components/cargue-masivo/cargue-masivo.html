@@ -1,12 +1,12 @@
 <div class="cargue-masivo-dialog">
   <div class="dialog-header">
-    <h2>Cargue masivo</h2>
+    <h2 i18n="@@inventory.bulkUploadDialog.title">Cargue masivo</h2>
     <button
       mat-icon-button
       class="close-btn"
       (click)="onCancel()"
       type="button"
-      aria-label="Cerrar formulario de cargue masivo"
+      i18n-aria-label="@@inventory.bulkUploadDialog.closeAria" aria-label="Cerrar formulario de cargue masivo"
     >
       <mat-icon>close</mat-icon>
     </button>
@@ -16,7 +16,7 @@
     <div class="content-section">
       <!-- Paso 1: Descargar plantilla -->
       <div class="step-section">
-        <p class="step-label">1. Obtén la plantilla que debes diligenciar</p>
+        <p class="step-label" i18n="@@inventory.bulkUploadDialog.step1">1. Obtén la plantilla que debes diligenciar</p>
         <button
           mat-raised-button
           class="download-btn"
@@ -24,13 +24,13 @@
           type="button"
         >
           <mat-icon>download</mat-icon>
-          Descargar plantilla
+          <span i18n="@@inventory.bulkUploadDialog.downloadTemplateBtn">Descargar plantilla</span>
         </button>
       </div>
 
       <!-- Paso 2: Cargar archivo -->
       <div class="step-section">
-        <p class="step-label">2. Sube el archivo a la plataforma</p>
+        <p class="step-label" i18n="@@inventory.bulkUploadDialog.step2">2. Sube el archivo a la plataforma</p>
         
         @if (!selectedFile) {
         <button
@@ -40,7 +40,7 @@
           type="button"
         >
           <mat-icon>upload</mat-icon>
-          Cargar plantilla
+          <span i18n="@@inventory.bulkUploadDialog.uploadTemplateBtn">Cargar plantilla</span>
         </button>
         <input
           #fileInput
@@ -48,7 +48,7 @@
           accept=".csv,.xlsx,.xls"
           (change)="onFileSelected($event)"
           style="display: none"
-          aria-label="Seleccionar archivo"
+          i18n-aria-label="@@inventory.bulkUploadDialog.selectFileAria" aria-label="Seleccionar archivo"
         />
         }
 
@@ -63,8 +63,8 @@
             class="remove-file-btn"
             (click)="removeFile()"
             type="button"
-            aria-label="Eliminar archivo seleccionado"
-            title="Eliminar archivo"
+            i18n-aria-label="@@inventory.bulkUploadDialog.removeFileAria" aria-label="Eliminar archivo seleccionado"
+            i18n-title="@@inventory.bulkUploadDialog.removeFileTitle" title="Eliminar archivo"
           >
             <mat-icon>delete</mat-icon>
           </button>
@@ -72,15 +72,11 @@
         }
 
         @if (uploadError()) {
-        <div class="error-message" role="alert">
-          {{ uploadError() }}
-        </div>
+        <div class="error-message" role="alert">{{ uploadError() }}</div>
         }
 
         @if (successMessage()) {
-        <div class="success-message" role="alert">
-          {{ successMessage() }}
-        </div>
+        <div class="success-message" role="alert">{{ successMessage() }}</div>
         }
       </div>
     </div>
@@ -95,9 +91,9 @@
       (click)="onSubmit()"
       [attr.aria-busy]="loading()"
     >
-      @if (!loading()) { Guardar } @else {
+      @if (!loading()) { <span i18n="@@inventory.bulkUploadDialog.saveButton">Guardar</span> } @else {
       <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
-      <span class="sr-only">Cargando archivo...</span>
+      <span class="sr-only" i18n="@@inventory.bulkUploadDialog.savingSr">Cargando archivo...</span>
       }
     </button>
   </mat-dialog-actions>
