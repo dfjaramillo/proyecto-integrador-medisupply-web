@@ -76,4 +76,50 @@ describe('VisitsService', () => {
     req.flush({ message: 'fail' }, { status: 500, statusText: 'Server Error' });
     expect(errorCaught).toBeTruthy();
   });
+
+  it('debe incluir filtro de findings en query params', () => {
+    service.getVideos(1, 5, '', '', '', 'Hallazgo importante').subscribe();
+
+    const req = httpMock.expectOne(r => {
+      return r.url === `${environment.apiUrl}/videos-processed` &&
+        r.params.get('page') === '1' &&
+        r.params.get('per_page') === '5' &&
+        r.params.get('find') === 'Hallazgo importante' &&
+        !r.params.has('visit_id') &&
+        !r.params.has('client_name') &&
+        !r.params.has('file_status');
+    });
+    expect(req.request.method).toBe('GET');
+    req.flush({ success: true, message: 'ok', data: { videos: [], pagination: { page: 1, per_page: 5, total: 0, total_pages: 0 } } });
+  });
+
+  it('debe incluir todos los filtros cuando están presentes', () => {
+    service.getVideos(1, 10, 'V123', 'Hospital', 'Procesado', 'Hallazgo crítico').subscribe();
+
+    const req = httpMock.expectOne(r => {
+      return r.url === `${environment.apiUrl}/videos-processed` &&
+        r.params.get('page') === '1' &&
+        r.params.get('per_page') === '10' &&
+        r.params.get('visit_id') === 'V123' &&
+        r.params.get('client_name') === 'Hospital' &&
+        r.params.get('file_status') === 'Procesado' &&
+        r.params.get('find') === 'Hallazgo crítico';
+    });
+    expect(req.request.method).toBe('GET');
+    req.flush({ success: true, message: 'ok', data: { videos: [], pagination: { page: 1, per_page: 10, total: 0, total_pages: 0 } } });
+  });
+
+  it('debe recortar espacios en blanco de los filtros', () => {
+    service.getVideos(1, 5, '  V123  ', '  Hospital  ', '  Procesado  ', '  Hallazgo  ').subscribe();
+
+    const req = httpMock.expectOne(r => {
+      return r.url === `${environment.apiUrl}/videos-processed` &&
+        r.params.get('visit_id') === 'V123' &&
+        r.params.get('client_name') === 'Hospital' &&
+        r.params.get('file_status') === 'Procesado' &&
+        r.params.get('find') === 'Hallazgo';
+    });
+    expect(req.request.method).toBe('GET');
+    req.flush({ success: true, message: 'ok', data: { videos: [], pagination: { page: 1, per_page: 5, total: 0, total_pages: 0 } } });
+  });
 });

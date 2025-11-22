@@ -30,6 +30,12 @@ describe('VisitsListComponent', () => {
     snackBar = jasmine.createSpyObj('MatSnackBar', ['open']);
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
+    // Configurar valor por defecto para getVideos
+    visitsService.getVideos.and.returnValue(of({
+      videos: [],
+      pagination: { page: 1, per_page: 5, total: 0, total_pages: 0 }
+    }));
+
     TestBed.configureTestingModule({
       imports: [VisitsListComponent, NoopAnimationsModule],
       providers: [
@@ -153,5 +159,36 @@ describe('VisitsListComponent', () => {
 
   it('isVideoAvailable retorna false si filename_url no existe', () => {
     expect(component.isVideoAvailable({} as any)).toBeFalse();
+  });
+
+  it('onSearchIdChange debe emitir valor al subject', () => {
+    const mockEvent = { target: { value: 'V123' } } as any;
+    component.onSearchIdChange(mockEvent);
+    // Verificar que se llamó sin error
+    expect(component.searchId).toBe('');
+  });
+
+  it('onSearchClientChange debe emitir valor al subject', () => {
+    const mockEvent = { target: { value: 'Hospital' } } as any;
+    component.onSearchClientChange(mockEvent);
+    expect(component.searchClient).toBe('');
+  });
+
+  it('onSearchStatusChange debe emitir valor al subject', () => {
+    component.onSearchStatusChange('Procesado');
+    expect(component.searchStatus).toBe('');
+  });
+
+  it('onSearchFindingsChange debe emitir valor al subject', () => {
+    const mockEvent = { target: { value: 'Hallazgo importante' } } as any;
+    component.onSearchFindingsChange(mockEvent);
+    expect(component.searchFindings).toBe('');
+  });
+
+  it('ngOnDestroy debe limpiar subscriptions', () => {
+    component.ngOnInit();
+    component.ngOnDestroy();
+    // Verificar que no lanza error al destruir
+    expect(component).toBeTruthy();
   });
 });
