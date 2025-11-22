@@ -1,4 +1,8 @@
 <div class="reject-container">
+  <!-- Hidden localized snackbar messages -->
+  <span class="sr-only" i18n="@@clients.rejectDialog.rejectedSnack" #rejectedSnack>Usuario rechazado exitosamente.</span>
+  <span class="sr-only" i18n="@@clients.rejectDialog.rejectErrorSnack" #rejectErrorSnack>No se pudo rechazar el cliente. Intenta nuevamente.</span>
+  <span class="sr-only" i18n="@@common.close" #closeAction>Cerrar</span>
   <div class="dialog-header">
     <h2 i18n="@@clients.rejectDialog.title">Rechazar cliente</h2>
     <button mat-icon-button (click)="close()">

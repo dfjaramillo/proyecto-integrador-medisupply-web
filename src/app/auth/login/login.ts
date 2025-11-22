@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -38,6 +38,11 @@ export class LoginComponent {
   hide = signal(true);
   loading = signal(false);
 
+  @ViewChild('loginSuccessMsg', { static: true }) loginSuccessMsg!: ElementRef<HTMLElement>;
+  @ViewChild('loginErrorMsg', { static: true }) loginErrorMsg!: ElementRef<HTMLElement>;
+  @ViewChild('okAction', { static: true }) okAction!: ElementRef<HTMLElement>;
+  @ViewChild('closeAction', { static: true }) closeAction!: ElementRef<HTMLElement>;
+
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
@@ -55,7 +60,7 @@ export class LoginComponent {
     this.authService.login(email!, password!).subscribe({
       next: (response) => {
         this.loading.set(false);
-        this.snack.open('Inicio de sesión exitoso', 'OK', { duration: 2000 });
+        this.snack.open(this.loginSuccessMsg.nativeElement.textContent!.trim(), this.okAction.nativeElement.textContent!.trim(), { duration: 2000 });
         if (response.role=='Compras') {
           this.router.navigateByUrl('/proveedores');
         }
@@ -69,7 +74,7 @@ export class LoginComponent {
       error: (err) => {
         this.loading.set(false);
         console.error('Login error:', err);
-        this.snack.open('Usuario o contraseña incorrectos', 'Cerrar', {
+        this.snack.open(this.loginErrorMsg.nativeElement.textContent!.trim(), this.closeAction.nativeElement.textContent!.trim(), {
           duration: 3000,
         });
       },

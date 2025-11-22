@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, Inject, OnInit, inject, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,6 +40,11 @@ export class ApproveClientComponent implements OnInit {
   sellers = signal<User[]>([]);
   selectedSellerId = signal<string | null>(null);
 
+  @ViewChild('loadSellersError', { static: true }) loadSellersError!: ElementRef<HTMLElement>;
+  @ViewChild('approvedSnack', { static: true }) approvedSnack!: ElementRef<HTMLElement>;
+  @ViewChild('approveErrorSnack', { static: true }) approveErrorSnack!: ElementRef<HTMLElement>;
+  @ViewChild('closeAction', { static: true }) closeAction!: ElementRef<HTMLElement>;
+
   // For capacity / suggestion we will plug assigned-clients later if needed
   ngOnInit(): void {
     this.loadSellers();
@@ -59,7 +64,7 @@ export class ApproveClientComponent implements OnInit {
       error: (err) => {
         console.error('Error loading sellers', err);
         this.loadingSellers.set(false);
-        this.snackBar.open('No se pudieron cargar los gerentes de cuenta.', 'Cerrar', {
+        this.snackBar.open(this.loadSellersError.nativeElement.textContent!.trim(), this.closeAction.nativeElement.textContent!.trim(), {
           duration: 4000
         });
       }
@@ -80,7 +85,7 @@ export class ApproveClientComponent implements OnInit {
     this.userService.assignClientToSeller(sellerId, this.data.client.id).subscribe({
       next: () => {
         this.saving.set(false);
-        this.snackBar.open('Cliente aprobado y asignado correctamente.', 'Cerrar', {
+        this.snackBar.open(this.approvedSnack.nativeElement.textContent!.trim(), this.closeAction.nativeElement.textContent!.trim(), {
           duration: 3000
         });
         this.dialogRef.close({ approved: true, sellerId });
@@ -88,7 +93,7 @@ export class ApproveClientComponent implements OnInit {
       error: (err) => {
         console.error('Error assigning client', err);
         this.saving.set(false);
-        this.snackBar.open('No se pudo aprobar el cliente. Intenta nuevamente.', 'Cerrar', {
+        this.snackBar.open(this.approveErrorSnack.nativeElement.textContent!.trim(), this.closeAction.nativeElement.textContent!.trim(), {
           duration: 4000
         });
       }

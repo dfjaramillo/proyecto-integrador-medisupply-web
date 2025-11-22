@@ -1,4 +1,9 @@
 <div class="approve-container">
+  <!-- Hidden localized snackbar messages -->
+  <span class="sr-only" i18n="@@clients.approveDialog.loadSellersErrorSnack" #loadSellersError>No se pudieron cargar los gerentes de cuenta.</span>
+  <span class="sr-only" i18n="@@clients.approveDialog.approvedSnack" #approvedSnack>Cliente aprobado y asignado correctamente.</span>
+  <span class="sr-only" i18n="@@clients.approveDialog.approveErrorSnack" #approveErrorSnack>No se pudo aprobar el cliente. Intenta nuevamente.</span>
+  <span class="sr-only" i18n="@@common.close" #closeAction>Cerrar</span>
   <div class="dialog-header">
     <h2 i18n="@@clients.approveDialog.title">Aprobar cliente</h2>
     <button mat-icon-button (click)="close()">

@@ -1,4 +1,4 @@
-import { Component, Inject, inject, signal } from '@angular/core';
+import { Component, Inject, inject, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,6 +35,10 @@ export class RejectClientComponent {
   justification = signal('');
   saving = signal(false);
 
+  @ViewChild('rejectedSnack', { static: true }) rejectedSnack!: ElementRef<HTMLElement>;
+  @ViewChild('rejectErrorSnack', { static: true }) rejectErrorSnack!: ElementRef<HTMLElement>;
+  @ViewChild('closeAction', { static: true }) closeAction!: ElementRef<HTMLElement>;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: RejectClientData) {}
 
   get canSave(): boolean {
@@ -55,7 +59,7 @@ export class RejectClientComponent {
     this.userService.rejectClient(this.data.client.id, this.data.sellerId, this.data.client.id).subscribe({
       next: () => {
         this.saving.set(false);
-        this.snackBar.open('Usuario rechazado exitosamente.', 'Cerrar', {
+        this.snackBar.open(this.rejectedSnack.nativeElement.textContent!.trim(), this.closeAction.nativeElement.textContent!.trim(), {
           duration: 3000
         });
         this.dialogRef.close({ rejected: true });
@@ -63,7 +67,7 @@ export class RejectClientComponent {
       error: (err) => {
         console.error('Error rejecting client', err);
         this.saving.set(false);
-        this.snackBar.open('No se pudo rechazar el cliente. Intenta nuevamente.', 'Cerrar', {
+        this.snackBar.open(this.rejectErrorSnack.nativeElement.textContent!.trim(), this.closeAction.nativeElement.textContent!.trim(), {
           duration: 4000
         });
       }
