@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, OnInit, signal, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -10,6 +10,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { VisitsService } from '../services/visits.service';
 import { Video, Pagination } from '../models/visit.model';
 import { VideoDialogComponent } from '../video-dialog/video-dialog';
@@ -33,7 +35,7 @@ import { VideoDialogComponent } from '../video-dialog/video-dialog';
   templateUrl: './visits-list.html',
   styleUrls: ['./visits-list.scss']
 })
-export class VisitsListComponent implements OnInit {
+export class VisitsListComponent implements OnInit, OnDestroy {
   private visitsService = inject(VisitsService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
@@ -42,11 +44,18 @@ export class VisitsListComponent implements OnInit {
   pagination = signal<Pagination>({ page: 1, per_page: 5, total: 0, total_pages: 0 });
   loading = signal(false);
 
-  // Search filters (no endpoint yet)
+  // Search filters
   searchId = '';
   searchClient = '';
   searchStatus = '';
   searchFindings = '';
+
+  // Debounced subjects for inputs
+  private searchId$ = new Subject<string>();
+  private searchClient$ = new Subject<string>();
+  private searchStatus$ = new Subject<string>();
+  private searchFindings$ = new Subject<string>();
+  private subscriptions: Subscription[] = [];
 
   displayedColumns: string[] = ['id_visita', 'cliente', 'estado', 'hallazgos', 'evidencia'];
 
@@ -54,6 +63,40 @@ export class VisitsListComponent implements OnInit {
   Math = Math;
 
   ngOnInit(): void {
+    // Subscribe to debounced inputs
+    this.subscriptions.push(
+      this.searchId$.pipe(debounceTime(400), distinctUntilChanged()).subscribe(value => {
+        this.searchId = value;
+        this.pagination.set({ ...this.pagination(), page: 1 });
+        this.loadVideos();
+      }) as unknown as Subscription
+    );
+
+    this.subscriptions.push(
+      this.searchClient$.pipe(debounceTime(400), distinctUntilChanged()).subscribe(value => {
+        this.searchClient = value;
+        this.pagination.set({ ...this.pagination(), page: 1 });
+        this.loadVideos();
+      }) as unknown as Subscription
+    );
+
+    this.subscriptions.push(
+      this.searchStatus$.pipe(debounceTime(400), distinctUntilChanged()).subscribe(value => {
+        this.searchStatus = value;
+        this.pagination.set({ ...this.pagination(), page: 1 });
+        this.loadVideos();
+      }) as unknown as Subscription
+    );
+
+    this.subscriptions.push(
+      this.searchFindings$.pipe(debounceTime(400), distinctUntilChanged()).subscribe(value => {
+        this.searchFindings = value;
+        this.pagination.set({ ...this.pagination(), page: 1 });
+        this.loadVideos();
+      }) as unknown as Subscription
+    );
+
+    // Initial load
     this.loadVideos();
   }
 
@@ -62,7 +105,15 @@ export class VisitsListComponent implements OnInit {
     const currentPage = this.pagination().page;
     const perPage = this.pagination().per_page;
 
-    this.visitsService.getVideos(currentPage, perPage).subscribe({
+    this.visitsService.getVideos(
+      currentPage, 
+      perPage,
+      this.searchId,
+      this.searchClient,
+      this.searchStatus,
+      this.searchFindings
+      
+    ).subscribe({
       next: (response) => {
         this.videos.set(response.videos);
         this.pagination.set(response.pagination);
@@ -77,15 +128,35 @@ export class VisitsListComponent implements OnInit {
   }
 
   onSearchChange(): void {
+    // This method is now deprecated, replaced by debounced subjects
     // Reset to first page when search changes
     this.pagination.set({ ...this.pagination(), page: 1 });
-    // TODO: Implement search with API when endpoint is ready
-    console.log('Search filters:', {
-      id: this.searchId,
-      client: this.searchClient,
-      status: this.searchStatus,
-      findings: this.searchFindings
-    });
+    // Load videos with the current filters
+    this.loadVideos();
+  }
+
+  onSearchIdChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchId$.next(value);
+  }
+
+  onSearchClientChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchClient$.next(value);
+  }
+
+  onSearchStatusChange(value: string): void {
+    this.searchStatus$.next(value);
+  }
+
+  onSearchFindingsChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchFindings$.next(value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+    this.subscriptions = [];
   }
 
   goToPage(page: number): void {
