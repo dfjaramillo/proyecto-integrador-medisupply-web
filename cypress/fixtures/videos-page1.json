@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "message": "ok",
+  "data": {
+    "videos": [
+      { "id": 1, "name": "Cliente 1", "file_status": "Procesado", "find": "Hallazgo 1", "filename_url": "https://example.com/v1.mp4", "filename_url_processed": "https://example.com/v1p.mp4" },
+      { "id": 2, "name": "Cliente 2", "file_status": "En curso", "find": "Hallazgo 2" },
+      { "id": 3, "name": "Cliente 3", "file_status": "Procesado", "find": "Hallazgo 3", "filename_url": "https://example.com/v3.mp4", "filename_url_processed": "https://example.com/v3p.mp4" },
+      { "id": 4, "name": "Cliente 4", "file_status": "En curso", "find": "Hallazgo 4" },
+      { "id": 5, "name": "Cliente 5", "file_status": "Procesado", "find": "Hallazgo 5", "filename_url": "https://example.com/v5.mp4", "filename_url_processed": "https://example.com/v5p.mp4" }
+    ],
+    "pagination": { "page": 1, "per_page": 5, "total": 8, "total_pages": 2 }
+  }
+}

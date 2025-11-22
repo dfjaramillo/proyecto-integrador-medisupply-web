@@ -43,7 +43,7 @@ describe('Crear Plan de Ventas', () => {
     }).as('getSellers');
 
     // Interceptar lista de clientes
-    cy.intercept('GET', '**/clients**', {
+    cy.intercept('GET', '**/user**', {
       statusCode: 200,
       body: {
         success: true,
@@ -215,9 +215,6 @@ describe('Crear Plan de Ventas', () => {
     cy.get('input[formcontrolname="end_date"]').type('2026-06-30', { force: true });
     cy.get('input[formcontrolname="target_revenue"]').type('75000000');
     cy.get('textarea[formcontrolname="objectives"]').type('Objetivo de prueba');
-
-    cy.get('mat-select[formcontrolname="client_id"]').click({ force: true });
-    cy.get('mat-option').first().click();
 
     cy.contains('button', 'Guardar').should('be.disabled');    
   });
