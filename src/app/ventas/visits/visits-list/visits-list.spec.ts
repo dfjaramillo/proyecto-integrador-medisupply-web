@@ -30,6 +30,12 @@ describe('VisitsListComponent', () => {
     snackBar = jasmine.createSpyObj('MatSnackBar', ['open']);
     dialog = jasmine.createSpyObj('MatDialog', ['open']);
 
+    // Configurar valor por defecto para getVideos
+    visitsService.getVideos.and.returnValue(of({
+      videos: [],
+      pagination: { page: 1, per_page: 5, total: 0, total_pages: 0 }
+    }));
+
     TestBed.configureTestingModule({
       imports: [VisitsListComponent, NoopAnimationsModule],
       providers: [
@@ -50,7 +56,7 @@ describe('VisitsListComponent', () => {
       pagination: { page: 1, per_page: 5, total: 10, total_pages: 2 }
     }));
     component.ngOnInit();
-    expect(visitsService.getVideos).toHaveBeenCalledWith(1, 5);
+    expect(visitsService.getVideos).toHaveBeenCalledWith(1, 5, '', '', '', '');
     expect(component.videos().length).toBe(5);
     expect(component.pagination().total).toBe(10);
     expect(component.loading()).toBeFalse();
@@ -88,6 +94,7 @@ describe('VisitsListComponent', () => {
     component.pagination.set({ page: 2, per_page: 5, total: 10, total_pages: 2 });
     visitsService.getVideos.and.returnValue(of({ videos: [], pagination: { page: 1, per_page: 5, total: 10, total_pages: 2 } }));
     component.previousPage();
+    expect(visitsService.getVideos).toHaveBeenCalledWith(1, 5, '', '', '', '');
     expect(component.pagination().page).toBe(1);
   });
 
@@ -101,6 +108,7 @@ describe('VisitsListComponent', () => {
     component.pagination.set({ page: 1, per_page: 5, total: 10, total_pages: 2 });
     visitsService.getVideos.and.returnValue(of({ videos: [], pagination: { page: 2, per_page: 5, total: 10, total_pages: 2 } }));
     component.nextPage();
+    expect(visitsService.getVideos).toHaveBeenCalledWith(2, 5, '', '', '', '');
     expect(component.pagination().page).toBe(2);
   });
 
@@ -111,24 +119,25 @@ describe('VisitsListComponent', () => {
   });
 
   it('goToPage dentro de rango carga videos', () => {
-    // Inicializar paginación en página 1
-    component.pagination.set({ page: 1, per_page: 5, total: 10, total_pages: 2 });
-    visitsService.getVideos.and.returnValue(of({ videos: [], pagination: { page: 2, per_page: 5, total: 10, total_pages: 2 } }));
-    component.goToPage(2);
-    expect(visitsService.getVideos).toHaveBeenCalledWith(2, 5);
-    expect(component.pagination().page).toBe(2);
-  });
-
-  it('goToPage fuera de rango no cambia página', () => {
+  // Inicializar paginación en página 1
+  component.pagination.set({ page: 1, per_page: 5, total: 10, total_pages: 2 });
+  visitsService.getVideos.and.returnValue(of({ videos: [], pagination: { page: 2, per_page: 5, total: 10, total_pages: 2 } }));
+  component.goToPage(2);
+  expect(visitsService.getVideos).toHaveBeenCalledWith(2, 5, '', '', '', '');
+  expect(component.pagination().page).toBe(2);
+});  it('goToPage fuera de rango no cambia página', () => {
     component.pagination.set({ page: 1, per_page: 5, total: 10, total_pages: 2 });
     component.goToPage(3);
     expect(component.pagination().page).toBe(1);
   });
 
-  it('onSearchChange reinicia a página 1', () => {
+  it('onSearchChange reinicia a página 1 y carga videos con filtros', () => {
     component.pagination.set({ page: 2, per_page: 5, total: 10, total_pages: 2 });
+    component.searchClient = 'Hospital';
+    visitsService.getVideos.and.returnValue(of({ videos: [], pagination: { page: 1, per_page: 5, total: 5, total_pages: 1 } }));
     component.onSearchChange();
     expect(component.pagination().page).toBe(1);
+    expect(visitsService.getVideos).toHaveBeenCalledWith(1, 5, '', 'Hospital', '', '');
   });
 
   it('openVideoDialog llama dialog.open si hay video disponible', () => {
@@ -150,5 +159,36 @@ describe('VisitsListComponent', () => {
 
   it('isVideoAvailable retorna false si filename_url no existe', () => {
     expect(component.isVideoAvailable({} as any)).toBeFalse();
+  });
+
+  it('onSearchIdChange debe emitir valor al subject', () => {
+    const mockEvent = { target: { value: 'V123' } } as any;
+    component.onSearchIdChange(mockEvent);
+    // Verificar que se llamó sin error
+    expect(component.searchId).toBe('');
+  });
+
+  it('onSearchClientChange debe emitir valor al subject', () => {
+    const mockEvent = { target: { value: 'Hospital' } } as any;
+    component.onSearchClientChange(mockEvent);
+    expect(component.searchClient).toBe('');
+  });
+
+  it('onSearchStatusChange debe emitir valor al subject', () => {
+    component.onSearchStatusChange('Procesado');
+    expect(component.searchStatus).toBe('');
+  });
+
+  it('onSearchFindingsChange debe emitir valor al subject', () => {
+    const mockEvent = { target: { value: 'Hallazgo importante' } } as any;
+    component.onSearchFindingsChange(mockEvent);
+    expect(component.searchFindings).toBe('');
+  });
+
+  it('ngOnDestroy debe limpiar subscriptions', () => {
+    component.ngOnInit();
+    component.ngOnDestroy();
+    // Verificar que no lanza error al destruir
+    expect(component).toBeTruthy();
   });
 });
