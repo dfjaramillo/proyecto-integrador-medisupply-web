@@ -1,5 +1,39 @@
-.report-container { padding: 24px; }
-.breadcrumb { font-size: 13px; color: #6d7183; margin-bottom: 16px; }
+.report-container { 
+  padding: 24px 32px;
+  margin: 0;
+
+	.header {
+    margin-bottom: 16px;
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
+      color: #41444f;
+    }
+
+    .breadcrumb {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #9ca3af;
+
+      .breadcrumb-current {
+        color: #41444f;
+        font-weight: 500;
+      }
+
+      .breadcrumb-link {
+        color: #2563eb;
+        cursor: pointer;
+      }
+
+      .breadcrumb-separator {
+        margin: 0 4px;
+      }
+    }
+  }
+}
+
 .loading, .error, .empty { text-align: center; padding: 40px 0; }
 .grid { display: grid; gap: 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .grid { align-items: stretch; }

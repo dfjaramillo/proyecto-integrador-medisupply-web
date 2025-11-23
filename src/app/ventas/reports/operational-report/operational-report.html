@@ -1,6 +1,13 @@
 <div class="report-container">
-  <h1 i18n="@@reports.operational.title">Reporte operativo</h1>
-  <div class="breadcrumb" i18n="@@reports.operational.breadcrumb">Ventas – Reporte operativo</div>
+  <div class="header">
+    <h1 i18n="@@reports.operational.title">Reporte operativo</h1>
+    <div class="breadcrumb">
+      <span class="breadcrumb-link" i18n="@@reports.operational.breadcrumbSales">Ventas</span>
+      <span class="breadcrumb-separator">-</span>
+      <span class="breadcrumb-current" i18n="@@reports.operational.breadcrumbCurrent">Reporte operativo</span>
+    </div>
+  </div>
+    
 
   <!-- Loading State -->
   <div class="loading" *ngIf="loading()">

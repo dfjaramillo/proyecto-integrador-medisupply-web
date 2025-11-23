@@ -20,45 +20,36 @@
 }
 
 .proveedores-container {
-  padding: 0;
-  margin-top: -32px; // Compensate for main-content padding to align with header
-  margin-left: -32px;
-  margin-right: -32px;
+  padding: 24px 32px;
+  margin: 0;
 
   .header {
-    background-color: #F5F5F5;
-    padding: 16px 32px;
-    
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 
     h1 {
-      font-size: 22px;
-      font-weight: 500;
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
       color: #41444F;
-      margin: 0 0 8px 0;
     }
 
     .breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-
-      .breadcrumb-link {
-        color: #0D66D0; /* Cambio de #1078FF para cumplir WCAG 2.1 AA */
-        cursor: pointer;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-
-      .breadcrumb-separator {
-        color: #6D7183;
-      }
+      margin-top: 4px;
+      font-size: 13px;
+      color: #9ca3af;
 
       .breadcrumb-current {
         color: #41444F;
+        font-weight: 500;
+      }
+
+      .breadcrumb-link {
+        color: #2563eb;
+        cursor: pointer;
+      }
+
+      .breadcrumb-separator {
+        margin: 0 4px;
       }
     }
   }
@@ -89,11 +80,11 @@
   }
 
   .table-container {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 17px;
-    margin: 0 32px; // Add horizontal margins
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+    margin: 0;
 
     .filter-row {
       display: grid;
@@ -157,10 +148,9 @@
         font-size: 12px;
         font-weight: 600;
         color: #6D7183;
-        letter-spacing: 0.5px;
         background-color: transparent;
         padding: 16px 12px;
-        border-bottom: 1px solid #E5E7EB;
+        border-bottom: none;
       }
 
       td {
