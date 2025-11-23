@@ -71,4 +71,84 @@ html, body {
     }
   }
   
+  /* Global app dialog layout */
+  .app-dialog {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .app-dialog .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 24px 0;
+    margin-bottom: 16px;
+  }
+
+  .app-dialog .dialog-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    color: #41444f;
+  }
+
+  .app-dialog mat-dialog-content {
+    padding: 0 24px;
+    margin: 0;
+    max-height: none;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .app-dialog mat-dialog-content form { display: flex; flex-direction: column; gap: 16px; }
+
+  .app-dialog mat-dialog-actions {
+    padding: 24px;
+    margin: 0;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: center;
+  }
+
+  .app-dialog .submit-btn, .app-dialog .primary-action-btn {
+    width: 360px;
+    min-width: 120px;
+    height: 40px;
+    background-color: #0d66d0;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: none;
+  }
+  .app-dialog .submit-btn:disabled,
+  .app-dialog .primary-action-btn:disabled { background-color: #1078ff; color: #ffffff; }
+  .app-dialog .submit-btn:not(:disabled):hover,
+  .app-dialog .primary-action-btn:not(:disabled):hover { background-color: #0b5bb8; }
+
+  /* Accessibility utilities */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .app-dialog .submit-btn:focus-visible,
+  .app-dialog .primary-action-btn:focus-visible,
+  .app-dialog .close-btn:focus-visible { outline: 3px solid #0d66d0; outline-offset: 2px; }
+  
   

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, inject, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +19,7 @@ export interface ApproveClientData {
   standalone: true,
   imports: [
     CommonModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
     MatButtonModule,

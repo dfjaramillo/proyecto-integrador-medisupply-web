@@ -1,16 +1,16 @@
-<div class="reject-container">
+<div class="app-dialog reject-client-dialog">
   <!-- Hidden localized snackbar messages -->
   <span class="sr-only" i18n="@@clients.rejectDialog.rejectedSnack" #rejectedSnack>Usuario rechazado exitosamente.</span>
   <span class="sr-only" i18n="@@clients.rejectDialog.rejectErrorSnack" #rejectErrorSnack>No se pudo rechazar el cliente. Intenta nuevamente.</span>
   <span class="sr-only" i18n="@@common.close" #closeAction>Cerrar</span>
   <div class="dialog-header">
     <h2 i18n="@@clients.rejectDialog.title">Rechazar cliente</h2>
-    <button mat-icon-button (click)="close()">
+    <button mat-icon-button class="close-btn" (click)="close()" type="button" aria-label="Cerrar diálogo" i18n-aria-label="@@clients.rejectDialog.closeAria">
       <span class="material-icons">close</span>
     </button>
   </div>
 
-  <div class="dialog-body">
+  <mat-dialog-content>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label i18n="@@clients.rejectDialog.justificationLabel">Justificación</mat-label>
       <textarea
@@ -21,16 +21,23 @@
         (input)="onJustificationChange($event)"></textarea>
       <mat-hint align="end">{{ justification().length }}/500</mat-hint>
     </mat-form-field>
-  </div>
+  </mat-dialog-content>
 
-  <div class="dialog-footer">
+  <mat-dialog-actions>
     <button
       mat-raised-button
-      color="primary"
-      class="save-button"
-      [disabled]="!canSave"
-      (click)="save()">
-      <span i18n="@@clients.rejectDialog.saveButton">Guardar</span>
+      type="button"
+      class="primary-action-btn"
+      [disabled]="!canSave || saving()"
+      (click)="save()"
+      [attr.aria-busy]="saving()">
+      <ng-container *ngIf="!saving(); else savingTpl">
+        <span i18n="@@clients.rejectDialog.saveButton">Guardar</span>
+      </ng-container>
+      <ng-template #savingTpl>
+        <mat-spinner diameter="20" aria-hidden="true"></mat-spinner>
+        <span class="sr-only" i18n="@@clients.rejectDialog.savingSr">Guardando rechazo...</span>
+      </ng-template>
     </button>
-  </div>
+  </mat-dialog-actions>
 </div>
