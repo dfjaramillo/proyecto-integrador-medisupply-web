@@ -977,6 +977,8 @@
       <trans-unit id="sales.createSalesPlanDialog.savingSr" datatype="html"><source>Guardando plan de ventas...</source><target>Saving sales plan...</target></trans-unit>
       <!-- Operational Report -->
       <trans-unit id="reports.operational.title" datatype="html"><source>Reporte operativo</source><target>Operational report</target></trans-unit>
+      <trans-unit id="reports.operational.breadcrumbSales" datatype="html"><source>Ventas</source><target>Sales</target></trans-unit>
+      <trans-unit id="reports.operational.breadcrumbCurrent" datatype="html"><source>Reporte operativo</source><target>Operational report</target></trans-unit>
       <trans-unit id="reports.operational.breadcrumb" datatype="html"><source>Ventas – Reporte operativo</source><target>Sales – Operational report</target></trans-unit>
       <trans-unit id="reports.operational.loading" datatype="html"><source>Cargando reporte...</source><target>Loading report...</target></trans-unit>
       <trans-unit id="reports.operational.empty" datatype="html"><source>No hay datos para el período seleccionado.</source><target>No data for selected period.</target></trans-unit>
