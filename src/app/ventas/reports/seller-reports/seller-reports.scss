@@ -174,37 +174,56 @@
   }
 
   .donut-chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .canvas-wrapper {
     position: relative;
-    height: 300px;
+    width: 320px;
+    height: 320px;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
 
-    .chart-center-label {
-      position: absolute;
-      top: 50%;
-      left: 41%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      pointer-events: none;
-      z-index: 10;
+  .canvas-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
 
-      .center-value {
-        font-size: 36px;
-        font-weight: 600;
-        color: #41444f;
-        line-height: 1;
-      }
+  .canvas-wrapper .chart-center-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 10;
 
-      .center-label {
-        font-size: 13px;
-        color: #6d7183;
-        margin-top: 4px;
-      }
+    .center-value {
+      font-size: 36px;
+      font-weight: 600;
+      color: #41444f;
+      line-height: 1;
     }
 
-    canvas {
-      max-height: 300px;
+    .center-label {
+      font-size: 13px;
+      color: #6d7183;
+      margin-top: 4px;
+    }
+  }
+
+  /* Responsive adjustments for smaller widths */
+  @media (max-width: 700px) {
+    .donut-chart-container {
+      height: 240px;
+      canvas { max-height: 240px; }
+      .chart-center-label .center-value { font-size: 30px; }
     }
   }
 

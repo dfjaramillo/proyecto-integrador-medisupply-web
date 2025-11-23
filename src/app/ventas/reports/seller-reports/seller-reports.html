@@ -46,16 +46,18 @@
           
           @if (donutChartConfig() && statusSummary()!.summary.total_orders > 0) {
             <div class="donut-chart-container">
-              <div class="chart-center-label">
-                <div class="center-value">{{ statusSummary()!.summary.total_orders }}</div>
-                <div class="center-label" i18n="@@reports.seller.ordersLabel">pedidos</div>
+              <div class="canvas-wrapper">
+                <div class="chart-center-label">
+                  <div class="center-value">{{ statusSummary()!.summary.total_orders }}</div>
+                  <div class="center-label" i18n="@@reports.seller.ordersLabel">pedidos</div>
+                </div>
+                <canvas 
+                  baseChart
+                  [type]="donutChartConfig()!.type"
+                  [data]="donutChartConfig()!.data"
+                  [options]="donutChartConfig()!.options">
+                </canvas>
               </div>
-              <canvas 
-                baseChart
-                [type]="donutChartConfig()!.type"
-                [data]="donutChartConfig()!.data"
-                [options]="donutChartConfig()!.options">
-              </canvas>
             </div>
           } @else {
             <div class="no-data">

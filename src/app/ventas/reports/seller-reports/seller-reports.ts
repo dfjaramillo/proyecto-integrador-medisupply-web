@@ -181,15 +181,16 @@ export class SellerReportsComponent implements OnInit {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: 'right',
+            position: 'bottom',
+            align: 'center',
             labels: {
-              padding: 15,
+              padding: 12,
               font: { size: 12 },
               generateLabels: (chart) => {
                 const data = chart.data;
                 if (data.labels && data.datasets[0].data) {
                   return data.labels.map((label, i) => {
-                    const value = data.datasets[0].data[i] as number;
+                    const value = data.datasets[0].data[i] as number; // value kept in case future customization
                     const percent = filteredData[i].percentage.toFixed(0);
                     const bgColors = data.datasets[0].backgroundColor as string[];
                     return {
