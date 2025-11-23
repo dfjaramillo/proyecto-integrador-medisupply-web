@@ -25,14 +25,17 @@
 
   .close-btn {
     background-color: #0d66d0;
-    color: #ffffff;
-    border-radius: 8px;
+    color: white;
     width: 36px;
     height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    border-radius: 10px;
+
+    mat-icon {
+      width: 20.75px;
+      height: 24.75px;
+      font-size: 20px;
+      line-height: 20px;
+    }
 
     &:hover {
       background-color: #0b5bb8;
@@ -89,39 +92,36 @@ mat-dialog-content {
 
 /* Footer con botones */
 mat-dialog-actions {
-  padding: 16px 24px;
+  padding: 24px;
   margin: 0;
-  background: white;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: center;
-  gap: 12px;
 
   .submit-btn {
+    width: 360px;
+    min-width: 120px;
+    height: 40px;
     background-color: #0d66d0;
     color: white;
-    border-radius: 8px;
-    padding: 12px 24px;
+    font-size: 14px;
     font-weight: 500;
-    width: 360px;
-    height: 48px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
 
-    &:hover:not(:disabled) {
+    &:disabled {
+      background-color: #1078ff;
+      color: #ffffff;
+    }
+    &:not(:disabled):hover {
       background-color: #0b5bb8;
     }
 
-    &:disabled {
-      background-color: rgba(13, 102, 208, 0.4);
-      color: rgba(255, 255, 255, 0.7);
-    }
-
     mat-spinner {
-      width: 20px !important;
-      height: 20px !important;
+      display: inline-block;
     }
   }
 }

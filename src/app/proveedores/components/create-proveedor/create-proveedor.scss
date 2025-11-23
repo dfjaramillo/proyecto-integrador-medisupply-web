@@ -25,14 +25,17 @@
 
   .close-btn {
     background-color: #0d66d0;
-    color: #ffffff;
-    border-radius: 8px;
+    color: white;
     width: 36px;
-    height: 36px;    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    height: 36px;
+    border-radius: 10px;
+
+    mat-icon {
+      width: 20.75px;
+      height: 24.75px;
+      font-size: 20px;
+      line-height: 20px;
+    }
 
     &:hover {
       background-color: #0b5bb8;
@@ -58,44 +61,38 @@ mat-dialog-content {
   }
 }
 
-/* Footer sticky al fondo del panel */
 mat-dialog-actions {
-  position: sticky;
-  bottom: 0;
-  z-index: 2;
-
-  /* Fondo y borde para “flotar” sobre el contenido */
-  background: #fff;
-  border-top: 1px solid #e5e7eb;
-
-  /* Padding pegado a los laterales del panel */
-  padding: 16px 24px 24px;
+  padding: 24px;
   margin: 0;
-
-  display: block; /* deja de centrar el botón, toma todo el ancho */
-}
-
-/* Botón estilo “barra” al ancho del panel (como en el prototipo) */
-.submit-btn {
-  width: 100%;
-  height: 48px;
-  border-radius: 12px; /* píldora */
-  background-color: #0d66d0;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 600;
-
+  border-top: 1px solid #e5e7eb;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 8px;
 
-  &:disabled {
-    background-color: #1078ff;
-    color: #ffffff;
-  }
-  &:not(:disabled):hover {
-    background-color: #0b5bb8;
+  .submit-btn {
+    width: 360px;
+    min-width: 120px;
+    height: 40px;
+    background-color: #0d66d0;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    &:disabled {
+      background-color: #1078ff;
+      color: #ffffff;
+    }
+    &:not(:disabled):hover {
+      background-color: #0b5bb8;
+    }
+
+    mat-spinner {
+      display: inline-block;
+    }
   }
 }
 

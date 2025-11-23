@@ -52,9 +52,7 @@
 .routes-container {
   padding: 24px 32px;
   margin: 0;
-  height: calc(100vh - 64px);
-  display: flex;
-  flex-direction: column;
+  
 
   // Vista del mapa
   .map-view {

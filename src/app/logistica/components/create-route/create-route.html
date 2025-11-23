@@ -84,18 +84,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <div class="dialog-actions">
-      <button
-        mat-button
-        type="button"
-        class="cancel-btn"
-        (click)="onCancel()"
-        [disabled]="loading()"
-        i18n-aria-label="@@routes.createRouteDialog.cancelAria" aria-label="Cancelar creación de ruta"
-      >
-        <span i18n="@@routes.createRouteDialog.cancelBtn">Cancelar</span>
-      </button>
-
+    <div class="dialog-actions">    
       <button
         mat-raised-button
         type="submit"
