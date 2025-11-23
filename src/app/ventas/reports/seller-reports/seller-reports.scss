@@ -229,9 +229,9 @@
     width: 100%;
 
     th {
-      font-size: 11px;
+      font-size: 12px; /* slightly larger for readability */
       font-weight: 600;
-      color: #9ca3af;
+      color: #41444f; /* higher contrast against light background */
       letter-spacing: 0.5px;
       background-color: transparent;
       padding: 12px;

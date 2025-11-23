@@ -614,6 +614,14 @@
         <source>EVIDENCIA</source>
         <target>EVIDENCE</target>
       </trans-unit>
+      <trans-unit id="visits.evidenceActionAria" datatype="html">
+        <source>Ver evidencia</source>
+        <target>View evidence</target>
+      </trans-unit>
+      <trans-unit id="visits.statusFilterAria" datatype="html">
+        <source>Filtrar por estado</source>
+        <target>Filter by status</target>
+      </trans-unit>
       <trans-unit id="visits.noData" datatype="html">
         <source>No se encontraron visitas</source>
         <target>No visits found</target>

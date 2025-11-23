@@ -16,6 +16,11 @@
       font-size: 13px;
       color: #9ca3af;
 
+      .breadcrumb-current {
+        color: #41444f; /* higher contrast */
+        font-weight: 500;
+      }
+
       .breadcrumb-link {
         color: #2563eb;
       }
@@ -33,7 +38,7 @@
     box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
   }
   .filter-select {
-        color: #9ca3af;
+      color: #41444f; /* improved contrast */
         height: 34px;
       }
       

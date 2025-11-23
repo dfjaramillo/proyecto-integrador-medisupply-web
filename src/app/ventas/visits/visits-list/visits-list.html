@@ -60,6 +60,7 @@
             <div class="filter-header">
               <select
                 class="filter-input filter-select"
+                i18n-aria-label="@@visits.statusFilterAria" aria-label="Filtrar por estado"
                 [(ngModel)]="searchStatus"
                 (ngModelChange)="onSearchStatusChange($event)">
                 <option value="" i18n="@@visits.all">Todos</option>
@@ -100,6 +101,7 @@
               data-cy="evidence-btn"
               [disabled]="!isVideoAvailable(video)"
               [matTooltip]="getTooltipText(video)"
+              i18n-aria-label="@@visits.evidenceActionAria" aria-label="Ver evidencia"
               (click)="openVideoDialog(video)">
               <mat-icon>visibility</mat-icon>
             </button>
